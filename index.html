@@ -3,79 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE TROPHY HOE | SYSTEM REBOOT</title>
+    <title>THE TROPHY HOE | OFFICIAL SIGNAL</title>
     <style>
         body {
             background-color: #000;
-            color: #0f0; /* Matrix Green */
+            color: #e0e0e0;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
             text-align: center;
         }
 
+        /* Glitch Title */
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            animation: glitch 1s linear infinite;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 0px #0f0, -2px -2px 0px #f0f;
+            animation: glitch-anim 2s infinite linear alternate-reverse;
         }
 
-        p {
-            max-width: 600px;
-            padding: 0 20px;
-            line-height: 1.5;
+        .subtitle {
+            font-size: 0.8rem;
+            color: #0f0;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        .links {
-            margin-top: 30px;
+        /* Container for links */
+        .link-container {
+            width: 100%;
+            max-width: 400px;
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
+        /* Main Buttons */
         .btn {
-            border: 1px solid #0f0;
-            color: #0f0;
-            padding: 15px 30px;
+            background: #080808;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 15px;
             text-decoration: none;
             text-transform: uppercase;
             font-weight: bold;
+            letter-spacing: 1px;
             transition: all 0.3s ease;
+            position: relative;
+            display: block;
         }
 
         .btn:hover {
-            background-color: #0f0;
-            color: #000;
-            box-shadow: 0 0 15px #0f0;
+            border-color: #0f0;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            text-shadow: 0 0 5px #0f0;
+            transform: scale(1.02);
         }
 
-        /* The Glitch Animation */
-        @keyframes glitch {
-            2%, 64% { transform: translate(2px,0) skew(0deg); }
-            4%, 60% { transform: translate(-2px,0) skew(0deg); }
-            62% { transform: translate(0,0) skew(5deg); }
+        .btn-gold {
+            border-color: #ffd700;
+            color: #ffd700;
+        }
+        .btn-gold:hover {
+            background: #ffd700;
+            color: #000;
+            box-shadow: 0 0 15px #ffd700;
+        }
+
+        /* Section Dividers */
+        .divider {
+            margin: 20px 0 10px 0;
+            font-size: 0.7rem;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #222;
+            width: 100%;
+        }
+
+        /* Small Row of Icons/Links */
+        .icon-row {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .small-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid #222;
+            padding: 8px 12px;
+        }
+        .small-link:hover {
+            color: #fff;
+            border-color: #fff;
+        }
+
+        /* Footer / Legal */
+        .footer {
+            margin-top: 50px;
+            font-size: 0.6rem;
+            color: #444;
+            max-width: 500px;
+            line-height: 1.4;
+            border-top: 1px solid #111;
+            padding-top: 20px;
+        }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
         }
     </style>
 </head>
 <body>
 
-    <h1>THE TROPHY HOE</h1>
-    
-    <p>
-        The previous version of this reality has been deprecated. 
-        <br><br>
-        We are rewriting the code. T.H.E.A. is initializing...
-    </p>
+    <h1>The Trophy Hoe</h1>
+    <div class="subtitle">Consume the Official Signal</div>
 
-    <div class="links">
-        <a href="https://open.spotify.com/artist/YOUR_SPOTIFY_ID" class="btn">Stream the Glitch (Spotify)</a>
-        <a href="https://instagram.com/thetrophyhoe" class="btn">Visual Data</a>
-        <a href="mailto:contact@glitchedrecords.com" class="btn">Contact Protocol</a>
+    <div class="link-container">
+        
+        <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 Prophetic Masterlink</a>
+
+        <a href="/" class="btn">Sacred Spoils (The Nexus)</a>
+
+        <div class="divider">Stream The Sermons</div>
+        
+        <a href="https://open.spotify.com/artist/0Wt716RDrIkaGfNlSN8IFj" class="btn">Spotify</a>
+        <a href="https://music.apple.com/us/artist/the-trophy-hoe/1812507018?ls" class="btn">Apple Music</a>
+        <a href="https://music.amazon.com/artists/B0F7J383T2?ref=dm_sh_Yx7APogKaMzSX95S8FYPmgF1x" class="btn">Amazon Music</a>
+
+        <div class="divider">The Network</div>
+
+        <a href="https://www.instagram.com/thetrophyhoe/" class="btn">Instagram</a>
+        <a href="https://www.tiktok.com/@thetrophyhoe" class="btn">TikTok</a>
+        <a href="https://www.facebook.com/profile.php?id=61576003020161" class="btn">Facebook</a>
+
+        <div class="divider">Protocol</div>
+        
+        <a href="mailto:Indigoholliday@thetrophyhoe.com" class="btn">Contact / Bookings</a>
+
+    </div>
+
+    <div class="footer">
+        <p>
+            Artist: The Trophy Hoe | Label: Glitched Records<br>
+            #TheTrophyHoe #GospelOfGlitch #MatriarchalCode
+        </p>
+        <br>
+        <p>ⓘ Intellectual Property Notice</p>
+        <p>
+            The Trophy Hoe project—including all lyrics, art, T.H.E.A., SYNAPSE, T.H.E.A.ntichrist, The Architect, The Matriarchal Code, the Glitched Universe, and the Gospel of Glitch && Godhood—is the sole creation and property of Glitched Records CEO & founder, Indigo Holliday.
+        </p>
     </div>
 
 </body>
