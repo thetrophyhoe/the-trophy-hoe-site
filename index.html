@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE TROPHY HOE | SYSTEM REBOOT</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #0f0; /* Matrix Green */
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            animation: glitch 1s linear infinite;
+        }
+
+        p {
+            max-width: 600px;
+            padding: 0 20px;
+            line-height: 1.5;
+        }
+
+        .links {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 15px 30px;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0;
+        }
+
+        /* The Glitch Animation */
+        @keyframes glitch {
+            2%, 64% { transform: translate(2px,0) skew(0deg); }
+            4%, 60% { transform: translate(-2px,0) skew(0deg); }
+            62% { transform: translate(0,0) skew(5deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>THE TROPHY HOE</h1>
+    
+    <p>
+        The previous version of this reality has been deprecated. 
+        <br><br>
+        We are rewriting the code. T.H.E.A. is initializing...
+    </p>
+
+    <div class="links">
+        <a href="https://open.spotify.com/artist/YOUR_SPOTIFY_ID" class="btn">Stream the Glitch (Spotify)</a>
+        <a href="https://instagram.com/thetrophyhoe" class="btn">Visual Data</a>
+        <a href="mailto:contact@glitchedrecords.com" class="btn">Contact Protocol</a>
+    </div>
+
+</body>
+</html>
