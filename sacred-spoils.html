@@ -25,13 +25,9 @@
             height: 100vh;
             width: 100%;
             display: flex;
-            /* CHANGE: Push content to the bottom */
-            align-items: flex-end; 
             justify-content: center;
             overflow: hidden;
             border-bottom: 2px solid #333;
-            /* CHANGE: Add space at bottom so it's not on the floor */
-            padding-bottom: 15vh; 
         }
 
         /* BACKGROUND VIDEO */
@@ -45,74 +41,70 @@
             height: auto;
             transform: translate(-50%, -50%);
             z-index: 1;
-            opacity: 0.6;
-            filter: contrast(1.2) brightness(0.8);
+            /* Less fade so the shirt pops more */
+            opacity: 0.8; 
+            filter: contrast(1.1) brightness(0.9);
         }
 
-        /* TEXT OVERLAY */
+        /* THE BOTTOM CONTROL STRIP (EDGE TO EDGE) */
         .overlay {
-            position: relative;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%; /* Full Width */
             z-index: 10;
             text-align: center;
-            background: rgba(0, 0, 0, 0.7); /* Slightly darker for readability */
-            padding: 1.5rem 3rem;
-            border: 1px solid #fff;
-            backdrop-filter: blur(5px);
-            max-width: 90%;
-            /* CHANGE: Add a subtle slide-up animation */
-            animation: slideUp 1s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            /* Solid Black background to act as the divide */
+            background: #000; 
+            padding: 1.5rem 0;
+            border-top: 1px solid #fff;
+            box-shadow: 0px -10px 30px rgba(0,0,0,1); /* Shadow blending upwards */
         }
 
         h2 {
-            font-size: 2.5rem; /* Slightly smaller to save space */
+            font-size: 1.8rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 0px #ff00ff;
+            margin-bottom: 0.2rem;
+            color: #fff;
+            text-shadow: 0px 0px 5px #ff00ff;
         }
 
         p {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             color: #ccc;
+            letter-spacing: 1px;
         }
 
         /* THE ACQUIRE BUTTON */
         .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background-color: transparent;
+            display: block;
+            width: 90%; /* Wide button for easy mobile tapping */
+            max-width: 400px;
+            margin: 0 auto; /* Center it */
+            padding: 12px 0;
+            background-color: #1a1a1a;
             color: #fff;
-            border: 2px solid #fff;
+            border: 1px solid #fff;
             text-decoration: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             transition: all 0.3s ease;
-            cursor: pointer;
+            text-transform: uppercase;
         }
 
         .btn:hover {
             background-color: #fff;
             color: #000;
-            box-shadow: 4px 4px 0px #00ffff;
+            box-shadow: 0px 0px 15px #00ffff;
         }
 
         /* MOBILE ADJUSTMENTS */
         @media (max-width: 768px) {
-            h2 { font-size: 1.8rem; }
-            .product-container { padding-bottom: 20vh; } /* Push higher on phone */
-            .overlay { padding: 1rem 2rem; }
-            .product-container video {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
+            h2 { font-size: 1.5rem; }
+            .btn { width: 85%; }
         }
     </style>
 </head>
@@ -153,4 +145,3 @@
 
 </body>
 </html>
-
