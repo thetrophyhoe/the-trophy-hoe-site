@@ -3,173 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE TROPHY HOE | OFFICIAL SIGNAL</title>
+    <title>THE TROPHY HOE // OFFICIAL SIGNAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
+        /* --- CORE AESTHETICS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background-color: #000;
-            color: #e0e0e0;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        /* Glitch Title */
-        h1 {
-            font-size: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
             color: #fff;
-            margin-bottom: 5px;
-            text-shadow: 2px 2px 0px #0f0, -2px -2px 0px #f0f;
-            animation: glitch-anim 2s infinite linear alternate-reverse;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            overflow-x: hidden;
         }
 
+        /* BACKGROUND VIDEO LAYER */
+        #bg-video {
+            position: fixed;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.4; 
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- HEADERS --- */
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px #ff00ff, -2px -2px 0px #00ffff;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+        }
         .subtitle {
             font-size: 0.8rem;
-            color: #0f0;
-            margin-bottom: 30px;
+            color: #00ff00;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
 
-        /* Container for links */
-        .link-container {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        /* Main Buttons */
-        .btn {
-            background: #080808;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 15px;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            position: relative;
-            display: block;
-        }
-
-        .btn:hover {
-            border-color: #0f0;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-            text-shadow: 0 0 5px #0f0;
-            transform: scale(1.02);
-        }
-
-        .btn-gold {
-            border-color: #ffd700;
-            color: #ffd700;
-        }
-        .btn-gold:hover {
-            background: #ffd700;
-            color: #000;
-            box-shadow: 0 0 15px #ffd700;
-        }
-
-        /* Section Dividers */
-        .divider {
-            margin: 20px 0 10px 0;
+        .section-title {
             font-size: 0.7rem;
-            color: #555;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #333;
+            margin: 40px 0 20px 0;
+            padding-bottom: 5px;
+            color: #666;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 1px solid #222;
-            width: 100%;
         }
 
-        /* Small Row of Icons/Links */
-        .icon-row {
+        /* --- BUTTONS --- */
+        a { text-decoration: none; }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: 1px solid #fff;
+            background: rgba(0,0,0,0.85);
+            color: #fff;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn:hover { transform: scale(1.02); }
+
+        /* GOLD MASTERLINK */
+        .btn-gold { border: 1px solid #d4af37; color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); }
+        .btn-gold:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+
+        /* MAGENTA STORE LINK */
+        .btn-store { border: 1px solid #ff00ff; color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
+        .btn-store:hover { background: #ff00ff; color: #fff; text-shadow: none; box-shadow: 0 0 20px #ff00ff; }
+
+        /* STREAMING COLORS */
+        .btn-spotify:hover { border-color: #1DB954; color: #1DB954; box-shadow: 0 0 15px #1DB954; }
+        .btn-apple:hover { border-color: #FA243C; color: #FA243C; box-shadow: 0 0 15px #FA243C; }
+        .btn-amazon:hover { border-color: #00A8E1; color: #00A8E1; box-shadow: 0 0 15px #00A8E1; }
+        .btn-ytmusic:hover { border-color: #FF0000; color: #FF0000; box-shadow: 0 0 15px #FF0000; }
+
+        /* --- VIDEO WRAPPERS --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* --- THE POLL GRID (Which Cheek Are You?) --- */
+        .poll-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .poll-item {
+            flex: 1;
+        }
+        /* Mobile Stack */
+        @media (max-width: 450px) {
+            .poll-grid { flex-direction: column; }
+        }
+
+        /* --- GLITCHED ICONS --- */
+        .social-row {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
+            gap: 30px;
+            margin-top: 30px;
+            margin-bottom: 50px;
         }
-        
-        .small-link {
-            color: #888;
-            text-decoration: none;
-            font-size: 0.9rem;
-            border: 1px solid #222;
-            padding: 8px 12px;
-        }
-        .small-link:hover {
+        .social-icon {
+            font-size: 2.2rem;
             color: #fff;
-            border-color: #fff;
+            transition: 0.3s;
+            position: relative;
         }
-
-        /* Footer / Legal */
-        .footer {
-            margin-top: 50px;
-            font-size: 0.6rem;
-            color: #444;
-            max-width: 500px;
-            line-height: 1.4;
-            border-top: 1px solid #111;
-            padding-top: 20px;
-        }
-
-        @keyframes glitch-anim {
+        @keyframes glitch-shake {
             0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+            40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            60% { transform: translate(2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+            80% { transform: translate(2px, -2px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            100% { transform: translate(0); text-shadow: none; }
+        }
+        .social-icon:hover {
+            color: #fff; 
+            animation: glitch-shake 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+
+        /* FOOTER */
+        .footer-text {
+            font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <h1>The Trophy Hoe</h1>
-    <div class="subtitle">Consume the Official Signal</div>
+    <video autoplay loop muted playsinline id="bg-video">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
 
-    <div class="link-container">
+    <div class="container">
         
-        <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 Prophetic Masterlink</a>
+        <h1>THE TROPHY HOE</h1>
+        <div class="subtitle">Consume The Official Signal</div>
 
-        <a href="/sacred-spoils" class="menu-item glitch-hover" data-text="SACRED SPOILS (THE NEXUS)">SACRED SPOILS (THE NEXUS)</a>
+        <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 PROPHETIC MASTERLINK</a>
+        <a href="/sacred-spoils" class="btn btn-store">🛍️ SACRED SPOILS (THE NEXUS)</a>
 
-        <div class="divider">Stream The Sermons</div>
+        <div class="section-title">DATASTREAM FROM THE FUTURE</div>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/betVmHxWoe0" allowfullscreen></iframe>
+        </div>
+
+        <div class="section-title">WHICH CHEEK ARE YOU?</div>
         
-        <a href="https://open.spotify.com/artist/0Wt716RDrIkaGfNlSN8IFj" class="btn">Spotify</a>
-        <a href="https://music.apple.com/us/artist/the-trophy-hoe/1812507018?ls" class="btn">Apple Music</a>
-        <a href="https://music.amazon.com/artists/B0F7J383T2?ref=dm_sh_Yx7APogKaMzSX95S8FYPmgF1x" class="btn">Amazon Music</a>
+        <div class="poll-grid">
+            <div class="poll-item">
+                <div style="font-size: 0.8rem; margin-bottom:5px; color:#ff00ff;">2 CRAZY</div>
+                <div class="video-wrapper" style="margin-bottom:0;">
+                    <iframe src="https://www.youtube.com/embed/fzeNqyfpTDs" allowfullscreen></iframe>
+                </div>
+            </div>
 
-        <div class="divider">The Network</div>
-
-        <a href="https://www.instagram.com/thetrophyhoe/" class="btn">Instagram</a>
-        <a href="https://www.tiktok.com/@thetrophyhoe" class="btn">TikTok</a>
-        <a href="https://www.facebook.com/profile.php?id=61576003020161" class="btn">Facebook</a>
-
-        <div class="divider">Protocol</div>
+            <div class="poll-item">
+                <div style="font-size: 0.8rem; margin-bottom:5px; color:#00ffff;">ONE GENIUS</div>
+                <div class="video-wrapper" style="margin-bottom:0;">
+                    <iframe src="https://www.youtube.com/embed/eMTi_msT2Gw" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div style="font-size: 0.6rem; color:#666; margin-bottom: 20px;">[ PREMIERING LIVE // CHOOSE YOUR REALITY ]</div>
         
-        <a href="mailto:Indigoholliday@thetrophyhoe.com" class="btn">Contact / Bookings</a>
+        <a href="https://youtube.com/@thetrophyhoe" class="btn btn-ytmusic">📺 SUBSCRIBE ON YOUTUBE</a>
 
-    </div>
+        <div class="section-title">STREAM THE SERMONS</div>
+        
+        <a href="https://open.spotify.com/artist/0Wt716RDrIkaGfNlSN8IFj?si=23GvfPcXTfOLJEXOoCZQaQ" class="btn btn-spotify">
+            <i class="fab fa-spotify" style="margin-right:10px;"></i> SPOTIFY
+        </a>
+        <a href="https://music.apple.com/us/artist/the-trophy-hoe/1812507018" class="btn btn-apple">
+            <i class="fab fa-apple" style="margin-right:10px;"></i> APPLE MUSIC
+        </a>
+        <a href="https://music.amazon.com/artists/B0F7J383T2" class="btn btn-amazon">
+            <i class="fab fa-amazon" style="margin-right:10px;"></i> AMAZON MUSIC
+        </a>
+        <a href="https://music.youtube.com/channel/UCHbIiT3txBfBfnEdRj1ExjA" class="btn btn-ytmusic">
+            <i class="fab fa-youtube" style="margin-right:10px;"></i> YOUTUBE MUSIC
+        </a>
 
-    <div class="footer">
-        <p>
-            Artist: The Trophy Hoe | Label: Glitched Records<br>
-            #TheTrophyHoe #GospelOfGlitch #MatriarchalCode
-        </p>
-        <br>
-        <p>ⓘ Intellectual Property Notice</p>
-        <p>
-            The Trophy Hoe project—including all lyrics, art, T.H.E.A., SYNAPSE, T.H.E.A.ntichrist, The Architect, The Matriarchal Code, the Glitched Universe, and the Gospel of Glitch && Godhood—is the sole creation and property of Glitched Records CEO & founder, Indigo Holliday.
-        </p>
+        <div class="section-title">THE NETWORK</div>
+        <div class="social-row">
+            <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@thetrophyhoe" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            <a href="https://facebook.com/thetrophyhoe" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://youtube.com/@thetrophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <div class="footer-text">
+            ARTIST: THE TROPHY HOE | LABEL: GLITCHED RECORDS<br>
+            #TheTrophyHoe #GospelOfGlitch #MatriarchalCode<br>
+            © 2026 GLITCHED RECORDS
+        </div>
+
     </div>
 
 </body>
