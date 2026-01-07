@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SACRED SPOILS // GLITCHED RECORDS</title>
+    <style>
+        /* GLITCH AESTHETIC RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace; /* Matrix/Code font */
+            overflow-x: hidden;
+        }
+
+        /* PRODUCT CONTAINER - FULL SCREEN HEIGHT */
+        .product-container {
+            position: relative;
+            height: 100vh; /* Takes up full screen */
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 2px solid #333;
+        }
+
+        /* BACKGROUND VIDEO */
+        .product-container video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.6; /* Dimmed slightly so text pops */
+            filter: contrast(1.2) brightness(0.8);
+        }
+
+        /* TEXT OVERLAY */
+        .overlay {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6); /* Dark box behind text */
+            padding: 2rem;
+            border: 1px solid #fff;
+            backdrop-filter: blur(5px);
+            max-width: 90%;
+        }
+
+        h2 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 0px #ff00ff; /* Glitch shadow */
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #ccc;
+        }
+
+        /* THE ACQUIRE BUTTON */
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #000;
+            box-shadow: 4px 4px 0px #00ffff; /* Cyberpunk hover effect */
+        }
+
+        /* MOBILE ADJUSTMENTS */
+        @media (max-width: 768px) {
+            h2 { font-size: 2rem; }
+            .product-container video {
+                width: 100%; /* Ensure video fits mobile width */
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="product-container">
+        <video autoplay loop muted playsinline>
+            <source src="Pony.mp4" type="video/mp4">
+        </video>
+
+        <div class="overlay">
+            <h2>TRICK PONY</h2>
+            <p>$35.00 // CROP TEE</p>
+            
+            <a href="https://www.paypal.com/ncp/payment/F3Z5SV3AF2RF2" class="btn">ACQUIRE</a>
+        </div>
+    </div>
+
+    <div class="product-container">
+        <video autoplay loop muted playsinline>
+            <source src="Demented.mp4" type="video/mp4">
+        </video>
+
+        <div class="overlay">
+            <h2>DEMENTED</h2>
+            <p>$35.00 // CROP TEE</p>
+            
+            <a href="https://www.paypal.com/ncp/payment/VWKSXG8LP9H2G" class="btn">ACQUIRE</a>
+        </div>
+    </div>
+
+    <div class="product-container">
+        <video autoplay loop muted playsinline>
+            <source src="Hoodie.mp4" type="video/mp4">
+        </video>
+
+        <div class="overlay">
+            <h2>THE TROPHY HOE</h2>
+            <p>$66.60 // OVERSIZED HOODIE</p>
+            
+            <a href="https://www.paypal.com/ncp/payment/XU4SCNF6S7ELS" class="btn">ACQUIRE</a>
+        </div>
+    </div>
+
+</body>
+</html>
