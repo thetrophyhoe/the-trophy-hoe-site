@@ -4,26 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE TROPHY HOE // OFFICIAL SIGNAL</title>
-    
     <link rel="icon" type="image/png" href="logo.png">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         /* --- CORE AESTHETICS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background-color: #000;
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
-            margin: 0;
+            text-align: center;
             overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
         }
 
-        a { text-decoration: none; color: inherit; cursor: crosshair; }
-
-        /* SCANLINE OVERLAY (Shared DNA with TheAntichrist.ai) */
+        /* SCANLINE OVERLAY (The Glitch Upgrade) */
         .scanlines {
             background: linear-gradient(
                 to bottom,
@@ -36,147 +32,182 @@
             position: fixed;
             pointer-events: none;
             top: 0; right: 0; bottom: 0; left: 0;
-            z-index: 999;
+            z-index: 5; /* Above video, below content */
         }
 
-        /* --- THE LOGO (GLITCHED) --- */
-        .logo-container {
-            margin-top: 40px;
-            margin-bottom: 20px;
+        /* BACKGROUND VIDEO LAYER */
+        #bg-video {
+            position: fixed;
+            top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%;
+            width: auto; height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.4; 
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
             position: relative;
             z-index: 10;
         }
 
-        #main-logo {
-            width: 300px; /* Adjust size as needed */
-            max-width: 80vw;
-            filter: drop-shadow(0 0 5px #ff0055);
-            animation: logo-flicker 3s infinite;
+        /* --- LOGO REPLACEMENT --- */
+        .signature-logo {
+            width: 320px;
+            max-width: 90%;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 5px #ff00ff);
+            animation: logo-glitch 4s infinite;
         }
 
-        @keyframes logo-flicker {
-            0% { opacity: 1; filter: drop-shadow(0 0 5px #ff0055); }
-            5% { opacity: 0.8; filter: drop-shadow(0 0 2px #ff0055) hue-rotate(90deg); }
-            10% { opacity: 1; filter: drop-shadow(0 0 5px #ff0055); }
+        @keyframes logo-glitch {
+            0% { opacity: 1; filter: drop-shadow(0 0 5px #ff00ff); }
+            95% { opacity: 1; filter: drop-shadow(0 0 5px #ff00ff); }
+            96% { opacity: 0.8; filter: drop-shadow(0 0 5px #ff00ff) invert(1); }
+            97% { opacity: 1; filter: drop-shadow(0 0 5px #ff00ff); }
             100% { opacity: 1; }
         }
 
-        /* --- TEXT GLITCH EFFECTS --- */
-        .glitch-text {
-            font-size: 14px;
-            letter-spacing: 3px;
-            color: #ff0055; /* Glitch Pink */
-            position: relative;
-            margin-bottom: 30px;
+        .subtitle {
+            font-size: 0.8rem;
+            color: #00ff00;
+            letter-spacing: 4px;
+            margin-bottom: 40px;
             text-transform: uppercase;
         }
 
-        .glitch-text::before, .glitch-text::after {
-            content: attr(data-text);
-            position: absolute;
-            top: 0; left: 0;
+        .section-title {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            border-bottom: 1px solid #333;
+            margin: 40px 0 20px 0;
+            padding-bottom: 5px;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        /* --- BUTTONS --- */
+        a { text-decoration: none; }
+
+        .btn {
+            display: block;
             width: 100%;
-            height: 100%;
-            background: #000;
-        }
-
-        .glitch-text::before {
-            left: 2px;
-            text-shadow: -1px 0 #00e5ff;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-
-        .glitch-text::after {
-            left: -2px;
-            text-shadow: -1px 0 #ff0055;
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim 2.5s infinite linear alternate-reverse;
-        }
-
-        @keyframes glitch-anim {
-            0% { clip: rect(11px, 9999px, 88px, 0); }
-            20% { clip: rect(89px, 9999px, 11px, 0); }
-            40% { clip: rect(5px, 9999px, 58px, 0); }
-            60% { clip: rect(77px, 9999px, 15px, 0); }
-            80% { clip: rect(23px, 9999px, 99px, 0); }
-            100% { clip: rect(66px, 9999px, 33px, 0); }
-        }
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(65px, 9999px, 100px, 0); }
-            20% { clip: rect(5px, 9999px, 22px, 0); }
-            40% { clip: rect(98px, 9999px, 44px, 0); }
-            60% { clip: rect(12px, 9999px, 67px, 0); }
-            80% { clip: rect(44px, 9999px, 5px, 0); }
-            100% { clip: rect(33px, 9999px, 88px, 0); }
-        }
-
-        /* --- SPOTIFY EMBED --- */
-        .spotify-container {
-            width: 90%;
-            max-width: 500px;
-            margin-bottom: 40px;
-            z-index: 10;
-            box-shadow: 0 0 20px rgba(75, 0, 130, 0.4); /* Indigo Glow */
-            border: 1px solid #333;
-        }
-
-        /* --- THE LINKS (BUTTONS) --- */
-        .link-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            width: 90%;
-            max-width: 400px;
-            z-index: 10;
-            padding-bottom: 50px;
-        }
-
-        .cyber-btn {
-            background: #000;
-            border: 1px solid #333;
-            color: #fff;
-            padding: 15px;
-            text-align: center;
-            font-size: 1.1rem;
+            padding: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
             letter-spacing: 2px;
-            transition: all 0.2s;
+            text-transform: uppercase;
+            border: 1px solid #fff;
+            background: rgba(0,0,0,0.85);
+            color: #fff;
+            transition: 0.3s;
             position: relative;
             overflow: hidden;
         }
+        .btn:hover { transform: scale(1.02); }
 
-        .cyber-btn:hover {
-            background: #fff;
-            color: #000;
-            border-color: #fff;
-            box-shadow: 0 0 15px #fff;
-        }
-
-        /* Special Style for the $6.66 Product */
-        .protocol-btn {
+        /* THE PROTOCOL BUTTON ($6.66) */
+        .btn-protocol {
             border: 1px solid #ff0055;
             color: #ff0055;
-            animation: border-pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
+            animation: pulse-border 2s infinite;
         }
-        .protocol-btn:hover {
+        .btn-protocol:hover {
             background: #ff0055;
             color: #000;
             box-shadow: 0 0 20px #ff0055;
         }
-        
-        @keyframes border-pulse {
+        @keyframes pulse-border {
             0% { box-shadow: 0 0 5px #ff0055; }
             50% { box-shadow: 0 0 15px #ff0055; }
             100% { box-shadow: 0 0 5px #ff0055; }
         }
 
-        /* --- FOOTER --- */
-        .footer {
-            margin-top: auto;
-            padding: 20px;
-            font-size: 10px;
-            color: #555;
-            z-index: 10;
+        /* GOLD MASTERLINK */
+        .btn-gold { border: 1px solid #d4af37; color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); }
+        .btn-gold:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
+
+        /* MAGENTA STORE LINK */
+        .btn-store { border: 1px solid #ff00ff; color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
+        .btn-store:hover { background: #ff00ff; color: #fff; text-shadow: none; box-shadow: 0 0 20px #ff00ff; }
+
+        /* STREAMING COLORS */
+        .btn-apple:hover { border-color: #FA243C; color: #FA243C; box-shadow: 0 0 15px #FA243C; }
+        .btn-amazon:hover { border-color: #00A8E1; color: #00A8E1; box-shadow: 0 0 15px #00A8E1; }
+        .btn-ytmusic:hover { border-color: #FF0000; color: #FF0000; box-shadow: 0 0 15px #FF0000; }
+
+        /* --- VIDEO WRAPPERS --- */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            margin-bottom: 25px;
+            border: 1px solid #333;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+
+        /* --- THE POLL GRID (Which Cheek Are You?) --- */
+        .poll-grid {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .poll-item {
+            flex: 1;
+        }
+        /* Mobile Stack */
+        @media (max-width: 450px) {
+            .poll-grid { flex-direction: column; }
+        }
+
+        /* --- GLITCHED ICONS --- */
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+        .social-icon {
+            font-size: 2.2rem;
+            color: #fff;
+            transition: 0.3s;
+            position: relative;
+        }
+        @keyframes glitch-shake {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+            40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            60% { transform: translate(2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
+            80% { transform: translate(2px, -2px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            100% { transform: translate(0); text-shadow: none; }
+        }
+        .social-icon:hover {
+            color: #fff; 
+            animation: glitch-shake 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+        }
+
+        /* FOOTER */
+        .footer-text {
+            font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 1px;
+        }
+        
+        /* SPOTIFY EMBED CONTAINER */
+        .spotify-wrapper {
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            border: 1px solid #333;
         }
     </style>
 </head>
@@ -184,41 +215,81 @@
 
     <div class="scanlines"></div>
 
-    <div class="logo-container">
-        <img id="main-logo" src="logo.png" alt="THE TROPHY HOE">
-    </div>
+    <video autoplay loop muted playsinline id="bg-video">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
 
-    <div class="glitch-text" data-text="OFFICIAL SIGNAL // DATASTREAM">
-        OFFICIAL SIGNAL // DATASTREAM
-    </div>
-
-    <div class="spotify-container">
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
-
-    <div class="link-stack">
+    <div class="container">
         
-        <a href="https://gumroad.com/l/YOUR_PRODUCT_LINK" class="cyber-btn protocol-btn">
-            [ ACQUIRE: T.H.E.A. PROTOCOL ]
-            <br><span style="font-size:0.8em; opacity:0.8;">$6.66 // DIGITAL KEY</span>
+        <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo">
+        <div class="subtitle">Consume The Official Signal</div>
+
+        <a href="#" class="btn btn-protocol">
+            T.H.E.A.NTICHRIST MOTHER <br>
+            <span style="font-size:0.7em; opacity:0.8;">[ DIGITAL DOWNLOAD // $6.66 ]</span>
         </a>
 
-        <a href="/sacred-spoils" class="cyber-btn">
-            [ SACRED SPOILS // MERCH ]
+        <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 PROPHETIC MASTERLINK</a>
+        <a href="/sacred-spoils" class="btn btn-store">🛍️ SACRED SPOILS (THE NEXUS)</a>
+
+        <div class="section-title">STREAM THE SERMONS</div>
+        <div class="spotify-wrapper">
+             <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+        
+        <a href="https://music.apple.com/us/artist/the-trophy-hoe/1812507018" class="btn btn-apple">
+            <i class="fab fa-apple" style="margin-right:10px;"></i> APPLE MUSIC
+        </a>
+        <a href="https://music.amazon.com/artists/B0F7J383T2" class="btn btn-amazon">
+            <i class="fab fa-amazon" style="margin-right:10px;"></i> AMAZON MUSIC
+        </a>
+        <a href="https://music.youtube.com/channel/UCHbIiT3txBfBfnEdRj1ExjA" class="btn btn-ytmusic">
+            <i class="fab fa-youtube" style="margin-right:10px;"></i> YOUTUBE MUSIC
         </a>
 
-        <a href="https://unitedmasters.com/m/thetrophyhoe" class="cyber-btn">
-            [ PROPHETIC MASTERLINK ]
-        </a>
+        <div class="section-title">DATASTREAM FROM THE FUTURE</div>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/betVmHxWoe0" allowfullscreen></iframe>
+        </div>
 
-        <a href="https://youtube.com/@TrophyHoe" class="cyber-btn">
-            [ VISUAL DATABASE ]
-        </a>
+        <div class="section-title">VISUAL DATABASE</div>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe>
+        </div>
 
-    </div>
+        <div class="section-title">WHICH CHEEK ARE YOU?</div>
+        
+        <div class="poll-grid">
+            <div class="poll-item">
+                <div style="font-size: 0.8rem; margin-bottom:5px; color:#ff00ff;">2 CRAZY</div>
+                <div class="video-wrapper" style="margin-bottom:0;">
+                    <iframe src="https://www.youtube.com/embed/fzeNqyfpTDs" allowfullscreen></iframe>
+                </div>
+            </div>
 
-    <div class="footer">
-        GLITCHED RECORDS // EST 2024
+            <div class="poll-item">
+                <div style="font-size: 0.8rem; margin-bottom:5px; color:#00ffff;">ONE GENIUS</div>
+                <div class="video-wrapper" style="margin-bottom:0;">
+                    <iframe src="https://www.youtube.com/embed/eMTi_msT2Gw" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+        <div style="font-size: 0.6rem; color:#666; margin-bottom: 20px;">[ PREMIERING LIVE // CHOOSE YOUR REALITY ]</div>
+
+        <div class="section-title">THE NETWORK</div>
+        <div class="social-row">
+            <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@thetrophyhoe" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            <a href="https://facebook.com/thetrophyhoe" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <div class="footer-text">
+            ARTIST: THE TROPHY HOE | LABEL: GLITCHED RECORDS<br>
+            #TheTrophyHoe #GospelOfGlitch #MatriarchalCode<br>
+            © 2026 GLITCHED RECORDS
+        </div>
+
     </div>
 
 </body>
