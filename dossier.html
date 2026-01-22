@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLASSIFIED DOSSIER // THE TROPHY HOE</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- REUSING CORE ASSETS --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #000;
+            color: #ccc; /* Slightly softer text for reading */
+            font-family: 'Courier New', Courier, monospace;
+            text-align: left; /* Left align for reading */
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+            position: fixed; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0; z-index: 5;
+        }
+
+        #bg-video {
+            position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            width: auto; height: auto; transform: translate(-50%, -50%);
+            z-index: -1; opacity: 0.2; /* Darker for readability */
+            filter: grayscale(100%) contrast(1.2);
+        }
+
+        .container {
+            max-width: 800px; /* Wider for EPK info */
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- HEADER --- */
+        .confidential-stamp {
+            border: 2px solid #ff0055;
+            color: #ff0055;
+            display: inline-block;
+            padding: 5px 15px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            transform: rotate(-2deg);
+            margin-bottom: 20px;
+            font-size: 0.8rem;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #ff00ff;
+        }
+
+        .epk-subtitle {
+            color: #00ff00;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* --- CONTENT BLOCKS --- */
+        .section-header {
+            background: #111;
+            color: #fff;
+            padding: 10px;
+            border-left: 4px solid #ff00ff;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .bio-text {
+            background: rgba(0,0,0,0.7);
+            padding: 20px;
+            border: 1px solid #333;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        
+        .highlight { color: #fff; font-weight: bold; }
+
+        /* --- STATS GRID --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-box {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid #333;
+            padding: 15px;
+            text-align: center;
+        }
+        .stat-number { font-size: 1.5rem; color: #00ffff; font-weight: bold; display: block; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- DOWNLOAD BUTTONS --- */
+        .btn-download {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid #666;
+            color: #fff;
+            padding: 10px 20px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .btn-download:hover { background: #fff; color: #000; border-color: #fff; }
+        .btn-download i { margin-right: 8px; }
+
+        /* --- MEDIA GRID --- */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .photo-slot {
+            background: #111;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #333;
+            overflow: hidden;
+        }
+        .photo-slot img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%); transition:0.3s;}
+        .photo-slot:hover img { filter: grayscale(0%); }
+
+        /* --- CONTACT TABLE --- */
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0,0,0,0.8);
+        }
+        .contact-table td {
+            padding: 15px;
+            border-bottom: 1px solid #222;
+        }
+        .contact-role { color: #666; text-transform: uppercase; font-size: 0.8rem; width: 40%; }
+        .contact-email { color: #fff; font-weight: bold; }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .photo-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+        }
+        
+        /* APPLE FIX AGAIN */
+        .apple-glitch { filter: invert(100%) hue-rotate(180deg); width: 100%; height: 175px; display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+    <video autoplay loop muted playsinline id="bg-video">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+
+    <div class="container">
+        
+        <div class="confidential-stamp">INTERNAL DOSSIER // READ ONLY</div>
+        
+        <h1>THE TROPHY HOE</h1>
+        <div class="epk-subtitle">GLITCHED RECORDS // ASSET PROFILE 001</div>
+
+        <div class="section-header">01 // THE NARRATIVE</div>
+        <div class="bio-text">
+            <p style="margin-bottom: 15px;">
+                <span class="highlight">THE TROPHY HOE</span> is not just a moniker; it is a reclamation of the derogatory and a glitch in the pop-culture matrix. Fusing industrial soundscapes with hyper-pop sensibilities, she operates as the primary output of <span class="highlight">GLITCHED RECORDS</span>.
+            </p>
+            <p>
+                Born from the digital void, her work explores themes of <span class="highlight">Cyber-Theology, Self-Deification, and the breakdown of Reality</span>. Her visual album "The #CONFETTI Narrative" and upcoming project "T.H.E.A.ntichrist Mother" challenge the listener to choose their own reality.
+            </p>
+            <p style="margin-top: 15px; font-size: 0.8rem; color:#666;">
+                "The throne isn't given. It's hacked."
+            </p>
+        </div>
+
+        <a href="#" class="btn-download"><i class="fas fa-file-pdf"></i> DOWNLOAD FULL BIO (PDF)</a>
+
+        <div class="section-header">02 // SONIC EVIDENCE</div>
+        
+        <div style="margin-bottom: 15px; box-shadow: 0 0 10px #000;">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <div style="margin-bottom: 15px; overflow: hidden; box-shadow: 0 0 10px #000;">
+            <iframe class="apple-glitch" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" style="width:100%;max-width:800px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/artist/the-trophy-hoe/1812507018"></iframe>
+        </div>
+
+        <div class="section-header">03 // KEY METRICS</div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <span class="stat-number">2026</span>
+                <span class="stat-label">PROJECT DROP</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">5-VOL</span>
+                <span class="stat-label">VISUAL ALBUM</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">OCEANSIDE</span>
+                <span class="stat-label">OPERATING BASE</span>
+            </div>
+        </div>
+
+        <div class="section-header">04 // VISUAL ASSETS</div>
+        <div class="photo-grid">
+            <div class="photo-slot"><img src="path-to-photo1.jpg" alt="Press Shot 1"></div>
+            <div class="photo-slot"><img src="path-to-photo2.jpg" alt="Press Shot 2"></div>
+        </div>
+        <br>
+        <a href="#" class="btn-download"><i class="fas fa-download"></i> DOWNLOAD HI-RES PACK (ZIP)</a>
+        <a href="#" class="btn-download"><i class="fas fa-image"></i> DOWNLOAD LOGOS</a>
+
+        <div class="section-header">05 // SECURE UPLINK</div>
+        <table class="contact-table">
+            <tr>
+                <td class="contact-role">MANAGEMENT // BOOKING</td>
+                <td class="contact-email">
+                    <a href="mailto:stayglitched@glitchedrecords.com" style="color:#fff;">stayglitched@glitchedrecords.com</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="contact-role">DIRECT LINE</td>
+                <td class="contact-email">619-953-2720</td>
+            </tr>
+            <tr>
+                <td class="contact-role">SOCIAL</td>
+                <td class="contact-email">@thetrophyhoe</td>
+            </tr>
+        </table>
+
+        <div style="margin-top: 50px; text-align: center; border-top: 1px solid #333; padding-top: 20px; font-size: 0.7rem; color: #555;">
+            CONFIDENTIAL DOCUMENT // PROPERTY OF GLITCHED RECORDS<br>
+            UNAUTHORIZED DISTRIBUTION IS A VIOLATION OF THE MATRIARCHAL CODE.
+        </div>
+
+    </div>
+
+</body>
+</html>
