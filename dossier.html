@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- REUSING CORE ASSETS --- */
+        /* --- CORE ASSETS --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
@@ -54,13 +54,13 @@
             font-size: 0.8rem;
         }
 
-        h1 {
-            color: #fff;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
+        /* LOGO HEADER (Replaces H1 Text) */
+        .header-logo {
+            width: 250px;
+            max-width: 80%;
+            display: block;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 0 #ff00ff;
+            filter: drop-shadow(0 0 5px #ff00ff);
         }
 
         .epk-subtitle {
@@ -69,13 +69,6 @@
             border-bottom: 1px solid #333;
             padding-bottom: 20px;
             margin-bottom: 40px;
-        }
-
-        /* LOGO HEADER IMAGE */
-        .header-logo {
-            width: 150px;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 5px #ff00ff);
         }
 
         /* --- CONTENT BLOCKS --- */
@@ -135,7 +128,7 @@
         .btn-download:hover { background: #fff; color: #000; border-color: #fff; }
         .btn-download i { margin-right: 8px; }
 
-        /* --- MEDIA GRID (Updated for uploaded assets) --- */
+        /* --- MEDIA GRID --- */
         .photo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -143,21 +136,14 @@
         }
         .photo-slot {
             background: #111;
-            height: 350px; /* Increased height for your vertical images */
+            height: 350px; 
             display: flex;
             align-items: center;
             justify-content: center;
             border: 1px solid #333;
             overflow: hidden;
-            position: relative;
         }
-        .photo-slot img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* Ensures they fill the box perfectly */
-            filter: grayscale(100%) contrast(1.1); 
-            transition:0.3s;
-        }
+        .photo-slot img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.1); transition:0.3s;}
         .photo-slot:hover img { filter: grayscale(0%) contrast(1); }
 
         /* --- CONTACT TABLE --- */
@@ -170,18 +156,33 @@
             padding: 15px;
             border-bottom: 1px solid #222;
         }
-        .contact-role { color: #666; text-transform: uppercase; font-size: 0.8rem; width: 40%; }
-        .contact-email { color: #fff; font-weight: bold; }
+        .contact-role { color: #666; text-transform: uppercase; font-size: 0.8rem; width: 40%; vertical-align: middle; }
+        .contact-email { color: #fff; font-weight: bold; vertical-align: middle; }
         
-        /* SOCIAL LINKS */
-        .social-link { color: #fff; text-decoration: none; margin-right: 15px; font-size: 1.2rem; transition: 0.2s; }
-        .social-link:hover { color: #00ffff; }
+        /* SOCIAL LINKS (Updated) */
+        .social-row-item {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+        .social-row-item:hover { color: #00ffff; }
+        .social-row-item i { width: 25px; color: #ff00ff; }
+
+        /* VIDEO WRAPPER */
+        .video-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; border: 1px solid #333; margin-bottom: 20px;
+        }
+        .video-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
 
         @media (max-width: 600px) {
             .stats-grid { grid-template-columns: 1fr; }
             .photo-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 1.8rem; }
-            .photo-slot { height: 400px; } /* Even taller on mobile for full impact */
+            .photo-slot { height: 400px; }
         }
         
         .apple-glitch { filter: invert(100%) hue-rotate(180deg); width: 100%; height: 175px; display: block; }
@@ -198,9 +199,7 @@
         
         <div class="confidential-stamp">INTERNAL DOSSIER // READ ONLY</div>
         
-        <img src="logo.png" alt="Logo" class="header-logo">
-        
-        <h1>THE TROPHY HOE</h1>
+        <img src="logo.png" alt="THE TROPHY HOE" class="header-logo">
         <div class="epk-subtitle">GLITCHED RECORDS // ASSET PROFILE 001</div>
 
         <div class="section-header">01 // THE NARRATIVE</div>
@@ -212,16 +211,21 @@
                 Following the ritual sacrifice of her former self in the short film <span class="highlight">"T.H.E. A.NAMNESIS of a GODKILLER: Bloody Gnosis"</span> (released 12.25.25), she has initiated "Year Zero." Her work dissolves the boundary between flesh and data, utilizing industrial hyper-pop as a delivery system for <span class="highlight">Gnosis</span>.
             </p>
             <p>
-                In 2026, the signal intensifies with two confirmed impact events: <span class="highlight">"T.H.E.A.ntichrist Mother"</span> and <span class="highlight">"TransActionAl"</span>. This is not entertainment; it is a reality rewrite.
+                In 2026, the signal intensifies with two confirmed impact events: <span class="highlight">"T.H.E.A.ntichrist Mother"</span> and <span class="highlight">"TransActionAl"</span>. This operation initiates a total reality rewrite.
             </p>
             <p style="margin-top: 15px; font-size: 0.8rem; color:#666;">
-                "Seven Solar Deaths. The Path of Five. One Unified Throne."
+                "Seven Solar Deaths. The Path of Five. One Hoe. One Beast. One Unified Throne."
             </p>
         </div>
         
-        <a href="bio.pdf" class="btn-download" download><i class="fas fa-file-pdf"></i> DOWNLOAD FULL BIO (PDF)</a>
+        <a href="bio.pdf" class="btn-download" download><i class="fas fa-file-pdf"></i> DOWNLOAD OFFICIAL BIO</a>
 
-        <div class="section-header">02 // SONIC EVIDENCE</div>
+        <div class="section-header">02 // VISUAL EVIDENCE</div>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" frameborder="0" allowfullscreen></iframe>
+        </div>
+
+        <div class="section-header">03 // SONIC EVIDENCE</div>
         
         <div style="margin-bottom: 15px; box-shadow: 0 0 10px #000;">
             <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -231,7 +235,13 @@
             <iframe class="apple-glitch" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" style="width:100%;max-width:800px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/artist/the-trophy-hoe/1812507018"></iframe>
         </div>
 
-        <div class="section-header">03 // KEY METRICS</div>
+        <div class="section-header">04 // CLASSIFIED AUDIO (VAULT)</div>
+        <div class="bio-text" style="text-align:center;">
+            <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">[ UNRELEASED MATERIAL // PRIVATE STREAM ]</div>
+            <iframe width="100%" height="166" scrolling="no" frameborder="0" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/YOUR_PRIVATE_TRACK_ID&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        </div>
+
+        <div class="section-header">05 // KEY METRICS</div>
         <div class="stats-grid">
             <div class="stat-box">
                 <span class="stat-number">JAN 30 '26</span>
@@ -249,11 +259,8 @@
                 <span class="stat-sub">PENDING DISTRO</span>
             </div>
         </div>
-        <div style="font-size: 0.7rem; color: #555; text-align: center; margin-top: -20px; margin-bottom: 30px;">
-            FILM ARCHIVE: "T.H.E. A.NAMNESIS of a GODKILLER: Bloody Gnosis" // RELEASED 12.25.25
-        </div>
 
-        <div class="section-header">04 // VISUAL ASSETS</div>
+        <div class="section-header">06 // VISUAL ASSETS</div>
         <div class="photo-grid">
             <div class="photo-slot"><img src="press_throne.png" alt="The Throne"></div>
             <div class="photo-slot"><img src="press_crowbar.png" alt="Crowbar"></div>
@@ -261,13 +268,13 @@
             <div class="photo-slot"><img src="press_wires.png" alt="Wires"></div>
         </div>
         <br>
-        <a href="mailto:Indigoholliday@thetrophyhoe.com?subject=REQUESTING_EPK_ASSETS" class="btn-download"><i class="fas fa-envelope"></i> REQUEST HI-RES PACK</a>
-        <a href="mailto:Indigoholliday@thetrophyhoe.com?subject=REQUESTING_LOGOS" class="btn-download"><i class="fas fa-id-card"></i> REQUEST LOGO SET</a>
+        <a href="assets.zip" class="btn-download" download><i class="fas fa-file-archive"></i> DOWNLOAD HI-RES PACK (ZIP)</a>
+        <a href="logos.zip" class="btn-download" download><i class="fas fa-id-card"></i> DOWNLOAD LOGO SET (ZIP)</a>
 
-        <div class="section-header">05 // SECURE UPLINK</div>
+        <div class="section-header">07 // SECURE UPLINK</div>
         <table class="contact-table">
             <tr>
-                <td class="contact-role">MANAGEMENT // BOOKING</td>
+                <td class="contact-role">MANAGEMENT</td>
                 <td class="contact-email">
                     <a href="mailto:Indigoholliday@thetrophyhoe.com" style="color:#fff; text-decoration:none;">Indigoholliday@thetrophyhoe.com</a>
                 </td>
@@ -279,9 +286,9 @@
             <tr>
                 <td class="contact-role">NETWORK</td>
                 <td class="contact-email">
-                    <a href="https://instagram.com/thetrophyhoe" class="social-link"><i class="fab fa-instagram"></i></a>
-                    <a href="https://tiktok.com/@thetrophyhoe" class="social-link"><i class="fab fa-tiktok"></i></a>
-                    <a href="https://youtube.com/@trophyhoe" class="social-link"><i class="fab fa-youtube"></i></a>
+                    <a href="https://instagram.com/thetrophyhoe" class="social-row-item"><i class="fab fa-instagram"></i> @thetrophyhoe</a>
+                    <a href="https://tiktok.com/@thetrophyhoe" class="social-row-item"><i class="fab fa-tiktok"></i> @thetrophyhoe</a>
+                    <a href="https://youtube.com/@trophyhoe" class="social-row-item"><i class="fab fa-youtube"></i> @trophyhoe</a>
                 </td>
             </tr>
         </table>
