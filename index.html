@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE TROPHY HOE // OFFICIAL SIGNAL</title>
+    <title>THE TROPHY HOE // T.H.E.A.NTICHRIST MOTHER</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-        /* SCANLINE OVERLAY */
         .scanlines {
             background: linear-gradient(
                 to bottom,
@@ -29,110 +28,64 @@
                 rgba(0,0,0,0.2)
             );
             background-size: 100% 4px;
-            position: fixed;
-            pointer-events: none;
-            top: 0; right: 0; bottom: 0; left: 0;
-            z-index: 5;
+            position: fixed; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0; z-index: 5;
         }
 
-        /* BACKGROUND VIDEO LAYER */
         #bg-video {
-            position: fixed;
-            top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%;
-            width: auto; height: auto;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            opacity: 0.4; 
-            filter: grayscale(100%) contrast(1.2);
+            position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+            width: auto; height: auto; transform: translate(-50%, -50%);
+            z-index: -1; opacity: 0.4; filter: grayscale(100%) contrast(1.2);
         }
 
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            position: relative;
-            z-index: 10;
+            max-width: 600px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10;
         }
 
-        /* --- LOGO --- */
+        /* --- ERA LOGO --- */
         .signature-logo {
-            width: 320px;
-            max-width: 90%;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 5px #ff00ff);
-            animation: logo-glitch 4s infinite;
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 15px rgba(255, 0, 85, 0.6));
+            animation: breathe 4s infinite ease-in-out;
         }
 
-        @keyframes logo-glitch {
-            0% { opacity: 1; filter: drop-shadow(0 0 5px #ff00ff); }
-            95% { opacity: 1; filter: drop-shadow(0 0 5px #ff00ff); }
-            96% { opacity: 0.8; filter: drop-shadow(0 0 5px #ff00ff) invert(1); }
-            97% { opacity: 1; filter: drop-shadow(0 0 5px #ff00ff); }
-            100% { opacity: 1; }
+        @keyframes breathe {
+            0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.4)); }
+            50% { transform: scale(1.02); filter: drop-shadow(0 0 20px rgba(255, 0, 85, 0.8)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(255, 0, 85, 0.4)); }
         }
 
         .subtitle {
-            font-size: 0.8rem;
-            color: #00ff00;
-            letter-spacing: 4px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
+            font-size: 0.8rem; color: #ff0055; letter-spacing: 4px; margin-bottom: 40px; text-transform: uppercase; text-shadow: 0 0 5px #ff0055;
         }
 
         .section-title {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            border-bottom: 1px solid #333;
-            margin: 40px 0 20px 0;
-            padding-bottom: 5px;
-            color: #666;
-            text-transform: uppercase;
+            font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #333; margin: 40px 0 20px 0; padding-bottom: 5px; color: #666; text-transform: uppercase;
         }
 
         /* --- BUTTONS --- */
         a { text-decoration: none; cursor: pointer; }
 
         .btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border: 1px solid #fff;
-            background: rgba(0,0,0,0.85);
-            color: #fff;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
+            display: block; width: 100%; padding: 18px; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #fff; background: rgba(0,0,0,0.85); color: #fff; transition: 0.3s; position: relative; overflow: hidden;
         }
         .btn:hover { transform: scale(1.02); }
 
-        /* THE PROTOCOL BUTTON ($6.66) */
+        /* LOCKOUT BUTTON */
         .btn-protocol {
-            border: 1px solid #ff0055;
-            color: #ff0055;
-            box-shadow: 0 0 10px rgba(255, 0, 85, 0.2);
-            animation: pulse-border 2s infinite;
+            border: 1px solid #ff0055; color: #ff0055; background: rgba(20, 0, 5, 0.9); box-shadow: 0 0 10px rgba(255, 0, 85, 0.2); animation: pulse-border 2s infinite; cursor: not-allowed;
         }
-        .btn-protocol:hover {
-            background: #ff0055;
-            color: #000;
-            box-shadow: 0 0 20px #ff0055;
-        }
-        /* Error State for Protocol Button */
+        .btn-protocol:hover { background: #ff0055; color: #000; box-shadow: 0 0 30px #ff0055; }
+        
+        /* ERROR STATE (JavaScript Triggered) */
         .btn-error {
-            background: #ff0000 !important;
-            color: #000 !important;
-            border-color: #ff0000 !important;
-            animation: shake 0.5s !important;
+            background: #ff0000 !important; color: #000 !important; border-color: #ff0000 !important; animation: shake 0.5s !important;
         }
         
         @keyframes pulse-border {
             0% { box-shadow: 0 0 5px #ff0055; }
-            50% { box-shadow: 0 0 15px #ff0055; }
+            50% { box-shadow: 0 0 20px #ff0055; }
             100% { box-shadow: 0 0 5px #ff0055; }
         }
         @keyframes shake {
@@ -149,89 +102,53 @@
             100% { transform: translate(1px, -2px) rotate(-1deg); }
         }
 
-        /* OTHER BUTTONS */
-        .btn-gold { border: 1px solid #d4af37; color: #d4af37; box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); }
+        .btn-gold { border: 1px solid #d4af37; color: #d4af37; }
         .btn-gold:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
 
-        .btn-store { border: 1px solid #ff00ff; color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
-        .btn-store:hover { background: #ff00ff; color: #fff; text-shadow: none; box-shadow: 0 0 20px #ff00ff; }
+        .btn-store { border: 1px solid #fff; color: #fff; }
+        .btn-store:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
 
         .btn-amazon:hover { border-color: #00A8E1; color: #00A8E1; box-shadow: 0 0 15px #00A8E1; }
         .btn-ytmusic:hover { border-color: #FF0000; color: #FF0000; box-shadow: 0 0 15px #FF0000; }
 
-        /* --- VIDEO WRAPPERS --- */
         .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; 
-            height: 0;
-            margin-bottom: 25px;
-            border: 1px solid #333;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: none;
-        }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* --- POLL GRID --- */
         .poll-grid { display: flex; gap: 15px; margin-bottom: 10px; }
         .poll-item { flex: 1; }
         @media (max-width: 450px) { .poll-grid { flex-direction: column; } }
 
-        /* --- ICONS --- */
         .social-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; margin-bottom: 50px; }
         .social-icon { font-size: 2.2rem; color: #fff; transition: 0.3s; position: relative; }
-        .social-icon:hover { color: #fff; animation: glitch-shake 0.3s cubic-bezier(.25, .46, .45, .94) both infinite; }
-        @keyframes glitch-shake {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); text-shadow: 2px 0 #ff00ff, -2px 0 #00ffff; }
-            40% { transform: translate(-2px, -2px); text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
-            100% { transform: translate(0); text-shadow: none; }
-        }
+        .social-icon:hover { color: #ff0055; text-shadow: 0 0 10px #ff0055; transform: scale(1.1); }
 
-        /* FOOTER */
         .footer-text { font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* PLAYER WRAPPERS */
-        .player-wrapper {
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-            border: 1px solid #333;
-            background: #000;
-            overflow: hidden; 
-        }
-
-        /* THE APPLE FIX (Inverted Colors) */
-        .apple-glitch {
-            filter: invert(100%) hue-rotate(180deg);
-            width: 100%;
-            height: 450px;
-            display: block; 
-        }
+        .player-wrapper { margin-bottom: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.8); border: 1px solid #333; background: #000; overflow: hidden; }
+        .apple-glitch { filter: invert(100%) hue-rotate(180deg); width: 100%; height: 450px; display: block; }
     </style>
 </head>
 <body>
 
     <div class="scanlines"></div>
-
     <video autoplay loop muted playsinline id="bg-video">
         <source src="bg.mp4" type="video/mp4">
     </video>
 
     <div class="container">
         
-        <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo">
-        <div class="subtitle">Consume The Official Signal</div>
+        <img src="logo_era_antichrist.png" alt="THE TROPHY HOE" class="signature-logo">
+        <div class="subtitle">T.H.E.A.NTICHRIST MOTHER</div>
 
         <a id="protocol-btn" class="btn btn-protocol" onclick="triggerLockout()">
             T.H.E.A.NTICHRIST MOTHER <br>
-            <span id="protocol-sub" style="font-size:0.7em; opacity:0.8;">[ DIGITAL DOWNLOAD // $6.66 ]</span>
+            <span id="protocol-sub" style="font-size:0.7em; opacity:0.8;">[ ENCRYPTED // AWAITING 01.30.26 ]</span>
         </a>
 
         <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 PROPHETIC MASTERLINK</a>
-        <a href="/sacred-spoils" class="btn btn-store">🛍️ SACRED SPOILS (THE NEXUS)</a>
+        <a href="/sacred-spoils" class="btn btn-store">🛍️ SACRED SPOILS (MERCH)</a>
 
         <div class="section-title">STREAM THE SERMONS</div>
         
@@ -301,11 +218,11 @@
             
             // Original Text
             const originalText = "T.H.E.A.NTICHRIST MOTHER";
-            const originalSub = "[ DIGITAL DOWNLOAD // $6.66 ]";
+            const originalSub = "[ ENCRYPTED // AWAITING 01.30.26 ]";
             
-            // Lockout State (01.30.26)
+            // Lockout State
             btn.classList.add('btn-error');
-            btn.innerHTML = "ACCESS DENIED<br><span style='font-size:0.7em;'>[ PROTOCOL OFFLINE // AWAITING 01.30.26 ]</span>";
+            btn.innerHTML = "ACCESS DENIED<br><span style='font-size:0.7em;'>[ SYSTEM LOCKED UNTIL 01.30.26 ]</span>";
             
             // Reset after 2 seconds
             setTimeout(() => {
