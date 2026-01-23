@@ -80,7 +80,7 @@
         }
         .btn-protocol:hover { background: #ff0055; color: #000; box-shadow: 0 0 30px #ff0055; }
         
-        /* ERROR STATE (JavaScript Triggered) */
+        /* ERROR STATE */
         .btn-error {
             background: #ff0000 !important; color: #000 !important; border-color: #ff0000 !important; animation: shake 0.5s !important;
         }
@@ -110,7 +110,6 @@
         .btn-store { border: 1px solid #fff; color: #fff; }
         .btn-store:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
 
-        /* LABEL BUTTON (Green) */
         .btn-label { border: 1px solid #00ff00; color: #00ff00; }
         .btn-label:hover { background: #00ff00; color: #000; box-shadow: 0 0 15px #00ff00; }
 
@@ -130,9 +129,20 @@
         .social-icon { font-size: 2.2rem; color: #fff; transition: 0.3s; position: relative; }
         .social-icon:hover { color: #ff0055; text-shadow: 0 0 10px #ff0055; transform: scale(1.1); }
 
-        /* FOOTER VISIBILITY UPGRADE */
-        .footer-text { font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 1px; line-height: 1.8; }
-        .footer-tags { color: #ff0055; font-weight: bold; }
+        /* FOOTER UPGRADES */
+        .footer-tags-block {
+            color: #ff0055;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            line-height: 1.2;
+            /* RESPONSIVE HUGE SIZE: Min 1.2rem, Pref 6% width, Max 2.5rem */
+            font-size: clamp(1.2rem, 6vw, 2.5rem);
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 25px;
+            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5);
+        }
+        .footer-text { font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 1px; line-height: 1.8; }
         
         .player-wrapper { margin-bottom: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.8); border: 1px solid #333; background: #000; overflow: hidden; }
         .apple-glitch { filter: invert(100%) hue-rotate(180deg); width: 100%; height: 450px; display: block; }
@@ -214,9 +224,11 @@
             <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
         </div>
 
+        <div class="footer-tags-block">
+            #TheTrophyHoe #ReprobateHoe<br>#GospelOfGlitch #MatriarchalCode
+        </div>
         <div class="footer-text">
             ARTIST: THE TROPHY HOE | LABEL: GLITCHED RECORDS<br>
-            <span class="footer-tags">#TheTrophyHoe #ReprobateHoe #GospelOfGlitch #MatriarchalCode</span><br>
             © 2026 GLITCHED RECORDS
         </div>
 
