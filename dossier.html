@@ -12,12 +12,31 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #000;
+            background-color: #050505;
             color: #ccc; 
             font-family: 'Courier New', Courier, monospace;
             text-align: left; 
             overflow-x: hidden;
             line-height: 1.6;
+            position: relative;
+        }
+
+        /* WATERMARK SEAL (The Matriarch is Watching) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; max-width: 600px;
+            height: 80vw; max-height: 600px;
+            background-image: url('seal.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            opacity: 0.08; /* Subtle Ghost Effect */
+            z-index: -1;
+            filter: grayscale(100%);
+            pointer-events: none;
         }
 
         .scanlines {
@@ -29,7 +48,7 @@
         #bg-video {
             position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
             width: auto; height: auto; transform: translate(-50%, -50%);
-            z-index: -1; opacity: 0.2; 
+            z-index: -2; opacity: 0.15; 
             filter: grayscale(100%) contrast(1.2);
         }
 
@@ -52,19 +71,20 @@
             transform: rotate(-2deg);
             margin-bottom: 20px;
             font-size: 0.8rem;
+            text-shadow: 0 0 5px #ff0055;
         }
 
-        /* LOGO HEADER */
+        /* UPDATED: ANTICHRIST LOGO */
         .header-logo {
-            width: 250px;
-            max-width: 80%;
+            width: 300px; /* Slightly larger for the new script */
+            max-width: 90%;
             display: block;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 5px #ff00ff);
+            filter: drop-shadow(0 0 5px #ff0055);
         }
 
         .epk-subtitle {
-            color: #00ff00;
+            color: #d4af37; /* GOLD */
             letter-spacing: 2px;
             border-bottom: 1px solid #333;
             padding-bottom: 20px;
@@ -76,7 +96,7 @@
             background: #111;
             color: #fff;
             padding: 10px;
-            border-left: 4px solid #ff00ff;
+            border-left: 4px solid #ff0055; /* RED ACCENT */
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-top: 50px;
@@ -106,7 +126,8 @@
             padding: 15px;
             text-align: center;
         }
-        .stat-number { font-size: 1.1rem; color: #00ffff; font-weight: bold; display: block; margin-bottom:5px; }
+        /* UPDATED COLORS */
+        .stat-number { font-size: 1.1rem; color: #ff0055; font-weight: bold; display: block; margin-bottom:5px; }
         .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color:#888; }
         .stat-sub { font-size: 0.6rem; color:#555; display:block; margin-top:5px; }
 
@@ -168,8 +189,8 @@
             font-size: 0.9rem;
             transition: 0.2s;
         }
-        .social-row-item:hover { color: #00ffff; }
-        .social-row-item i { width: 25px; color: #ff00ff; }
+        .social-row-item:hover { color: #ff0055; }
+        .social-row-item i { width: 25px; color: #ff0055; }
 
         /* VIDEO WRAPPER */
         .video-wrapper {
@@ -199,7 +220,7 @@
         
         <div class="confidential-stamp">INTERNAL DOSSIER // READ ONLY</div>
         
-        <img src="logo.png" alt="THE TROPHY HOE" class="header-logo">
+        <img src="logo_era_antichrist.png" alt="THE TROPHY HOE" class="header-logo">
         <div class="epk-subtitle">GLITCHED RECORDS // ASSET PROFILE 001</div>
 
         <div class="section-header">01 // THE NARRATIVE</div>
@@ -238,7 +259,7 @@
         <div class="section-header">04 // CLASSIFIED AUDIO (VAULT)</div>
         <div class="bio-text" style="text-align:center;">
             <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">[ UNRELEASED MATERIAL // PRIVATE STREAM ]</div>
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2251931048%3Fsecret_token%3Ds-TopYRiT8jkP&color=%23ff00ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2251931048%3Fsecret_token%3Ds-TopYRiT8jkP&color=%23ff0055&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
         </div>
 
         <div class="section-header">05 // KEY METRICS</div>
