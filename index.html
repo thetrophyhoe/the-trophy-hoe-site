@@ -86,16 +86,21 @@
         .btn { display: block; width: 100%; padding: 18px; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #fff; background: rgba(0,0,0,0.85); color: #fff; transition: 0.3s; position: relative; overflow: hidden; }
         .btn:hover { transform: scale(1.02); }
         
-        /* NEW V6.66 BUTTON STYLE */
+        /* NEW V6.66 BUTTON STYLE - HEAVY BRANDING */
         .btn-v666 { 
             border: 2px solid #ff0055; color: #ff0055; background: rgba(0,0,0,0.9); 
             box-shadow: 0 0 20px rgba(255, 0, 85, 0.3); text-align: center;
+            padding: 25px 15px;
             animation: border-flicker 2s infinite;
         }
         .btn-v666:hover { 
             background: #ff0055; color: #000; box-shadow: 0 0 50px #ff0055; 
-            text-shadow: none; font-weight: 900;
+            text-shadow: none;
         }
+        .btn-v666 .title-line { font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 5px; display: block; }
+        .btn-v666 .sub-line { font-size: 1.4rem; font-weight: 900; letter-spacing: 3px; display: block; }
+        .btn-v666 .meta-line { font-family: 'Courier New', monospace; font-size: 0.75rem; margin-top: 10px; opacity: 0.9; display: block;}
+
         .payload-info {
             font-size: 0.65rem; color: #ff0055; margin-top: -10px; margin-bottom: 30px;
             letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,0,85,0.5); line-height: 1.4;
@@ -103,8 +108,6 @@
         @keyframes border-flicker {
             0% { border-color: #ff0055; } 50% { border-color: #550022; } 100% { border-color: #ff0055; }
         }
-
-        .timer-display { font-family: 'Courier New', monospace; font-size: 0.8rem; margin-top: 5px; opacity: 0.9; }
 
         .btn-gold { border: 1px solid #d4af37; color: #d4af37; }
         .btn-gold:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
@@ -117,9 +120,15 @@
 
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .poll-grid { display: flex; gap: 15px; margin-bottom: 10px; }
-        .poll-item { flex: 1; }
-        @media (max-width: 450px) { .poll-grid { flex-direction: column; } }
+        
+        /* VERTICAL VIDEO WRAPPER FOR SHORTS (9:16) */
+        .video-wrapper-vertical { 
+            position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; 
+            border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); 
+            max-width: 350px; margin-left: auto; margin-right: auto;
+        }
+        .video-wrapper-vertical iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
         .social-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; margin-bottom: 50px; }
         .social-icon { font-size: 2.2rem; color: #fff; transition: 0.3s; position: relative; }
         .social-icon:hover { color: #ff0055; text-shadow: 0 0 10px #ff0055; transform: scale(1.1); }
@@ -140,24 +149,15 @@
             background: black; z-index: 99999; display: none;
             justify-content: center; align-items: center;
         }
-        #breach-video {
-            /* FIXED SCALING: CONTAIN ENSURES NOTHING IS CUT OFF */
-            width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.5s;
-        }
+        #breach-video { width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.5s; }
         
-        /* THE CRASH TEXT (First 0.8s) */
         #breach-flash-text {
             position: absolute; color: #ff0055; font-size: 4rem; font-weight: bold;
             text-shadow: 4px 0 red, -4px 0 cyan; display: none; z-index: 100000;
         }
 
         .breach-active { display: flex !important; }
-
-        /* CATASTROPHIC FAILURE ANIMATION */
-        .system-failure {
-            animation: violent-shake 0.1s infinite, strobe 0.1s infinite;
-            filter: invert(1) contrast(2);
-        }
+        .system-failure { animation: violent-shake 0.1s infinite, strobe 0.1s infinite; filter: invert(1) contrast(2); }
         
         @keyframes violent-shake {
             0% { transform: translate(5px, 5px) skew(10deg); }
@@ -166,11 +166,7 @@
             75% { transform: translate(-5px, 5px) skew(-5deg); }
             100% { transform: translate(0, 0); }
         }
-        @keyframes strobe {
-            0% { background-color: #000; }
-            50% { background-color: #fff; }
-            100% { background-color: #ff0055; }
-        }
+        @keyframes strobe { 0% { background-color: #000; } 50% { background-color: #fff; } 100% { background-color: #ff0055; } }
 
     </style>
 </head>
@@ -199,11 +195,12 @@
         <div class="subtitle">T.H.E.A.NTICHRIST MOTHER</div>
 
         <a href="https://payhip.com/b/MYNlE" class="btn btn-v666">
-            <i class="fas fa-download"></i> DOWNLOAD V6.66 ARCHIVE [$6.66]
-            <div class="timer-display" style="color:inherit">SIZE: 666.70 MB // STATUS: ONLINE</div>
+            <span class="title-line">T.H.E.A.NTICHRIST MOTHER</span>
+            <span class="sub-line">[ V6.66 ARCHIVE ]</span>
+            <span class="meta-line">666.70 MB // $6.66 // EXCLUSIVE ACCESS</span>
         </a>
         <div class="payload-info">
-            [ CONTAINS: 4 EXCLUSIVE TRACKS + MATRIARCHAL CODE GRIMOIRE + T.H.E.A. EARLY ACCESS ]
+            [ INCLUDES: 4 RESTRICTED TRACKS + MATRIARCHAL CODE GRIMOIRE + T.H.E.A. ENTITY ]
         </div>
 
         <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 PROPHETIC MASTERLINK</a>
@@ -220,17 +217,15 @@
         <a href="https://music.amazon.com/artists/B0F7J383T2" class="btn btn-amazon"><i class="fab fa-amazon" style="margin-right:10px;"></i> AMAZON MUSIC</a>
         <a href="https://music.youtube.com/channel/UCHbIiT3txBfBfnEdRj1ExjA" class="btn btn-ytmusic"><i class="fab fa-youtube" style="margin-right:10px;"></i> YOUTUBE MUSIC</a>
 
+        <div class="section-title">FR33D EMPYR3 // VERTICAL TRANSMISSION</div>
+        <div class="video-wrapper-vertical">
+            <iframe src="https://www.youtube.com/embed/hbHbrBqf5_c" allowfullscreen></iframe>
+        </div>
+
         <div class="section-title">DATASTREAM FROM THE FUTURE</div>
         <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/betVmHxWoe0" allowfullscreen></iframe></div>
         <div class="section-title">VISUAL DATABASE</div>
         <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe></div>
-
-        <div class="section-title">WHICH CHEEK ARE YOU?</div>
-        <div class="poll-grid">
-            <div class="poll-item"><div style="font-size: 0.8rem; margin-bottom:5px; color:#ff00ff;">2 CRAZY</div><div class="video-wrapper" style="margin-bottom:0;"><iframe src="https://www.youtube.com/embed/fzeNqyfpTDs" allowfullscreen></iframe></div></div>
-            <div class="poll-item"><div style="font-size: 0.8rem; margin-bottom:5px; color:#00ffff;">ONE GENIUS</div><div class="video-wrapper" style="margin-bottom:0;"><iframe src="https://www.youtube.com/embed/eMTi_msT2Gw" allowfullscreen></iframe></div></div>
-        </div>
-        <div style="font-size: 0.6rem; color:#666; margin-bottom: 20px;">[ PREMIERING LIVE // CHOOSE YOUR REALITY ]</div>
 
         <div class="section-title">THE NETWORK</div>
         <div class="social-row">
@@ -284,9 +279,9 @@
             breachRunning = true;
 
             // STEP 1: THE CRASH (0.0s - 0.8s)
-            document.body.classList.add('system-failure'); // Violent shake/invert
+            document.body.classList.add('system-failure'); 
             overlay.classList.add('breach-active');
-            flashText.style.display = 'block'; // Show "BREACH DETECTED"
+            flashText.style.display = 'block'; 
             
             // STEP 2: THE CALM (VIDEO) (0.8s)
             setTimeout(() => {
