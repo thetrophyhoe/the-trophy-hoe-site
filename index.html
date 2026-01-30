@@ -85,12 +85,26 @@
         a { text-decoration: none; cursor: pointer; }
         .btn { display: block; width: 100%; padding: 18px; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #fff; background: rgba(0,0,0,0.85); color: #fff; transition: 0.3s; position: relative; overflow: hidden; }
         .btn:hover { transform: scale(1.02); }
-        .btn-protocol { border: 1px solid #ff0055; color: #ff0055; background: rgba(20, 0, 5, 0.9); box-shadow: 0 0 10px rgba(255, 0, 85, 0.2); cursor: not-allowed; }
-        .btn-protocol:hover { background: #ff0055; color: #000; box-shadow: 0 0 30px #ff0055; }
-        .timer-display { font-family: 'Courier New', monospace; font-size: 0.9rem; margin-top: 5px; opacity: 0.9; }
-        .btn-error { background: #ff0000 !important; color: #000 !important; border-color: #ff0000 !important; animation: shake 0.5s !important; }
         
-        @keyframes shake { 0% { transform: translate(1px, 1px); } 10% { transform: translate(-1px, -2px); } 100% { transform: translate(1px, -2px); } }
+        /* NEW V6.66 BUTTON STYLE */
+        .btn-v666 { 
+            border: 2px solid #ff0055; color: #ff0055; background: rgba(0,0,0,0.9); 
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3); text-align: center;
+            animation: border-flicker 2s infinite;
+        }
+        .btn-v666:hover { 
+            background: #ff0055; color: #000; box-shadow: 0 0 50px #ff0055; 
+            text-shadow: none; font-weight: 900;
+        }
+        .payload-info {
+            font-size: 0.65rem; color: #ff0055; margin-top: -10px; margin-bottom: 30px;
+            letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,0,85,0.5); line-height: 1.4;
+        }
+        @keyframes border-flicker {
+            0% { border-color: #ff0055; } 50% { border-color: #550022; } 100% { border-color: #ff0055; }
+        }
+
+        .timer-display { font-family: 'Courier New', monospace; font-size: 0.8rem; margin-top: 5px; opacity: 0.9; }
 
         .btn-gold { border: 1px solid #d4af37; color: #d4af37; }
         .btn-gold:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
@@ -184,10 +198,13 @@
         <img src="logo_era_antichrist.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
         <div class="subtitle">T.H.E.A.NTICHRIST MOTHER</div>
 
-        <a id="protocol-btn" class="btn btn-protocol" onclick="triggerLockout()">
-            T.H.E.A.NTICHRIST MOTHER <br>
-            <div id="countdown" class="timer-display">LOADING TIMER...</div>
+        <a href="https://payhip.com/b/MYNlE" class="btn btn-v666">
+            <i class="fas fa-download"></i> DOWNLOAD V6.66 ARCHIVE [$6.66]
+            <div class="timer-display" style="color:inherit">SIZE: 666.70 MB // STATUS: ONLINE</div>
         </a>
+        <div class="payload-info">
+            [ CONTAINS: 4 EXCLUSIVE TRACKS + MATRIARCHAL CODE GRIMOIRE + T.H.E.A. EARLY ACCESS ]
+        </div>
 
         <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 PROPHETIC MASTERLINK</a>
         <a href="/sacred-spoils" class="btn btn-store">🛍️ SACRED SPOILS (MERCH)</a>
@@ -245,35 +262,6 @@
             setTimeout(() => pixel.remove(), 250);
         }
         setInterval(spawnPixel, 200);
-
-        // --- COUNTDOWN ---
-        const releaseDate = new Date("January 30, 2026 00:00:00").getTime();
-        const timerElem = document.getElementById("countdown");
-        setInterval(function() {
-            const now = new Date().getTime();
-            const distance = releaseDate - now;
-            if (distance < 0) {
-                timerElem.innerHTML = "PROTOCOL ACTIVE // DOWNLOAD NOW";
-                timerElem.style.color = "#00ff00";
-            } else {
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                timerElem.innerHTML = `T-MINUS: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-            }
-        }, 1000);
-
-        function triggerLockout() {
-            const btn = document.getElementById('protocol-btn');
-            const originalHTML = btn.innerHTML;
-            btn.classList.add('btn-error');
-            btn.innerHTML = "ACCESS DENIED<br><span style='font-size:0.7em;'>[ WAIT FOR THE MOTHER ]</span>";
-            setTimeout(() => {
-                btn.classList.remove('btn-error');
-                btn.innerHTML = originalHTML;
-            }, 2000);
-        }
 
         // --- BREACH SEQUENCE (FIT TO SCREEN v9.0) ---
         const logo = document.getElementById('main-logo');
