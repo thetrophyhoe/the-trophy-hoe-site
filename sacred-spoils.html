@@ -23,71 +23,76 @@
         /* PRODUCT CONTAINER */
         .product-container {
             position: relative;
-            height: 100vh;
             width: 100%;
+            height: 100vh; /* Keeps the full-screen scroll feel */
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Aligns content to bottom */
-            overflow: hidden;
+            background: #000;
             border-bottom: 2px solid #333;
         }
 
-        /* FIXED BACKGROUND VIDEO */
-        .product-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
+        /* VIDEO WRAPPER - Prevents the zoom-cutoff */
+        .video-wrap {
+            flex: 1; /* Takes up all available space above the overlay */
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-wrap video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Crops intelligently to fill screen */
-            object-position: center; /* Keeps the subject centered */
+            /* 'contain' ensures the whole video fits. 
+               'cover' with specific object-position can work if you prefer the zoom. */
+            object-fit: contain; 
             z-index: 1;
-            opacity: 0.8; 
-            filter: contrast(1.1) brightness(0.9);
+            opacity: 0.9; 
+            filter: contrast(1.1) brightness(1.0);
         }
 
         /* THE BOTTOM CONTROL STRIP */
         .overlay {
-            position: relative;
             width: 100%;
             z-index: 10;
             text-align: center;
             background: #000; 
-            padding: 1.5rem 0;
+            padding: 2rem 0; /* More breathing room */
             border-top: 1px solid #fff;
-            box-shadow: 0px -10px 30px rgba(0,0,0,1);
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.5rem;
             color: #fff;
-            text-shadow: 0px 0px 5px #ff00ff;
+            text-shadow: 0px 0px 8px #ff00ff;
         }
 
         p {
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
             color: #ccc;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
         /* THE ACQUIRE BUTTON */
         .btn {
             display: block;
-            width: 90%;
-            max-width: 400px;
+            width: 85%;
+            max-width: 350px;
             margin: 0 auto;
-            padding: 12px 0;
-            background-color: #1a1a1a;
+            padding: 15px 0;
+            background-color: #000;
             color: #fff;
             border: 1px solid #fff;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             transition: all 0.3s ease;
             text-transform: uppercase;
         }
@@ -95,23 +100,30 @@
         .btn:hover {
             background-color: #fff;
             color: #000;
-            box-shadow: 0px 0px 15px #00ffff;
+            box-shadow: 0px 0px 20px #00ffff;
         }
 
-        /* MOBILE ADJUSTMENTS */
+        /* MOBILE FIXES */
         @media (max-width: 768px) {
-            h2 { font-size: 1.5rem; }
-            .btn { width: 85%; }
-            .product-container { height: 100dvh; } /* Uses dynamic viewport height for mobile browsers */
+            .product-container { height: 100dvh; }
+            h2 { font-size: 1.4rem; }
+            .video-wrap video {
+                /* On mobile, we force 'cover' but shift the focus 
+                   if the subjects are being cut off. */
+                object-fit: cover;
+                object-position: center; 
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="product-container">
-        <video autoplay loop muted playsinline>
-            <source src="Pony.mp4" type="video/mp4">
-        </video>
+        <div class="video-wrap">
+            <video autoplay loop muted playsinline>
+                <source src="Pony.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="overlay">
             <h2>TRICK PONY</h2>
             <p>$35.00 // CROP TEE</p>
@@ -120,9 +132,11 @@
     </div>
 
     <div class="product-container">
-        <video autoplay loop muted playsinline>
-            <source src="Demented.mp4" type="video/mp4">
-        </video>
+        <div class="video-wrap">
+            <video autoplay loop muted playsinline>
+                <source src="Demented.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="overlay">
             <h2>DEMENTED</h2>
             <p>$35.00 // CROP TEE</p>
@@ -131,9 +145,11 @@
     </div>
 
     <div class="product-container">
-        <video autoplay loop muted playsinline>
-            <source src="Hoodie.mp4" type="video/mp4">
-        </video>
+        <div class="video-wrap">
+            <video autoplay loop muted playsinline>
+                <source src="Hoodie.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="overlay">
             <h2>THE TROPHY HOE</h2>
             <p>$66.60 // OVERSIZED HOODIE</p>
