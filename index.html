@@ -58,9 +58,10 @@
         }
         @keyframes pixel-flicker { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
 
+        /* UPDATED BACKGROUND VIDEO - TINT REMOVED FOR COLOR */
         #bg-video {
             position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%);
-            z-index: -1; opacity: 0.25; filter: contrast(1.2) brightness(0.5) sepia(100%) hue-rotate(180deg);
+            z-index: -1; opacity: 0.35; filter: contrast(1.1) brightness(0.4);
         }
 
         .container { max-width: 600px; margin: 0 auto; padding: 20px 20px; position: relative; z-index: 10; }
@@ -156,7 +157,7 @@
     </div>
 
     <video autoplay loop muted playsinline id="bg-video">
-        <source src="bg.mp4" type="video/mp4">
+        <source src="teraback.mp4" type="video/mp4">
     </video>
 
     <div class="container" id="main-content">
@@ -217,7 +218,6 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
             
-            // Format with leading zeros
             const d = days.toString().padStart(2, '0');
             const h = hours.toString().padStart(2, '0');
             const m = minutes.toString().padStart(2, '0');
@@ -226,7 +226,6 @@
             timerDisplay.innerHTML = `${d}:${h}:${m}:${s}`;
         }, 1000);
 
-        // --- ROGUE PIXELS ---
         function spawnPixel() {
             const pixel = document.createElement('div');
             pixel.className = 'glitch-pixel';
@@ -237,7 +236,6 @@
         }
         setInterval(spawnPixel, 300);
 
-        // --- EASTER EGGS ---
         const logo = document.getElementById('main-logo');
         const triggerTag = document.getElementById('breach-trigger');
         const overlay = document.getElementById('breach-overlay');
