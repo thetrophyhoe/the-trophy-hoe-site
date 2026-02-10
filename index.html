@@ -41,7 +41,7 @@
         .boot-btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* --- THE BACKGROUND VIDEO LAYER --- */
+        /* --- BACKGROUND VIDEO LAYER --- */
         #bg-video {
             position: fixed; top: 50%; left: 50%;
             min-width: 100vw; min-height: 100vh;
@@ -101,38 +101,31 @@
         .ticker-item.trigger { cursor: pointer; color: #00ffff; text-shadow: 0 0 5px #00ffff; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* --- UPDATED BREACH OVERLAY --- */
+        /* --- BREACH OVERLAY --- */
         #breach-overlay { 
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
             background: #000; z-index: 10000; 
             display: none; align-items: center; justify-content: center; 
         }
-        
-        #breach-video { 
-            width: 100%; height: 100%; 
-            /* THE FIX: CONTAIN ensures the full video is seen without cropping */
-            object-fit: contain; 
-        }
-
+        #breach-video { width: 100%; height: 100%; object-fit: contain; }
         .breach-active { display: flex !important; }
 
-        /* --- NEW ARHYTHMIC STROBE EFFECT --- */
-        .system-failure { animation: violent-strobe 0.8s steps(5) infinite; }
+        /* --- TIMED FAILURE SEQUENCE --- */
+        /* Runs for 17s (Video length) then holds */
+        .system-failure { animation: breach-timeline 17s linear forwards; }
 
-        @keyframes violent-strobe {
+        @keyframes breach-timeline {
             0% { filter: invert(0); }
-            10% { filter: invert(1); }
-            12% { filter: invert(0); }
-            30% { filter: invert(0); }
-            35% { filter: invert(1); }
-            40% { filter: invert(0); }
-            70% { filter: invert(0); }
-            75% { filter: invert(1); }
-            80% { filter: invert(0); }
+            1% { filter: invert(1); } /* INITIAL STROBE START */
+            2% { filter: invert(0); }
+            3% { filter: invert(1); }
+            4% { filter: invert(0); } /* INITIAL STROBE END */
+            49% { filter: invert(0); }
+            50% { filter: invert(1); } /* MID FLICKER */
+            51% { filter: invert(0); }
             100% { filter: invert(0); }
         }
 
-        /* Prevent scrolling when breach is active */
         body.locked { overflow: hidden; }
 
     </style>
@@ -223,14 +216,14 @@
         
         function executeBreach() {
             document.body.classList.add('locked'); // Disables scrolling
-            document.body.classList.add('system-failure'); // Triggers strobe
+            document.body.classList.add('system-failure'); // Triggers timeline animation
             document.getElementById('breach-overlay').classList.add('breach-active');
             
             breachVid.currentTime = 0;
             breachVid.play();
             
             breachVid.onended = () => { 
-                window.location.href = "https://glitchedrecords.com"; 
+                window.location.href = "https://theantichrist.ai"; 
             };
         }
 
