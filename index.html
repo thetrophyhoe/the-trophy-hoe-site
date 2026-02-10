@@ -3,171 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE TROPHY HOE // T.H.E.A.NTICHRIST MOTHER</title>
+    <title>THE TROPHY HOE // TRANSACTIONAL // 03.13.26</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- CORE AESTHETICS --- */
+        /* --- TRANSACTIONAL AESTHETICS (CYAN/MAGENTA/INDUSTRIAL) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #050505;
-            color: #dcdcdc;
+            background-color: #030303;
+            color: #e0e0e0;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
             overflow-x: hidden;
             position: relative;
-            animation: crt-flicker 0.1s infinite;
+            animation: crt-flicker 0.15s infinite;
         }
         
         @keyframes crt-flicker {
-            0% { opacity: 0.97; } 50% { opacity: 1; } 100% { opacity: 0.98; }
+            0% { opacity: 0.98; } 50% { opacity: 1; } 100% { opacity: 0.99; }
         }
 
-        /* --- ATMOSPHERE (DIRTY SIGNAL) --- */
+        /* --- ATMOSPHERE (CLINICAL GLITCH) --- */
         .scanlines {
-            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.4) 50%);
+            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
             background-size: 100% 4px; position: fixed; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0; z-index: 5;
         }
         .scanline-roll {
             position: fixed; top: 0; left: 0; width: 100%; height: 100px;
-            background: linear-gradient(to bottom, rgba(255,0,0,0), rgba(255,0,0,0.1), rgba(255,0,0,0));
-            z-index: 6; pointer-events: none; opacity: 0.5; animation: roll-down 8s linear infinite;
+            background: linear-gradient(to bottom, rgba(0,255,255,0), rgba(0,255,255,0.05), rgba(0,255,255,0));
+            z-index: 6; pointer-events: none; opacity: 0.4; animation: roll-down 10s linear infinite;
         }
         @keyframes roll-down { 0% { top: -100px; } 100% { top: 100%; } }
         
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 4; opacity: 0.15;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            animation: grain-shift 0.2s steps(4) infinite;
+            pointer-events: none; z-index: 4; opacity: 0.12;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain-shift 0.15s steps(4) infinite;
         }
         @keyframes grain-shift {
-            0% { transform: translate(0,0); } 25% { transform: translate(-5%,-5%); }
-            50% { transform: translate(5%,5%); } 75% { transform: translate(-5%,5%); } 100% { transform: translate(5%,-5%); }
+            0% { transform: translate(0,0); } 50% { transform: translate(-2%,2%); } 100% { transform: translate(2%,-2%); }
         }
         .vignette {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.9) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
             z-index: 7; pointer-events: none;
         }
 
         .glitch-pixel {
-            position: fixed; width: 6px; height: 6px; background: #ff0055; z-index: 8; pointer-events: none;
-            box-shadow: 0 0 10px #ff0055; opacity: 0; animation: pixel-flicker 0.15s linear;
+            position: fixed; width: 4px; height: 4px; background: #00ffff; z-index: 8; pointer-events: none;
+            box-shadow: 0 0 8px #ff00ff; opacity: 0; animation: pixel-flicker 0.2s linear;
         }
-        @keyframes pixel-flicker { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(2); } 100% { opacity: 0; transform: scale(0); } }
+        @keyframes pixel-flicker { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
 
         #bg-video {
             position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%);
-            z-index: -1; opacity: 0.3; filter: grayscale(100%) contrast(1.5) brightness(0.6);
+            z-index: -1; opacity: 0.25; filter: contrast(1.2) brightness(0.5) sepia(100%) hue-rotate(180deg);
         }
 
         .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; }
 
-        /* --- LOGO --- */
+        /* --- LOGO & COUNTDOWN --- */
         .signature-logo {
-            width: 100%; max-width: 450px; margin-bottom: 20px; filter: drop-shadow(0 0 15px rgba(255, 0, 85, 0.6));
-            animation: breathe 4s infinite ease-in-out; cursor: pointer;
+            width: 100%; max-width: 400px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.4));
+            animation: breathe 5s infinite ease-in-out; cursor: pointer;
         }
-        .signature-logo:hover { animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
+        .signature-logo:hover { animation: glitch-skew 0.2s infinite; }
+        
         @keyframes glitch-skew {
-            0% { transform: translate(0); } 20% { transform: translate(-4px, 4px); filter: drop-shadow(4px 0 #00ffff); }
-            40% { transform: translate(-4px, -4px); filter: drop-shadow(-4px 0 #ff0055); } 60% { transform: translate(4px, 4px); filter: drop-shadow(4px 0 #00ff00); }
-            80% { transform: translate(4px, -4px); filter: drop-shadow(-4px 0 #ff00ff); } 100% { transform: translate(0); }
+            0% { transform: translate(0); filter: drop-shadow(2px 0 #ff00ff); }
+            50% { transform: translate(-2px, 2px); filter: drop-shadow(-2px 0 #00ffff); }
+            100% { transform: translate(0); }
         }
 
-        .subtitle { font-size: 0.8rem; color: #ff0055; letter-spacing: 4px; margin-bottom: 40px; text-transform: uppercase; text-shadow: 0 0 5px #ff0055; }
-        .section-title { font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #333; margin: 40px 0 20px 0; padding-bottom: 5px; color: #666; text-transform: uppercase; }
-
-        /* --- BUTTONS --- */
-        a { text-decoration: none; cursor: pointer; }
-        .btn { display: block; width: 100%; padding: 18px; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #fff; background: rgba(0,0,0,0.85); color: #fff; transition: 0.3s; position: relative; overflow: hidden; }
-        .btn:hover { transform: scale(1.02); }
+        .subtitle { font-size: 0.9rem; color: #00ffff; letter-spacing: 5px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 8px #00ffff; }
         
-        /* NEW V6.66 BUTTON STYLE - HEAVY BRANDING */
-        .btn-v666 { 
-            border: 2px solid #ff0055; color: #ff0055; background: rgba(0,0,0,0.9); 
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3); text-align: center;
-            padding: 25px 15px;
-            animation: border-flicker 2s infinite;
-        }
-        .btn-v666:hover { 
-            background: #ff0055; color: #000; box-shadow: 0 0 50px #ff0055; 
-            text-shadow: none;
-        }
-        .btn-v666 .title-line { font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 5px; display: block; }
-        .btn-v666 .sub-line { font-size: 1.4rem; font-weight: 900; letter-spacing: 3px; display: block; }
-        .btn-v666 .meta-line { font-family: 'Courier New', monospace; font-size: 0.75rem; margin-top: 10px; opacity: 0.9; display: block;}
-
-        .payload-info {
-            font-size: 0.65rem; color: #ff0055; margin-top: -10px; margin-bottom: 30px;
-            letter-spacing: 1px; text-shadow: 0 0 5px rgba(255,0,85,0.5); line-height: 1.4;
-        }
-        @keyframes border-flicker {
-            0% { border-color: #ff0055; } 50% { border-color: #550022; } 100% { border-color: #ff0055; }
+        #countdown-timer {
+            font-size: 1.2rem; color: #ff00ff; margin-bottom: 40px; font-weight: bold;
+            letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
         }
 
-        .btn-gold { border: 1px solid #d4af37; color: #d4af37; }
-        .btn-gold:hover { background: #d4af37; color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.6); }
-        .btn-store { border: 1px solid #fff; color: #fff; }
-        .btn-store:hover { background: #fff; color: #000; box-shadow: 0 0 15px #fff; }
-        .btn-label { border: 1px solid #00ff00; color: #00ff00; }
-        .btn-label:hover { background: #00ff00; color: #000; box-shadow: 0 0 15px #00ff00; }
-        .btn-amazon:hover { border-color: #00A8E1; color: #00A8E1; box-shadow: 0 0 15px #00A8E1; }
-        .btn-ytmusic:hover { border-color: #FF0000; color: #FF0000; box-shadow: 0 0 15px #FF0000; }
+        .section-title { font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; }
 
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        /* --- BUTTONS (TRANSACTIONAL ERA) --- */
+        .btn { display: block; width: 100%; padding: 18px; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #444; background: rgba(0,0,0,0.9); color: #fff; transition: 0.2s; position: relative; overflow: hidden; }
+        .btn:hover { transform: translateY(-2px); border-color: #fff; }
+        
+        .btn-sovereign { 
+            border: 2px solid #00ffff; color: #00ffff; background: rgba(0,0,0,0.95); 
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); text-align: center;
+            padding: 30px 15px; animation: cyan-flicker 3s infinite;
+        }
+        .btn-sovereign:hover { 
+            background: #00ffff; color: #000; box-shadow: 0 0 40px #00ffff; 
+        }
+        .btn-sovereign .title-line { font-size: 1rem; font-weight: 900; letter-spacing: 1px; display: block; }
+        .btn-sovereign .sub-line { font-size: 1.5rem; font-weight: 900; letter-spacing: 4px; display: block; margin: 5px 0; }
+        .btn-sovereign .meta-line { font-size: 0.7rem; opacity: 0.8; display: block;}
+
+        @keyframes cyan-flicker {
+            0%, 100% { border-color: #00ffff; } 50% { border-color: #004444; }
+        }
+
+        .btn-spoils { border: 1px solid #ff00ff; color: #ff00ff; }
+        .btn-spoils:hover { background: #ff00ff; color: #000; box-shadow: 0 0 20px #ff00ff; }
+        .btn-label { border: 1px solid #e0e0e0; color: #e0e0e0; }
+
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #111; filter: grayscale(30%); }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        
-        /* VERTICAL VIDEO WRAPPER FOR SHORTS (9:16) */
-        .video-wrapper-vertical { 
-            position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; 
-            border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); 
-            max-width: 350px; margin-left: auto; margin-right: auto;
-        }
-        .video-wrapper-vertical iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .social-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; margin-bottom: 50px; }
-        .social-icon { font-size: 2.2rem; color: #fff; transition: 0.3s; position: relative; }
-        .social-icon:hover { color: #ff0055; text-shadow: 0 0 10px #ff0055; transform: scale(1.1); }
+        .social-icon { font-size: 2rem; color: #666; transition: 0.3s; }
+        .social-icon:hover { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
 
         .footer-tags-block {
-            color: #ff0055; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; line-height: 1.2;
-            font-size: clamp(1.2rem, 6vw, 2.5rem); display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 25px;
-            text-shadow: 0 0 10px rgba(255, 0, 85, 0.5); cursor: crosshair;
+            color: #ff00ff; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 25px;
+            font-size: clamp(1rem, 5vw, 2rem); text-shadow: 0 0 8px rgba(255, 0, 255, 0.4);
         }
-        .footer-text { font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 1px; line-height: 1.8; }
-        
-        .player-wrapper { margin-bottom: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.8); border: 1px solid #333; background: #000; overflow: hidden; }
-        .apple-glitch { filter: invert(100%) hue-rotate(180deg); width: 100%; height: 450px; display: block; }
+        .footer-text { font-size: 0.6rem; color: #444; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- THE BREACH CINEMA LAYER --- */
+        /* --- BREACH OVERLAY --- */
         #breach-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: black; z-index: 99999; display: none;
             justify-content: center; align-items: center;
         }
-        #breach-video { width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.5s; }
-        
-        #breach-flash-text {
-            position: absolute; color: #ff0055; font-size: 4rem; font-weight: bold;
-            text-shadow: 4px 0 red, -4px 0 cyan; display: none; z-index: 100000;
-        }
-
+        #breach-video { width: 100%; height: 100%; object-fit: contain; }
         .breach-active { display: flex !important; }
-        .system-failure { animation: violent-shake 0.1s infinite, strobe 0.1s infinite; filter: invert(1) contrast(2); }
+        .system-failure { animation: violent-shake 0.1s infinite; filter: invert(1) hue-rotate(90deg); }
         
         @keyframes violent-shake {
-            0% { transform: translate(5px, 5px) skew(10deg); }
-            25% { transform: translate(-5px, -5px) skew(-10deg); }
-            50% { transform: translate(5px, -5px) skew(5deg); }
-            75% { transform: translate(-5px, 5px) skew(-5deg); }
-            100% { transform: translate(0, 0); }
+            0% { transform: translate(3px, 3px); } 50% { transform: translate(-3px, -3px); } 100% { transform: translate(0); }
         }
-        @keyframes strobe { 0% { background-color: #000; } 50% { background-color: #fff; } 100% { background-color: #ff0055; } }
-
     </style>
 </head>
 <body>
@@ -176,10 +145,8 @@
     <div class="scanlines"></div>
     <div class="scanline-roll"></div>
     <div class="grain"></div>
-    <div id="particle-container"></div>
 
     <div id="breach-overlay">
-        <div id="breach-flash-text">BREACH<br>DETECTED</div>
         <video id="breach-video" playsinline>
             <source src="breach_cinematic.mp4" type="video/mp4">
         </video>
@@ -191,62 +158,61 @@
 
     <div class="container" id="main-content">
         
-        <img src="logo_era_antichrist.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
-        <div class="subtitle">T.H.E.A.NTICHRIST MOTHER</div>
+        <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
+        <div class="subtitle">TRANSACTIONAL</div>
+        <div id="countdown-timer">INITIALIZING...</div>
 
-        <a href="https://payhip.com/b/MYNlE" class="btn btn-v666">
-            <span class="title-line">T.H.E.A.NTICHRIST MOTHER</span>
-            <span class="sub-line">[ V6.66 ARCHIVE ]</span>
-            <span class="meta-line">666.70 MB // $6.66 // EXCLUSIVE ACCESS</span>
+        <a href="https://payhip.com/b/4TUNw" class="btn btn-sovereign">
+            <span class="title-line">EXECUTIVE ORDER // THE BUNDLE</span>
+            <span class="sub-line">KEEP YOUR SOVEREIGNTY</span>
+            <span class="meta-line">THE EXIT // THE TEA // ORIGINAL HATER // MANUAL</span>
         </a>
-        <div class="payload-info">
-            [ INCLUDES: 4 RESTRICTED TRACKS + MATRIARCHAL CODE GRIMOIRE + T.H.E.A. ENTITY ]
-        </div>
 
-        <a href="https://untd.io/a/thetrophyhoe" class="btn btn-gold">🏆 PROPHETIC MASTERLINK</a>
-        <a href="/sacred-spoils" class="btn btn-store">🛍️ SACRED SPOILS (MERCH)</a>
+        <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS [INC. THEAM ARCHIVE]</a>
         <a href="https://glitchedrecords.com" class="btn btn-label">💿 GLITCHED RECORDS // HQ</a>
 
-        <div class="section-title">STREAM THE SERMONS</div>
-        <div class="player-wrapper">
-             <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <div class="section-title">THE TRANSMISSIONS</div>
+        <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe>
         </div>
-        <div class="player-wrapper">
-            <iframe class="apple-glitch" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/artist/the-trophy-hoe/1812507018"></iframe>
-        </div>
-        <a href="https://music.amazon.com/artists/B0F7J383T2" class="btn btn-amazon"><i class="fab fa-amazon" style="margin-right:10px;"></i> AMAZON MUSIC</a>
-        <a href="https://music.youtube.com/channel/UCHbIiT3txBfBfnEdRj1ExjA" class="btn btn-ytmusic"><i class="fab fa-youtube" style="margin-right:10px;"></i> YOUTUBE MUSIC</a>
 
-        <div class="section-title">FR33D EMPYR3 // VERTICAL TRANSMISSION</div>
-        <div class="video-wrapper-vertical">
+        <div class="section-title">VISUAL DATABASE</div>
+        <div class="video-wrapper">
             <iframe src="https://www.youtube.com/embed/hbHbrBqf5_c" allowfullscreen></iframe>
         </div>
-
-        <div class="section-title">DATASTREAM FROM THE FUTURE</div>
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/betVmHxWoe0" allowfullscreen></iframe></div>
-        <div class="section-title">VISUAL DATABASE</div>
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe></div>
 
         <div class="section-title">THE NETWORK</div>
         <div class="social-row">
             <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
             <a href="https://tiktok.com/@thetrophyhoe" class="social-icon"><i class="fab fa-tiktok"></i></a>
-            <a href="https://facebook.com/thetrophyhoe" class="social-icon"><i class="fab fa-facebook-f"></i></a>
             <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
         </div>
 
         <div class="footer-tags-block">
-            #TheTrophyHoe #ReprobateHoe<br>
-            #GospelOfGlitch <span id="breach-trigger">#MatriarchalCode</span>
+            #KeepYourSovereignty<br>
+            #TheTrophyHoe <span id="breach-trigger">#Transactional</span>
         </div>
         <div class="footer-text">
-            ARTIST: THE TROPHY HOE | LABEL: GLITCHED RECORDS<br>
-            © 2026 GLITCHED RECORDS
+            © 2026 GLITCHED RECORDS | Oceanside, CA
         </div>
 
     </div>
 
     <script>
+        // --- COUNTDOWN TO 03.13.2026 ---
+        const targetDate = new Date("March 13, 2026 00:00:00").getTime();
+        const timerDisplay = document.getElementById('countdown-timer');
+
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            timerDisplay.innerHTML = `${days}D:${hours}H:${minutes}M:${seconds}S`;
+        }, 1000);
+
         // --- ROGUE PIXELS ---
         function spawnPixel() {
             const pixel = document.createElement('div');
@@ -254,54 +220,29 @@
             pixel.style.left = Math.random() * 100 + 'vw';
             pixel.style.top = Math.random() * 100 + 'vh';
             document.body.appendChild(pixel);
-            setTimeout(() => pixel.remove(), 250);
+            setTimeout(() => pixel.remove(), 200);
         }
-        setInterval(spawnPixel, 200);
+        setInterval(spawnPixel, 300);
 
-        // --- BREACH SEQUENCE (FIT TO SCREEN v9.0) ---
+        // --- EASTER EGGS ---
         const logo = document.getElementById('main-logo');
         const triggerTag = document.getElementById('breach-trigger');
         const overlay = document.getElementById('breach-overlay');
         const breachVid = document.getElementById('breach-video');
-        const flashText = document.getElementById('breach-flash-text');
         
-        let breachRunning = false; 
-
-        logo.addEventListener('dblclick', executeBreach);
-        let clickCount = 0;
+        logo.addEventListener('dblclick', () => executeBreach());
+        let clicks = 0;
         triggerTag.addEventListener('click', () => {
-            clickCount++;
-            if(clickCount === 3) executeBreach();
+            clicks++;
+            if(clicks === 3) executeBreach();
         });
 
         function executeBreach() {
-            if(breachRunning) return;
-            breachRunning = true;
-
-            // STEP 1: THE CRASH (0.0s - 0.8s)
-            document.body.classList.add('system-failure'); 
+            document.body.classList.add('system-failure');
             overlay.classList.add('breach-active');
-            flashText.style.display = 'block'; 
-            
-            // STEP 2: THE CALM (VIDEO) (0.8s)
-            setTimeout(() => {
-                document.body.classList.remove('system-failure');
-                flashText.style.display = 'none';
-                breachVid.style.opacity = '1';
-                breachVid.play();
-            }, 800);
-
-            // STEP 3: REDIRECT ON END
-            breachVid.onended = function() {
-                window.location.href = "https://theantichrist.ai";
-            };
-            
-            // FALLBACK REDIRECT (19s)
-            setTimeout(() => {
-                 window.location.href = "https://theantichrist.ai";
-            }, 19000);
+            breachVid.play();
+            breachVid.onended = () => { window.location.href = "https://glitchedrecords.com"; };
         }
     </script>
-
 </body>
 </html>
