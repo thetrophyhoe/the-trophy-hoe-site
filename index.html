@@ -69,7 +69,15 @@
         }
 
         /* --- UI ELEMENTS --- */
-        .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); cursor: pointer; }
+        /* Updated for VIDEO LOGO */
+        .signature-logo { 
+            width: 100%; max-width: 350px; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
+            cursor: pointer; 
+            /* Ensure video doesn't capture clicks in a way that blocks our event */
+            pointer-events: auto; 
+        }
+
         .hero-block { position: relative; margin-bottom: 30px; border: 1px solid #333; background: #000; overflow: hidden; }
         .hero-image { width: 100%; display: block; opacity: 0.8; }
         #countdown-timer {
@@ -111,17 +119,16 @@
         .breach-active { display: flex !important; }
 
         /* --- TIMED FAILURE SEQUENCE --- */
-        /* Runs for 17s (Video length) then holds */
         .system-failure { animation: breach-timeline 17s linear forwards; }
 
         @keyframes breach-timeline {
             0% { filter: invert(0); }
-            1% { filter: invert(1); } /* INITIAL STROBE START */
+            1% { filter: invert(1); } 
             2% { filter: invert(0); }
             3% { filter: invert(1); }
-            4% { filter: invert(0); } /* INITIAL STROBE END */
+            4% { filter: invert(0); } 
             49% { filter: invert(0); }
-            50% { filter: invert(1); } /* MID FLICKER */
+            50% { filter: invert(1); } 
             51% { filter: invert(0); }
             100% { filter: invert(0); }
         }
@@ -151,7 +158,11 @@
     </div>
 
     <div class="container" id="main-content">
-        <img src="teralogo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
+        
+        <video autoplay loop muted playsinline class="signature-logo" id="main-logo">
+            <source src="teralogo.mp4" type="video/mp4">
+        </video>
+        
         <div class="hero-block">
             <img src="transactional_date.png" alt="03.13.26" class="hero-image">
             <div id="countdown-timer">00:00:00:00</div>
@@ -193,8 +204,13 @@
         function initializeSystem() {
             const bootScreen = document.getElementById('boot-screen');
             const container = document.getElementById('main-content');
-            const video = document.getElementById('bg-video');
-            video.play().catch(error => { console.error("Video Failed:", error); });
+            const bgVideo = document.getElementById('bg-video');
+            const logoVideo = document.getElementById('main-logo');
+
+            // Force play BOTH videos on user interaction
+            bgVideo.play().catch(error => { console.error("BG Video Failed:", error); });
+            logoVideo.play().catch(error => { console.error("Logo Video Failed:", error); });
+
             bootScreen.style.opacity = '0';
             setTimeout(() => {
                 bootScreen.style.display = 'none';
@@ -215,8 +231,8 @@
         const breachVid = document.getElementById('breach-video');
         
         function executeBreach() {
-            document.body.classList.add('locked'); // Disables scrolling
-            document.body.classList.add('system-failure'); // Triggers timeline animation
+            document.body.classList.add('locked');
+            document.body.classList.add('system-failure');
             document.getElementById('breach-overlay').classList.add('breach-active');
             
             breachVid.currentTime = 0;
