@@ -18,9 +18,10 @@
             text-align: center;
             overflow-x: hidden;
             position: relative;
+            padding-bottom: 50px; /* Space for ticker */
         }
 
-        /* --- THE BOOT OVERLAY (Z-Index 9999) --- */
+        /* --- THE BOOT OVERLAY --- */
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; 
@@ -72,11 +73,15 @@
         .container { 
             max-width: 600px; margin: 0 auto; padding: 20px 20px; 
             position: relative; z-index: 10; 
-            opacity: 0; transition: opacity 1s ease-in; /* Hidden until boot */
+            opacity: 0; transition: opacity 1s ease-in; 
         }
 
         /* --- UI ELEMENTS --- */
-        .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); }
+        .signature-logo { 
+            width: 100%; max-width: 350px; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
+            cursor: pointer; /* Indicates interaction */
+        }
         
         .hero-block { 
             position: relative; margin-bottom: 30px; border: 1px solid #333; 
@@ -124,11 +129,44 @@
         .social-icon { font-size: 2rem; color: #888; transition: 0.3s; }
         .social-icon:hover { color: #00ffff; }
 
-        .footer-tags-block { color: #ff00ff; font-weight: 900; letter-spacing: 3px; font-size: 1.2rem; line-height: 1.5; margin-bottom: 20px; }
-        .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; }
+        .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 40px;}
+
+        /* --- SCROLLING TICKER --- */
+        .ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            overflow: hidden;
+            height: 35px;
+            background-color: rgba(0,0,0,0.95);
+            border-top: 1px solid #00ffff;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+        }
+        .ticker {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker 25s linear infinite;
+        }
+        .ticker-item {
+            color: #ff00ff;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 0 2rem;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        .ticker-item.trigger { cursor: pointer; color: #00ffff; text-shadow: 0 0 5px #00ffff; }
+        
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
 
         /* --- BREACH OVERLAY --- */
-        #breach-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; align-items: center; justify-content: center; }
+        #breach-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
         #breach-video { width: 100%; height: 100%; object-fit: contain; }
         .breach-active { display: flex !important; }
         .system-failure { animation: shake 0.1s infinite; filter: invert(1); }
@@ -188,15 +226,23 @@
             <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
         </div>
 
-        <div class="footer-tags-block">
-            #KeepYourSovereignty<br>
-            #TheTrophyHoe <span id="breach-trigger" style="cursor:pointer">#Transactional</span>
-        </div>
-
         <div class="footer-text">
             © 2026 GLITCHED RECORDS | Oceanside, CA
         </div>
 
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">#KeepYourSovereignty</div>
+            <div class="ticker-item">#TheTrophyHoe</div>
+            <div class="ticker-item trigger" id="ticker-trigger">#TransActionAl</div>
+            <div class="ticker-item">#ReprobateHoe</div>
+            <div class="ticker-item">#MatriarchalCode</div>
+             <div class="ticker-item">#KeepYourSovereignty</div>
+            <div class="ticker-item">#TheTrophyHoe</div>
+            <div class="ticker-item">#TransActionAl</div>
+        </div>
     </div>
 
     <script>
@@ -226,23 +272,24 @@
             document.getElementById('countdown-timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }, 1000);
 
-        // --- BREACH TRIGGER ---
-        // VERIFIED TIMING: Redirect happens automatically when video ends.
-        let clicks = 0;
-        document.getElementById('breach-trigger').addEventListener('click', () => {
-            clicks++;
-            if(clicks === 3) {
-                document.body.classList.add('system-failure');
-                document.getElementById('breach-overlay').classList.add('breach-active');
-                const breachVid = document.getElementById('breach-video');
-                
-                breachVid.play();
-                
-                // CRITICAL: This redirects the moment the video finishes
-                breachVid.onended = () => { 
-                    window.location.href = "https://glitchedrecords.com"; 
-                };
-            }
+        // --- BREACH TRIGGER SYSTEM ---
+        const breachVid = document.getElementById('breach-video');
+        
+        function executeBreach() {
+            document.body.classList.add('system-failure');
+            document.getElementById('breach-overlay').classList.add('breach-active');
+            breachVid.play();
+            breachVid.onended = () => { window.location.href = "https://glitchedrecords.com"; };
+        }
+
+        // TRIGGER 1: Double Click Logo
+        document.getElementById('main-logo').addEventListener('dblclick', executeBreach);
+
+        // TRIGGER 2: 3-Click on #TransActionAl Ticker Item
+        let tickerClicks = 0;
+        document.getElementById('ticker-trigger').addEventListener('click', () => {
+            tickerClicks++;
+            if(tickerClicks === 3) executeBreach();
         });
     </script>
 </body>
