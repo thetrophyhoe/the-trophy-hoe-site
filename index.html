@@ -28,6 +28,29 @@
             position: relative;
         }
 
+        /* --- THE BOOT OVERLAY (Z-Index 9999) --- */
+        #boot-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; 
+            z-index: 9999; /* Top Layer */
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            cursor: crosshair;
+        }
+
+        .boot-btn {
+            border: 2px solid #00ffff; color: #00ffff; background: transparent;
+            padding: 20px 40px; font-family: 'Courier New', monospace;
+            font-size: 1.2rem; font-weight: bold; letter-spacing: 4px;
+            cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 0 15px #00ffff;
+            animation: pulse 2s infinite;
+            transition: 0.3s;
+        }
+        .boot-btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
+        
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
         /* --- THE VIDEO LAYER --- */
         #bg-video {
             position: fixed;
@@ -57,16 +80,17 @@
         .container { 
             max-width: 600px; margin: 0 auto; padding: 20px 20px; 
             position: relative; z-index: 10; 
+            opacity: 0; transition: opacity 1s ease-in; /* Hidden until boot */
         }
 
         /* --- UI ELEMENTS --- */
         .signature-logo { 
             width: 100%; max-width: 350px; margin-bottom: 20px; 
             filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
-            cursor: pointer; /* Indicates it's interactive */
+            cursor: pointer; 
             transition: transform 0.1s;
         }
-        .signature-logo:active { transform: scale(0.98); } /* Feedback on tap */
+        .signature-logo:active { transform: scale(0.98); }
         
         .hero-block { 
             position: relative; margin-bottom: 30px; border: 1px solid #333; 
@@ -118,33 +142,25 @@
         .footer-tags-block { color: #ff00ff; font-weight: 900; letter-spacing: 3px; font-size: 1.2rem; line-height: 1.5; margin-bottom: 20px; }
         .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; }
 
-        /* --- BREACH STYLES --- */
+        /* --- BREACH OVERLAY --- */
         #breach-overlay { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #000; z-index: 99999; /* Highest Z-Index */
+            background: #000; z-index: 10000; /* Higher than Boot Screen */
             display: none; align-items: center; justify-content: center; 
         }
         #breach-video { width: 100%; height: 100%; object-fit: contain; }
-        
         .breach-active { display: flex !important; }
-        
-        /* The Glitch/Shake Effect */
-        .system-failure { 
-            animation: violent-shake 0.15s infinite; 
-            filter: invert(1) hue-rotate(180deg); 
-        }
-        
-        @keyframes violent-shake { 
-            0% { transform: translate(3px, 3px) rotate(0deg); } 
-            25% { transform: translate(-3px, -2px) rotate(1deg); } 
-            50% { transform: translate(2px, -3px) rotate(0deg); } 
-            75% { transform: translate(-2px, 2px) rotate(-1deg); } 
-            100% { transform: translate(1px, -1px) rotate(0deg); } 
-        }
+        .system-failure { animation: shake 0.1s infinite; filter: invert(1); }
+        @keyframes shake { 0% { transform: translate(2px, 2px); } 100% { transform: translate(-2px, -2px); } }
 
     </style>
 </head>
 <body>
+
+    <div id="boot-screen">
+        <div style="color: #ff00ff; margin-bottom: 20px; letter-spacing: 3px;">SYSTEM OFFLINE</div>
+        <button class="boot-btn" onclick="initializeSystem()">INITIALIZE SYSTEM</button>
+    </div>
 
     <video id="bg-video" loop muted playsinline poster="transactional_date.png">
         <source src="teraback.mp4" type="video/mp4">
@@ -205,16 +221,26 @@
     </div>
 
     <script>
-        // --- FORCE PLAY SCRIPT ---
-        window.onload = function() {
-            var video = document.getElementById('bg-video');
-            video.play().catch(function(error) {
-                console.log("Auto-play failed, waiting for interaction.");
-                document.body.addEventListener('click', function() {
-                    video.play();
-                }, {once: true});
+        // --- BOOT SEQUENCE LOGIC ---
+        function initializeSystem() {
+            const bootScreen = document.getElementById('boot-screen');
+            const container = document.getElementById('main-content');
+            const video = document.getElementById('bg-video');
+
+            // 1. ATTEMPT PLAY (Authorized by Click)
+            video.play().then(() => {
+                console.log("Transmission Stabilized.");
+            }).catch(error => {
+                console.error("Video Failed:", error);
             });
-        };
+
+            // 2. ANIMATE UNLOCK
+            bootScreen.style.opacity = '0';
+            setTimeout(() => {
+                bootScreen.style.display = 'none';
+                container.style.opacity = '1';
+            }, 500);
+        }
 
         // --- COUNTDOWN ---
         const targetDate = new Date("March 13, 2026 00:00:00").getTime();
@@ -234,27 +260,20 @@
         const breachVid = document.getElementById('breach-video');
 
         function executeBreach() {
-            // 1. Shake the screen violently
             document.body.classList.add('system-failure');
-            // 2. Show the breach video overlay
             overlay.classList.add('breach-active');
-            // 3. Play the cinematic
-            breachVid.play().then(() => {
-                // 4. On finish, redirect to THEANTICHRIST.AI
-                breachVid.onended = () => { 
-                    window.location.href = "https://theantichrist.ai"; 
-                };
-            }).catch(err => {
-                // If video fails, redirect immediately
-                console.error("Breach video failed:", err);
-                window.location.href = "https://theantichrist.ai";
-            });
+            breachVid.play();
+            
+            // REDIRECT TO THEANTICHRIST.AI ON END
+            breachVid.onended = () => { 
+                window.location.href = "https://theantichrist.ai"; 
+            };
         }
 
-        // TRIGGER 1: DOUBLE CLICK/TAP ON LOGO
+        // TRIGGER 1: DOUBLE CLICK LOGO
         logo.addEventListener('dblclick', executeBreach);
 
-        // TRIGGER 2: TRIPLE CLICK ON FOOTER HASH
+        // TRIGGER 2: TRIPLE CLICK FOOTER
         let clicks = 0;
         triggerTag.addEventListener('click', () => {
             clicks++;
