@@ -24,16 +24,16 @@
         .product-container {
             position: relative;
             width: 100%;
-            height: 100vh; /* Keeps the full-screen scroll feel */
+            height: 100vh; 
             display: flex;
             flex-direction: column;
             background: #000;
-            border-bottom: 2px solid #333;
+            border-bottom: 2px solid #1a1a1a;
         }
 
-        /* VIDEO WRAPPER - Prevents the zoom-cutoff */
+        /* VIDEO WRAPPER */
         .video-wrap {
-            flex: 1; /* Takes up all available space above the overlay */
+            flex: 1; 
             position: relative;
             width: 100%;
             overflow: hidden;
@@ -45,12 +45,10 @@
         .video-wrap video {
             width: 100%;
             height: 100%;
-            /* 'contain' ensures the whole video fits. 
-               'cover' with specific object-position can work if you prefer the zoom. */
             object-fit: contain; 
             z-index: 1;
-            opacity: 0.9; 
-            filter: contrast(1.1) brightness(1.0);
+            opacity: 0.8; 
+            filter: contrast(1.2) brightness(0.8) grayscale(50%);
         }
 
         /* THE BOTTOM CONTROL STRIP */
@@ -59,8 +57,8 @@
             z-index: 10;
             text-align: center;
             background: #000; 
-            padding: 2rem 0; /* More breathing room */
-            border-top: 1px solid #fff;
+            padding: 2.5rem 0;
+            border-top: 1px solid #333;
         }
 
         h2 {
@@ -69,14 +67,26 @@
             letter-spacing: 4px;
             margin-bottom: 0.5rem;
             color: #fff;
-            text-shadow: 0px 0px 8px #ff00ff;
+            text-shadow: 0px 0px 10px #ff0055;
         }
 
-        p {
-            font-size: 0.8rem;
-            margin-bottom: 1.5rem;
-            color: #ccc;
+        .price-line {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #ff0055;
             letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        .desc-line {
+            font-size: 0.7rem;
+            margin-bottom: 1.5rem;
+            color: #888;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* THE ACQUIRE BUTTON */
@@ -85,12 +95,12 @@
             width: 85%;
             max-width: 350px;
             margin: 0 auto;
-            padding: 15px 0;
+            padding: 18px 0;
             background-color: #000;
             color: #fff;
             border: 1px solid #fff;
             text-decoration: none;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             letter-spacing: 4px;
             transition: all 0.3s ease;
@@ -98,18 +108,28 @@
         }
 
         .btn:hover {
-            background-color: #fff;
+            background-color: #ff0055;
             color: #000;
-            box-shadow: 0px 0px 20px #00ffff;
+            border-color: #ff0055;
+            box-shadow: 0px 0px 25px #ff0055;
+        }
+
+        /* ARCHIVE SPECIAL STYLING */
+        .archive-tag {
+            color: #00ffff;
+            text-shadow: 0 0 5px #00ffff;
+            border-color: #00ffff !important;
+        }
+        .archive-tag:hover {
+            background-color: #00ffff !important;
+            box-shadow: 0px 0px 25px #00ffff !important;
         }
 
         /* MOBILE FIXES */
         @media (max-width: 768px) {
             .product-container { height: 100dvh; }
-            h2 { font-size: 1.4rem; }
+            h2 { font-size: 1.3rem; }
             .video-wrap video {
-                /* On mobile, we force 'cover' but shift the focus 
-                   if the subjects are being cut off. */
                 object-fit: cover;
                 object-position: center; 
             }
@@ -121,12 +141,27 @@
     <div class="product-container">
         <div class="video-wrap">
             <video autoplay loop muted playsinline>
+                <source src="bg.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="overlay">
+            <h2>T.H.E.A.NTICHRIST MOTHER</h2>
+            <p class="price-line">$6.66 // V6.66 DIGITAL ARCHIVE</p>
+            <p class="desc-line">666.70 MB // 4 RESTRICTED TRACKS + GRIMOIRE + T.H.E.A. ENTITY</p>
+            <a href="https://payhip.com/b/MYNlE" class="btn archive-tag">ACQUIRE ARCHIVE</a>
+        </div>
+    </div>
+
+    <div class="product-container">
+        <div class="video-wrap">
+            <video autoplay loop muted playsinline>
                 <source src="Pony.mp4" type="video/mp4">
             </video>
         </div>
         <div class="overlay">
             <h2>TRICK PONY</h2>
-            <p>$35.00 // CROP TEE</p>
+            <p class="price-line">$35.00 // CROP TEE</p>
+            <p class="desc-line">HEAVY COTTON // GLITCHED LOGO // LIMITED RUN</p>
             <a href="https://www.paypal.com/ncp/payment/F3Z5SV3AF2RF2" class="btn">ACQUIRE</a>
         </div>
     </div>
@@ -139,7 +174,8 @@
         </div>
         <div class="overlay">
             <h2>DEMENTED</h2>
-            <p>$35.00 // CROP TEE</p>
+            <p class="price-line">$35.00 // CROP TEE</p>
+            <p class="desc-line">DISTRESSED PRINT // REPROBATE SERIES</p>
             <a href="https://www.paypal.com/ncp/payment/VWKSXG8LP9H2G" class="btn">ACQUIRE</a>
         </div>
     </div>
@@ -152,7 +188,8 @@
         </div>
         <div class="overlay">
             <h2>THE TROPHY HOE</h2>
-            <p>$66.60 // OVERSIZED HOODIE</p>
+            <p class="price-line">$66.60 // OVERSIZED HOODIE</p>
+            <p class="desc-line">ULTRA-HEAVYWEIGHT // 03.13.26 PROTOCOL</p>
             <a href="https://www.paypal.com/ncp/payment/XU4SCNF6S7ELS" class="btn">ACQUIRE</a>
         </div>
     </div>
