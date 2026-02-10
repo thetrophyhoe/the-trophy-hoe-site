@@ -6,13 +6,12 @@
     <title>THE TROPHY HOE // TRANSACTIONAL // 03.13.26</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQELYM9237"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-KQELYM9237');
     </script>
     
@@ -61,7 +60,13 @@
         }
 
         /* --- UI ELEMENTS --- */
-        .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); }
+        .signature-logo { 
+            width: 100%; max-width: 350px; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
+            cursor: pointer; /* Indicates it's interactive */
+            transition: transform 0.1s;
+        }
+        .signature-logo:active { transform: scale(0.98); } /* Feedback on tap */
         
         .hero-block { 
             position: relative; margin-bottom: 30px; border: 1px solid #333; 
@@ -113,12 +118,29 @@
         .footer-tags-block { color: #ff00ff; font-weight: 900; letter-spacing: 3px; font-size: 1.2rem; line-height: 1.5; margin-bottom: 20px; }
         .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; }
 
-        /* --- BREACH --- */
-        #breach-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; align-items: center; justify-content: center; }
+        /* --- BREACH STYLES --- */
+        #breach-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000; z-index: 99999; /* Highest Z-Index */
+            display: none; align-items: center; justify-content: center; 
+        }
         #breach-video { width: 100%; height: 100%; object-fit: contain; }
+        
         .breach-active { display: flex !important; }
-        .system-failure { animation: shake 0.1s infinite; filter: invert(1); }
-        @keyframes shake { 0% { transform: translate(2px, 2px); } 100% { transform: translate(-2px, -2px); } }
+        
+        /* The Glitch/Shake Effect */
+        .system-failure { 
+            animation: violent-shake 0.15s infinite; 
+            filter: invert(1) hue-rotate(180deg); 
+        }
+        
+        @keyframes violent-shake { 
+            0% { transform: translate(3px, 3px) rotate(0deg); } 
+            25% { transform: translate(-3px, -2px) rotate(1deg); } 
+            50% { transform: translate(2px, -3px) rotate(0deg); } 
+            75% { transform: translate(-2px, 2px) rotate(-1deg); } 
+            100% { transform: translate(1px, -1px) rotate(0deg); } 
+        }
 
     </style>
 </head>
@@ -139,7 +161,7 @@
 
     <div class="container" id="main-content">
         
-        <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
+        <img src="teralogo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
         
         <div class="hero-block">
             <img src="transactional_date.png" alt="03.13.26" class="hero-image">
@@ -205,16 +227,38 @@
             document.getElementById('countdown-timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }, 1000);
 
-        // --- BREACH TRIGGER ---
+        // --- BREACH PROTOCOL (EASTER EGG) ---
+        const logo = document.getElementById('main-logo');
+        const triggerTag = document.getElementById('breach-trigger');
+        const overlay = document.getElementById('breach-overlay');
+        const breachVid = document.getElementById('breach-video');
+
+        function executeBreach() {
+            // 1. Shake the screen violently
+            document.body.classList.add('system-failure');
+            // 2. Show the breach video overlay
+            overlay.classList.add('breach-active');
+            // 3. Play the cinematic
+            breachVid.play().then(() => {
+                // 4. On finish, redirect to THEANTICHRIST.AI
+                breachVid.onended = () => { 
+                    window.location.href = "https://theantichrist.ai"; 
+                };
+            }).catch(err => {
+                // If video fails, redirect immediately
+                console.error("Breach video failed:", err);
+                window.location.href = "https://theantichrist.ai";
+            });
+        }
+
+        // TRIGGER 1: DOUBLE CLICK/TAP ON LOGO
+        logo.addEventListener('dblclick', executeBreach);
+
+        // TRIGGER 2: TRIPLE CLICK ON FOOTER HASH
         let clicks = 0;
-        document.getElementById('breach-trigger').addEventListener('click', () => {
+        triggerTag.addEventListener('click', () => {
             clicks++;
-            if(clicks === 3) {
-                document.body.classList.add('system-failure');
-                document.getElementById('breach-overlay').classList.add('breach-active');
-                document.getElementById('breach-video').play();
-                document.getElementById('breach-video').onended = () => { window.location.href = "https://glitchedrecords.com"; };
-            }
+            if(clicks === 3) executeBreach();
         });
     </script>
 </body>
