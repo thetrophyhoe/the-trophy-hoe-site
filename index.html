@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE TROPHY HOE // TRANSACTIONAL // 03.13.26</title>
-    <link rel="icon" type="image/png" href="teralogo.png">
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -77,6 +77,7 @@
         }
 
         /* --- UI ELEMENTS --- */
+        /* LOGO UPDATED TO TERALOGO.PNG */
         .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); }
         
         .hero-block { 
@@ -93,6 +94,11 @@
         }
 
         .subtitle { color: #ff00ff; letter-spacing: 5px; margin-bottom: 30px; font-weight: bold; text-shadow: 0 0 5px #ff00ff; }
+        
+        .section-title { 
+            font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; 
+            margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; 
+        }
 
         .btn { 
             display: block; width: 100%; padding: 0; margin-bottom: 20px; 
@@ -107,6 +113,14 @@
 
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #222; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        
+        /* VERTICAL VIDEO WRAPPER FOR SHORTS (9:16) */
+        .video-wrapper-vertical { 
+            position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; 
+            border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); 
+            max-width: 350px; margin-left: auto; margin-right: auto;
+        }
+        .video-wrapper-vertical iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .social-row { display: flex; justify-content: center; gap: 30px; margin: 40px 0; }
         .social-icon { font-size: 2rem; color: #888; transition: 0.3s; }
@@ -146,7 +160,7 @@
 
     <div class="container" id="main-content">
         
-        <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
+        <img src="teralogo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
         
         <div class="hero-block">
             <img src="transactional_date.png" alt="03.13.26" class="hero-image">
@@ -162,10 +176,13 @@
         <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS</a>
         <a href="https://glitchedrecords.com" class="btn btn-hq">💿 GLITCHED RECORDS // HQ</a>
 
-        <div style="border-bottom: 1px solid #333; margin: 40px 0; width: 50%; margin-left: auto; margin-right: auto;"></div>
+        <div class="section-title">THE CRUCIFLEX</div>
+        <div class="video-wrapper-vertical">
+            <iframe src="https://www.youtube.com/embed/F7PIxg_JhaY" allowfullscreen></iframe>
+        </div>
 
+        <div class="section-title">THE TRANSMISSIONS</div>
         <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe></div>
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/hbHbrBqf5_c" allowfullscreen></iframe></div>
 
         <div class="social-row">
             <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
@@ -196,7 +213,6 @@
                 console.log("Transmission Stabilized.");
             }).catch(error => {
                 console.error("Video Failed:", error);
-                // Even if video fails, we reveal the site (poster will show)
             });
 
             // 2. ANIMATE UNLOCK
