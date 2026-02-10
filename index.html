@@ -58,7 +58,6 @@
         }
         @keyframes pixel-flicker { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
 
-        /* UPDATED BACKGROUND VIDEO - TINT REMOVED FOR COLOR */
         #bg-video {
             position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%);
             z-index: -1; opacity: 0.35; filter: contrast(1.1) brightness(0.4);
@@ -156,7 +155,7 @@
         </video>
     </div>
 
-    <video autoplay loop muted playsinline id="bg-video">
+    <video autoplay loop muted playsinline id="bg-video" poster="transactional_date.png">
         <source src="teraback.mp4" type="video/mp4">
     </video>
 
@@ -226,6 +225,22 @@
             timerDisplay.innerHTML = `${d}:${h}:${m}:${s}`;
         }, 1000);
 
+        // --- BACKGROUND FORCE-START ---
+        window.addEventListener('load', function() {
+            var video = document.getElementById('bg-video');
+            var playPromise = video.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    console.log("Transmission Stabilized.");
+                }).catch(error => {
+                    console.log("Manual Override Required.");
+                    document.body.addEventListener('click', () => { video.play(); }, {once: true});
+                });
+            }
+        });
+
+        // --- ROGUE PIXELS ---
         function spawnPixel() {
             const pixel = document.createElement('div');
             pixel.className = 'glitch-pixel';
@@ -236,6 +251,7 @@
         }
         setInterval(spawnPixel, 300);
 
+        // --- EASTER EGGS ---
         const logo = document.getElementById('main-logo');
         const triggerTag = document.getElementById('breach-trigger');
         const overlay = document.getElementById('breach-overlay');
