@@ -3,71 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIGNAL RECEIVED | PROTOCOL VERIFIED</title>
+    <title>TRANSACTION COMPLETE // SOVEREIGNTY VERIFIED</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
     <style>
+        /* --- CORE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background-color: #000;
-            color: #0f0; /* Terminal Green */
+            color: #e0e0e0;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
             text-align: center;
+            overflow: hidden;
+            position: relative;
+            animation: crt-flicker 0.15s infinite;
         }
+
+        @keyframes crt-flicker { 0% { opacity: 0.98; } 50% { opacity: 1; } 100% { opacity: 0.99; } }
+
+        /* --- ATMOSPHERE --- */
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%);
+            background-size: 100% 4px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            z-index: 1; pointer-events: none;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 100%);
+            z-index: 2; pointer-events: none;
+        }
+
+        /* --- CONTENT --- */
+        .content-wrapper { z-index: 10; position: relative; padding: 20px; max-width: 600px; }
+
+        .signature-logo { 
+            width: 100%; max-width: 300px; margin-bottom: 30px; 
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.4)); 
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
         h1 {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            color: #00ffff;
             text-transform: uppercase;
-            border-bottom: 1px solid #0f0;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #0f0;
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #fff;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffff;
+            border-bottom: 2px solid #00ffff;
+            padding-bottom: 15px;
+            display: inline-block;
         }
 
         .status {
-            color: #d4af37; /* Gold */
+            color: #ff00ff; /* Magenta Strike */
             font-weight: bold;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 8px #ff00ff;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        p {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .email-note {
+            font-size: 0.7rem; color: #666; text-transform: uppercase; margin-bottom: 40px; letter-spacing: 1px;
         }
 
         .btn {
             background: transparent;
-            color: #0f0;
-            border: 1px solid #0f0;
-            padding: 15px 30px;
+            color: #00ffff;
+            border: 2px solid #00ffff;
+            padding: 20px 40px;
             font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 3px;
             text-transform: uppercase;
             text-decoration: none;
             cursor: pointer;
             transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background: #0f0;
+            background: #00ffff;
             color: #000;
-            box-shadow: 0 0 20px #0f0;
+            box-shadow: 0 0 30px #00ffff;
         }
+
     </style>
 </head>
 <body>
 
-    <div class="status">> TRANSACTION: VERIFIED</div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
 
-    <h1>Signal Received</h1>
+    <div class="content-wrapper">
+        <img src="teralogo.png" alt="THE TROPHY HOE" class="signature-logo">
 
-    <p>Your armor is being forged.<br>Dispatch imminent.</p>
-    <p style="font-size: 0.8rem; color: #666;">Check your email for tracking coordinates.</p>
+        <div class="status">> PROTOCOL: SOVEREIGNTY_CONFIRMED</div>
 
-    <a href="/" class="btn">Return to Void</a>
+        <h1>TRANSACTION COMPLETE</h1>
+
+        <p>Your armor is being forged.<br>The system has logged your contribution.</p>
+        <p class="email-note">CHECK YOUR EMAIL FOR TRACKING COORDINATES && DOWNLOAD KEYS.</p>
+
+        <a href="/" class="btn">RETURN TO SIGNAL</a>
+    </div>
 
 </body>
 </html>
