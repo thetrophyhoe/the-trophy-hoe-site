@@ -17,36 +17,50 @@
             width: 100%;
         }
 
-        /* --- INTRO OVERLAY --- */
+        /* --- INTRO OVERLAY (FIXED) --- */
         #intro-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0; /* Forces full coverage */
+            background: #000; 
+            z-index: 9999;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
         }
 
         #intro-video {
-            width: 100%; height: 100%;
-            object-fit: contain; /* Shows full video without cropping */
-        }
-        
-        /* Force cover on mobile to avoid black bars if preferred, or keep contain */
-        @media (max-width: 768px) {
-            #intro-video { object-fit: cover; }
+            width: 100%; 
+            height: 100%;
+            /* CONTAIN ensures the video never bleeds off screen */
+            object-fit: contain; 
         }
 
         .skip-btn {
-            position: absolute; bottom: 30px; right: 30px;
-            color: #444; border: 1px solid #444; padding: 10px 20px;
-            font-family: 'Courier New', monospace; font-size: 0.8rem;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
-            background: rgba(0,0,0,0.5); z-index: 10000; transition: 0.3s;
+            position: absolute; 
+            /* Moved to bottom-center with extra padding for mobile UI safety */
+            bottom: 10%; 
+            left: 50%;
+            transform: translateX(-50%);
+            color: #444; 
+            border: 1px solid #444; 
+            padding: 12px 24px;
+            font-family: 'Courier New', monospace; 
+            font-size: 0.9rem;
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.8); 
+            z-index: 10000; 
+            transition: 0.3s;
+            white-space: nowrap;
         }
-        .skip-btn:hover { color: #fff; border-color: #fff; }
+        .skip-btn:hover { color: #fff; border-color: #fff; box-shadow: 0 0 10px #fff; }
 
         /* --- MAIN CONTENT (Hidden Initially) --- */
         #main-store {
             opacity: 0; 
-            transition: opacity 1.5s ease-in; /* Smooth fade in */
+            transition: opacity 1.5s ease-in; 
+            display: none; /* Removed from flow until intro done */
         }
 
         /* --- ATMOSPHERE LAYERS --- */
@@ -191,17 +205,15 @@
         @media (max-width: 768px) {
             .product-container { height: 100dvh; }
             h2 { font-size: 1.4rem; }
-            .video-wrap video {
-                object-fit: cover;
-                object-position: center; 
-            }
+            /* Force video to contain even on mobile store items */
+            .video-wrap video { object-fit: cover; object-position: center; }
         }
     </style>
 </head>
 <body>
 
     <div id="intro-overlay">
-        <video id="intro-video" autoplay muted playsinline>
+        <video id="intro-video" muted playsinline>
             <source src="spoils_intro.mp4" type="video/mp4">
         </video>
         <button class="skip-btn" onclick="endIntro()">SKIP SEQUENCE</button>
@@ -280,24 +292,34 @@
 
         // Function to end intro and show store
         function endIntro() {
-            introOverlay.style.transition = "opacity 0.5s ease";
+            introOverlay.style.transition = "opacity 0.8s ease";
             introOverlay.style.opacity = "0";
             
             setTimeout(() => {
                 introOverlay.style.display = "none";
-                mainStore.style.opacity = "1"; // Fade in store
-            }, 500);
+                mainStore.style.display = "block"; // Make sure it exists
+                // Small delay to allow display:block to render before opacity fade
+                setTimeout(() => {
+                    mainStore.style.opacity = "1";
+                }, 50);
+            }, 800);
         }
+
+        // AUTO-START LOGIC
+        window.addEventListener('load', function() {
+            introVideo.play().then(() => {
+                console.log("Intro Sequence Initiated");
+            }).catch(error => {
+                console.log("Autoplay blocked. User must interact.");
+                // If blocked, we keep the overlay but maybe show a "START" button if needed
+                // For now, the SKIP button serves as the interactor
+            });
+        });
 
         // When video ends, transition automatically
         introVideo.onended = () => {
             endIntro();
         };
-
-        // Fallback: If video fails to autoplay (browser block), show "Play" or just end intro
-        introVideo.play().catch(error => {
-            console.log("Autoplay blocked, waiting for interaction or skip.");
-        });
     </script>
 </body>
 </html>
