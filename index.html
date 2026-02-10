@@ -11,32 +11,39 @@
         /* --- CORE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        body {
-            background-color: #000;
-            color: #e0e0e0;
+        html, body {
+            background-color: transparent; /* TRANSPARENT TO REVEAL VIDEO */
+            height: 100%;
+            margin: 0;
             font-family: 'Courier New', Courier, monospace;
             text-align: center;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* --- THE VIDEO LAYER (Level 0) --- */
-        #bg-video {
+        /* --- THE VIDEO LAYER (The Foundation) --- */
+        #bg-video-container {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            min-width: 100vw;
-            min-height: 100vh;
-            width: auto;
-            height: auto;
-            z-index: 0; /* Base Layer */
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -1; /* Behind everything */
+            background: #000; /* Fallback color if video fails */
+            overflow: hidden;
+        }
+
+        #bg-video {
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto; height: auto;
+            position: absolute;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             object-fit: cover;
-            opacity: 0.6; /* Visibility Check */
+            opacity: 0.5;
             filter: contrast(1.2) brightness(0.6);
         }
 
-        /* --- ATMOSPHERE LAYERS (Level 1) --- */
+        /* --- ATMOSPHERE LAYERS (The Texture) --- */
         .scanlines {
             background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%);
             background-size: 100% 4px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
@@ -48,35 +55,22 @@
             z-index: 2; pointer-events: none;
         }
 
-        /* --- CONTENT LAYER (Level 10) --- */
+        /* --- CONTENT LAYER (The Payload) --- */
         .container { 
             max-width: 600px; 
             margin: 0 auto; 
             padding: 20px 20px; 
             position: relative; 
             z-index: 10; 
-            display: none; /* Hidden until boot */
         }
 
-        /* --- BOOT OVERLAY (Level 999) --- */
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; z-index: 999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            cursor: crosshair;
+        /* --- DEBUG OVERLAY --- */
+        #debug-status {
+            position: fixed; top: 10px; left: 10px; 
+            color: #00ffff; font-size: 12px; z-index: 9999;
+            background: rgba(0,0,0,0.8); padding: 5px;
+            border: 1px solid #00ffff; display: none; /* Set to block if testing */
         }
-        .boot-btn {
-            border: 2px solid #00ffff; color: #00ffff; background: transparent;
-            padding: 20px 40px; font-family: 'Courier New', monospace;
-            font-size: 1.2rem; font-weight: bold; letter-spacing: 4px;
-            cursor: pointer; text-transform: uppercase;
-            box-shadow: 0 0 15px #00ffff;
-            animation: pulse 2s infinite;
-        }
-        .boot-btn:hover { background: #00ffff; color: #000; }
-        
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
         /* --- UI ELEMENTS --- */
         .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); }
@@ -128,14 +122,13 @@
 </head>
 <body>
 
-    <div id="boot-screen">
-        <div style="color: #ff00ff; margin-bottom: 20px; letter-spacing: 3px;">SYSTEM OFFLINE</div>
-        <button class="boot-btn" onclick="initializeSystem()">INITIALIZE SYSTEM</button>
-    </div>
+    <div id="debug-status">SIGNAL: INITIALIZING...</div>
 
-    <video id="bg-video" loop muted playsinline>
-        <source src="teraback.mp4" type="video/mp4">
-    </video>
+    <div id="bg-video-container">
+        <video id="bg-video" loop muted playsinline poster="transactional_date.png">
+            <source src="teraback.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div class="scanlines"></div>
     <div class="vignette"></div>
@@ -187,26 +180,25 @@
     </div>
 
     <script>
-        // --- SYSTEM BOOT SEQUENCE ---
-        function initializeSystem() {
-            const bootScreen = document.getElementById('boot-screen');
-            const container = document.getElementById('main-content');
-            const video = document.getElementById('bg-video');
+        // --- VIDEO DIAGNOSTICS ---
+        const video = document.getElementById('bg-video');
+        const status = document.getElementById('debug-status');
 
-            // 1. Force Video Play
-            video.play().then(() => {
-                console.log("Visuals Online");
-            }).catch(err => {
-                console.log("Video Error: " + err);
-            });
-
-            // 2. Hide Boot Screen
-            bootScreen.style.opacity = '0';
-            setTimeout(() => {
-                bootScreen.style.display = 'none';
-                container.style.display = 'block'; // Show content
-            }, 500);
-        }
+        // Attempt to play immediately
+        video.play().then(() => {
+            status.innerHTML = "SIGNAL: LOCKED (PLAYING)";
+            status.style.color = "#00ff00";
+        }).catch(error => {
+            status.innerHTML = "SIGNAL: ERROR - " + error.name;
+            status.style.color = "#ff0000";
+            status.style.display = "block"; // Show error if it fails
+            
+            // Force play on first click
+            document.body.addEventListener('click', () => {
+                video.play();
+                status.innerHTML = "SIGNAL: RETRYING...";
+            }, {once:true});
+        });
 
         // --- COUNTDOWN ---
         const targetDate = new Date("March 13, 2026 00:00:00").getTime();
