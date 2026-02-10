@@ -7,14 +7,6 @@
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQELYM9237"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KQELYM9237');
-    </script>
-    
     <style>
         /* --- CORE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,13 +20,12 @@
             position: relative;
         }
 
-        /* --- THE BOOT OVERLAY (STRICT ENFORCEMENT) --- */
+        /* --- THE BOOT OVERLAY (Z-Index 9999) --- */
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; 
-            z-index: 9999; /* Top Layer */
-            display: flex !important; /* FORCE DISPLAY */
-            flex-direction: column;
+            z-index: 9999; 
+            display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             cursor: crosshair;
         }
@@ -52,7 +43,7 @@
         
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        /* --- THE VIDEO LAYER --- */
+        /* --- THE BACKGROUND VIDEO LAYER --- */
         #bg-video {
             position: fixed;
             top: 50%; left: 50%;
@@ -85,13 +76,7 @@
         }
 
         /* --- UI ELEMENTS --- */
-        .signature-logo { 
-            width: 100%; max-width: 350px; margin-bottom: 20px; 
-            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
-            cursor: pointer; 
-            transition: transform 0.1s;
-        }
-        .signature-logo:active { transform: scale(0.98); }
+        .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); }
         
         .hero-block { 
             position: relative; margin-bottom: 30px; border: 1px solid #333; 
@@ -124,11 +109,10 @@
         .btn-spoils { padding: 20px; border-color: #ff00ff; color: #ff00ff; letter-spacing: 2px; }
         .btn-hq { padding: 20px; border-color: #fff; color: #fff; letter-spacing: 2px; }
 
-        /* STANDARD 16:9 VIDEO WRAPPER */
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #222; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
-        /* VERTICAL VIDEO WRAPPER (9:16) FOR THE CRUCIFLEX */
+        
+        /* VERTICAL VIDEO WRAPPER (9:16) */
         .video-wrapper-vertical { 
             position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; 
             border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); 
@@ -144,11 +128,7 @@
         .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; }
 
         /* --- BREACH OVERLAY --- */
-        #breach-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: #000; z-index: 10000; /* Higher than Boot Screen */
-            display: none; align-items: center; justify-content: center; 
-        }
+        #breach-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 1000; display: none; align-items: center; justify-content: center; }
         #breach-video { width: 100%; height: 100%; object-fit: contain; }
         .breach-active { display: flex !important; }
         .system-failure { animation: shake 0.1s infinite; filter: invert(1); }
@@ -194,8 +174,6 @@
         <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS</a>
         <a href="https://glitchedrecords.com" class="btn btn-hq">💿 GLITCHED RECORDS // HQ</a>
 
-        <div style="border-bottom: 1px solid #333; margin: 40px 0; width: 50%; margin-left: auto; margin-right: auto;"></div>
-
         <div class="section-title">THE CRUCIFLEX</div>
         <div class="video-wrapper-vertical">
             <iframe src="https://www.youtube.com/embed/F7PIxg_JhaY" allowfullscreen></iframe>
@@ -228,14 +206,8 @@
             const container = document.getElementById('main-content');
             const video = document.getElementById('bg-video');
 
-            // 1. ATTEMPT PLAY (Authorized by Click)
-            video.play().then(() => {
-                console.log("Transmission Stabilized.");
-            }).catch(error => {
-                console.error("Video Failed:", error);
-            });
+            video.play().catch(error => { console.error("Video Failed:", error); });
 
-            // 2. ANIMATE UNLOCK
             bootScreen.style.opacity = '0';
             setTimeout(() => {
                 bootScreen.style.display = 'none';
@@ -254,31 +226,23 @@
             document.getElementById('countdown-timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }, 1000);
 
-        // --- BREACH PROTOCOL (EASTER EGG) ---
-        const logo = document.getElementById('main-logo');
-        const triggerTag = document.getElementById('breach-trigger');
-        const overlay = document.getElementById('breach-overlay');
-        const breachVid = document.getElementById('breach-video');
-
-        function executeBreach() {
-            document.body.classList.add('system-failure');
-            overlay.classList.add('breach-active');
-            breachVid.play();
-            
-            // REDIRECT TO THEANTICHRIST.AI ON END
-            breachVid.onended = () => { 
-                window.location.href = "https://theantichrist.ai"; 
-            };
-        }
-
-        // TRIGGER 1: DOUBLE CLICK LOGO
-        logo.addEventListener('dblclick', executeBreach);
-
-        // TRIGGER 2: TRIPLE CLICK FOOTER
+        // --- BREACH TRIGGER ---
+        // VERIFIED TIMING: Redirect happens automatically when video ends.
         let clicks = 0;
-        triggerTag.addEventListener('click', () => {
+        document.getElementById('breach-trigger').addEventListener('click', () => {
             clicks++;
-            if(clicks === 3) executeBreach();
+            if(clicks === 3) {
+                document.body.classList.add('system-failure');
+                document.getElementById('breach-overlay').classList.add('breach-active');
+                const breachVid = document.getElementById('breach-video');
+                
+                breachVid.play();
+                
+                // CRITICAL: This redirects the moment the video finishes
+                breachVid.onended = () => { 
+                    window.location.href = "https://glitchedrecords.com"; 
+                };
+            }
         });
     </script>
 </body>
