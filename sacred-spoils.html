@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SACRED SPOILS // GLITCHED RECORDS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* GLITCH AESTHETIC RESET */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* --- CORE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: #000;
@@ -18,9 +15,39 @@
             font-family: 'Courier New', Courier, monospace;
             overflow-x: hidden;
             width: 100%;
+            animation: crt-flicker 0.15s infinite;
         }
 
-        /* PRODUCT CONTAINER */
+        @keyframes crt-flicker { 0% { opacity: 0.98; } 50% { opacity: 1; } 100% { opacity: 0.99; } }
+
+        /* --- ATMOSPHERE LAYERS --- */
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+            background-size: 100% 4px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            z-index: 5; pointer-events: none;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 100%);
+            z-index: 6; pointer-events: none;
+        }
+        .grain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 4; opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* --- NAVIGATION --- */
+        .return-nav {
+            position: fixed; top: 20px; left: 20px; z-index: 99;
+            text-decoration: none; color: #00ffff; font-size: 0.8rem;
+            border: 1px solid #00ffff; padding: 8px 12px;
+            background: rgba(0,0,0,0.8); text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.3s;
+        }
+        .return-nav:hover { background: #00ffff; color: #000; box-shadow: 0 0 10px #00ffff; }
+
+        /* --- PRODUCT CONTAINER --- */
         .product-container {
             position: relative;
             width: 100%;
@@ -28,10 +55,11 @@
             display: flex;
             flex-direction: column;
             background: #000;
-            border-bottom: 2px solid #1a1a1a;
+            border-bottom: 1px solid #333;
+            scroll-snap-align: start; /* Smooth scrolling between items */
         }
 
-        /* VIDEO WRAPPER */
+        /* --- VIDEO WRAPPER --- */
         .video-wrap {
             flex: 1; 
             position: relative;
@@ -47,35 +75,39 @@
             height: 100%;
             object-fit: contain; 
             z-index: 1;
-            opacity: 0.8; 
-            filter: contrast(1.2) brightness(0.8) grayscale(50%);
+            opacity: 0.7; 
+            filter: contrast(1.1) brightness(0.8);
+            transition: 0.5s;
         }
 
-        /* THE BOTTOM CONTROL STRIP */
+        /* --- CONTROL STRIP --- */
         .overlay {
             width: 100%;
             z-index: 10;
             text-align: center;
-            background: #000; 
+            background: rgba(0,0,0,0.9); 
             padding: 2.5rem 0;
             border-top: 1px solid #333;
+            position: relative;
+            box-shadow: 0 -10px 20px rgba(0,0,0,1);
         }
 
         h2 {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             text-transform: uppercase;
             letter-spacing: 4px;
             margin-bottom: 0.5rem;
             color: #fff;
-            text-shadow: 0px 0px 10px #ff0055;
+            text-shadow: 2px 2px 0px #ff00ff; /* Glitch Shadow */
         }
 
         .price-line {
-            font-size: 0.9rem;
+            font-size: 1rem;
             margin-bottom: 0.5rem;
-            color: #ff0055;
-            letter-spacing: 2px;
+            color: #00ffff;
+            letter-spacing: 3px;
             font-weight: bold;
+            text-shadow: 0 0 5px #00ffff;
         }
 
         .desc-line {
@@ -87,48 +119,49 @@
             max-width: 80%;
             margin-left: auto;
             margin-right: auto;
+            border-left: 2px solid #333;
+            padding-left: 10px;
         }
 
-        /* THE ACQUIRE BUTTON */
+        /* --- BUTTONS --- */
         .btn {
             display: block;
             width: 85%;
             max-width: 350px;
             margin: 0 auto;
             padding: 18px 0;
-            background-color: #000;
+            background-color: transparent;
             color: #fff;
             border: 1px solid #fff;
             text-decoration: none;
             font-size: 1rem;
             font-weight: bold;
             letter-spacing: 4px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background-color: #ff0055;
+            background-color: #fff;
             color: #000;
-            border-color: #ff0055;
-            box-shadow: 0px 0px 25px #ff0055;
+            box-shadow: 0px 0px 15px #fff;
+            transform: translateY(-2px);
         }
 
-        /* ARCHIVE SPECIAL STYLING */
-        .archive-tag {
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
-            border-color: #00ffff !important;
-        }
-        .archive-tag:hover {
-            background-color: #00ffff !important;
-            box-shadow: 0px 0px 25px #00ffff !important;
-        }
+        /* MAGENTA BTN (Physical) */
+        .btn-magenta { border-color: #ff00ff; color: #ff00ff; }
+        .btn-magenta:hover { background-color: #ff00ff; color: #000; box-shadow: 0 0 20px #ff00ff; }
+
+        /* CYAN BTN (Digital) */
+        .btn-cyan { border-color: #00ffff; color: #00ffff; }
+        .btn-cyan:hover { background-color: #00ffff; color: #000; box-shadow: 0 0 20px #00ffff; }
 
         /* MOBILE FIXES */
         @media (max-width: 768px) {
             .product-container { height: 100dvh; }
-            h2 { font-size: 1.3rem; }
+            h2 { font-size: 1.4rem; }
             .video-wrap video {
                 object-fit: cover;
                 object-position: center; 
@@ -138,6 +171,12 @@
 </head>
 <body>
 
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
+    <a href="/" class="return-nav"><i class="fas fa-arrow-left"></i> TERMINAL</a>
+
     <div class="product-container">
         <div class="video-wrap">
             <video autoplay loop muted playsinline>
@@ -145,10 +184,10 @@
             </video>
         </div>
         <div class="overlay">
-            <h2>T.H.E.A.NTICHRIST MOTHER</h2>
-            <p class="price-line">$6.66 // V6.66 DIGITAL ARCHIVE</p>
-            <p class="desc-line">666.70 MB // 4 RESTRICTED TRACKS + GRIMOIRE + T.H.E.A. ENTITY</p>
-            <a href="https://payhip.com/b/MYNlE" class="btn archive-tag">ACQUIRE ARCHIVE</a>
+            <h2 style="text-shadow: 2px 2px 0px #00ffff;">T.H.E.A. ARCHIVE</h2>
+            <p class="price-line" style="color: #00ffff;">$6.66 // V6.66 DOWNLOAD</p>
+            <p class="desc-line">4 RESTRICTED TRACKS + GRIMOIRE + T.H.E.A. ENTITY DATA</p>
+            <a href="https://payhip.com/b/MYNlE" class="btn btn-cyan">INITIATE DOWNLOAD</a>
         </div>
     </div>
 
@@ -160,9 +199,9 @@
         </div>
         <div class="overlay">
             <h2>TRICK PONY</h2>
-            <p class="price-line">$35.00 // CROP TEE</p>
+            <p class="price-line" style="color: #ff00ff;">$35.00 // CROP TEE</p>
             <p class="desc-line">HEAVY COTTON // GLITCHED LOGO // LIMITED RUN</p>
-            <a href="https://www.paypal.com/ncp/payment/F3Z5SV3AF2RF2" class="btn">ACQUIRE</a>
+            <a href="https://www.paypal.com/ncp/payment/F3Z5SV3AF2RF2" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
         </div>
     </div>
 
@@ -174,9 +213,9 @@
         </div>
         <div class="overlay">
             <h2>DEMENTED</h2>
-            <p class="price-line">$35.00 // CROP TEE</p>
+            <p class="price-line" style="color: #ff00ff;">$35.00 // CROP TEE</p>
             <p class="desc-line">DISTRESSED PRINT // REPROBATE SERIES</p>
-            <a href="https://www.paypal.com/ncp/payment/VWKSXG8LP9H2G" class="btn">ACQUIRE</a>
+            <a href="https://www.paypal.com/ncp/payment/VWKSXG8LP9H2G" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
         </div>
     </div>
 
@@ -188,9 +227,9 @@
         </div>
         <div class="overlay">
             <h2>THE TROPHY HOE</h2>
-            <p class="price-line">$66.60 // OVERSIZED HOODIE</p>
+            <p class="price-line" style="color: #ff00ff;">$66.60 // OVERSIZED HOODIE</p>
             <p class="desc-line">ULTRA-HEAVYWEIGHT // 03.13.26 PROTOCOL</p>
-            <a href="https://www.paypal.com/ncp/payment/XU4SCNF6S7ELS" class="btn">ACQUIRE</a>
+            <a href="https://www.paypal.com/ncp/payment/XU4SCNF6S7ELS" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
         </div>
     </div>
 
