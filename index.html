@@ -6,6 +6,15 @@
     <title>THE TROPHY HOE // TRANSACTIONAL // 03.13.26</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KQELYM9237"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-KQELYM9237');
+    </script>
     
     <style>
         /* --- CORE --- */
@@ -20,30 +29,7 @@
             position: relative;
         }
 
-        /* --- THE BOOT OVERLAY (Must be Z-Index 9999) --- */
-        #boot-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; 
-            z-index: 9999; /* TOP LAYER */
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            cursor: crosshair;
-        }
-
-        .boot-btn {
-            border: 2px solid #00ffff; color: #00ffff; background: transparent;
-            padding: 20px 40px; font-family: 'Courier New', monospace;
-            font-size: 1.2rem; font-weight: bold; letter-spacing: 4px;
-            cursor: pointer; text-transform: uppercase;
-            box-shadow: 0 0 15px #00ffff;
-            animation: pulse 2s infinite;
-            transition: 0.3s;
-        }
-        .boot-btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
-        
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
-        /* --- THE VIDEO LAYER (Base) --- */
+        /* --- THE VIDEO LAYER --- */
         #bg-video {
             position: fixed;
             top: 50%; left: 50%;
@@ -72,12 +58,9 @@
         .container { 
             max-width: 600px; margin: 0 auto; padding: 20px 20px; 
             position: relative; z-index: 10; 
-            /* Content is hidden until boot */
-            opacity: 0; transition: opacity 1s ease-in;
         }
 
         /* --- UI ELEMENTS --- */
-        /* LOGO UPDATED TO TERALOGO.PNG */
         .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); }
         
         .hero-block { 
@@ -111,10 +94,11 @@
         .btn-spoils { padding: 20px; border-color: #ff00ff; color: #ff00ff; letter-spacing: 2px; }
         .btn-hq { padding: 20px; border-color: #fff; color: #fff; letter-spacing: 2px; }
 
+        /* STANDARD 16:9 VIDEO WRAPPER */
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #222; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        
-        /* VERTICAL VIDEO WRAPPER FOR SHORTS (9:16) */
+
+        /* VERTICAL VIDEO WRAPPER (9:16) FOR THE CRUCIFLEX */
         .video-wrapper-vertical { 
             position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; 
             border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); 
@@ -140,11 +124,6 @@
 </head>
 <body>
 
-    <div id="boot-screen">
-        <div style="color: #ff00ff; margin-bottom: 20px; letter-spacing: 3px;">SYSTEM OFFLINE</div>
-        <button class="boot-btn" onclick="initializeSystem()">INITIALIZE SYSTEM</button>
-    </div>
-
     <video id="bg-video" loop muted playsinline poster="transactional_date.png">
         <source src="teraback.mp4" type="video/mp4">
     </video>
@@ -160,7 +139,7 @@
 
     <div class="container" id="main-content">
         
-        <img src="teralogo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
+        <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
         
         <div class="hero-block">
             <img src="transactional_date.png" alt="03.13.26" class="hero-image">
@@ -175,6 +154,8 @@
 
         <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS</a>
         <a href="https://glitchedrecords.com" class="btn btn-hq">💿 GLITCHED RECORDS // HQ</a>
+
+        <div style="border-bottom: 1px solid #333; margin: 40px 0; width: 50%; margin-left: auto; margin-right: auto;"></div>
 
         <div class="section-title">THE CRUCIFLEX</div>
         <div class="video-wrapper-vertical">
@@ -202,26 +183,16 @@
     </div>
 
     <script>
-        // --- BOOT SEQUENCE LOGIC ---
-        function initializeSystem() {
-            const bootScreen = document.getElementById('boot-screen');
-            const container = document.getElementById('main-content');
-            const video = document.getElementById('bg-video');
-
-            // 1. ATTEMPT PLAY (Authorized by Click)
-            video.play().then(() => {
-                console.log("Transmission Stabilized.");
-            }).catch(error => {
-                console.error("Video Failed:", error);
+        // --- FORCE PLAY SCRIPT ---
+        window.onload = function() {
+            var video = document.getElementById('bg-video');
+            video.play().catch(function(error) {
+                console.log("Auto-play failed, waiting for interaction.");
+                document.body.addEventListener('click', function() {
+                    video.play();
+                }, {once: true});
             });
-
-            // 2. ANIMATE UNLOCK
-            bootScreen.style.opacity = '0';
-            setTimeout(() => {
-                bootScreen.style.display = 'none';
-                container.style.opacity = '1';
-            }, 500);
-        }
+        };
 
         // --- COUNTDOWN ---
         const targetDate = new Date("March 13, 2026 00:00:00").getTime();
