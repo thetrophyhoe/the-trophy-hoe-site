@@ -63,11 +63,11 @@
             z-index: -1; opacity: 0.25; filter: contrast(1.2) brightness(0.5) sepia(100%) hue-rotate(180deg);
         }
 
-        .container { max-width: 600px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 10; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px 20px; position: relative; z-index: 10; }
 
-        /* --- LOGO & COUNTDOWN --- */
+        /* --- LOGO --- */
         .signature-logo {
-            width: 100%; max-width: 400px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.4));
+            width: 100%; max-width: 350px; margin-bottom: 10px; filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.4));
             animation: breathe 5s infinite ease-in-out; cursor: pointer;
         }
         .signature-logo:hover { animation: glitch-skew 0.2s infinite; }
@@ -78,40 +78,43 @@
             100% { transform: translate(0); }
         }
 
-        .subtitle { font-size: 0.9rem; color: #00ffff; letter-spacing: 5px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 8px #00ffff; }
+        /* --- HERO: TRANSACTIONAL DATE & COUNTDOWN --- */
+        .hero-block { position: relative; margin-bottom: 30px; border: 1px solid #222; overflow: hidden; }
+        .hero-image { width: 100%; display: block; filter: brightness(0.7) contrast(1.1); }
         
         #countdown-timer {
-            font-size: 1.2rem; color: #ff00ff; margin-bottom: 40px; font-weight: bold;
-            letter-spacing: 2px; text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            position: absolute; bottom: 15%; left: 0; width: 100%;
+            font-size: clamp(2.5rem, 10vw, 4.5rem); color: #00ffff; font-weight: 900;
+            letter-spacing: -2px; text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 2px 2px #ff00ff;
+            font-family: 'Arial Black', sans-serif;
+            pointer-events: none;
         }
 
+        .subtitle { font-size: 0.9rem; color: #ff00ff; letter-spacing: 5px; margin-bottom: 20px; text-transform: uppercase; text-shadow: 0 0 8px #ff00ff; }
         .section-title { font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; }
 
-        /* --- BUTTONS (TRANSACTIONAL ERA) --- */
-        .btn { display: block; width: 100%; padding: 18px; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #444; background: rgba(0,0,0,0.9); color: #fff; transition: 0.2s; position: relative; overflow: hidden; }
+        /* --- BUTTONS --- */
+        .btn { display: block; width: 100%; margin-bottom: 15px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #444; background: rgba(0,0,0,0.9); color: #fff; transition: 0.2s; position: relative; overflow: hidden; text-decoration: none; }
         .btn:hover { transform: translateY(-2px); border-color: #fff; }
         
-        .btn-sovereign { 
-            border: 2px solid #00ffff; color: #00ffff; background: rgba(0,0,0,0.95); 
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); text-align: center;
-            padding: 30px 15px; animation: cyan-flicker 3s infinite;
+        /* PURCHASE STRIKE: KYS IMAGE */
+        .purchase-link { 
+            border: 2px solid #00ffff; padding: 0; line-height: 0;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); animation: cyan-flicker 3s infinite;
         }
-        .btn-sovereign:hover { 
-            background: #00ffff; color: #000; box-shadow: 0 0 40px #00ffff; 
-        }
-        .btn-sovereign .title-line { font-size: 1rem; font-weight: 900; letter-spacing: 1px; display: block; }
-        .btn-sovereign .sub-line { font-size: 1.5rem; font-weight: 900; letter-spacing: 4px; display: block; margin: 5px 0; }
-        .btn-sovereign .meta-line { font-size: 0.7rem; opacity: 0.8; display: block;}
+        .purchase-link img { width: 100%; display: block; transition: 0.3s; }
+        .purchase-link:hover { border-color: #ff00ff; box-shadow: 0 0 40px #ff00ff; }
+        .purchase-link:hover img { filter: hue-rotate(45deg) brightness(1.2); }
 
         @keyframes cyan-flicker {
             0%, 100% { border-color: #00ffff; } 50% { border-color: #004444; }
         }
 
-        .btn-spoils { border: 1px solid #ff00ff; color: #ff00ff; }
+        .btn-spoils { border: 1px solid #ff00ff; color: #ff00ff; padding: 18px; }
         .btn-spoils:hover { background: #ff00ff; color: #000; box-shadow: 0 0 20px #ff00ff; }
-        .btn-label { border: 1px solid #e0e0e0; color: #e0e0e0; }
+        .btn-label { border: 1px solid #e0e0e0; color: #e0e0e0; padding: 18px; }
 
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #111; filter: grayscale(30%); }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #111; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
         .social-row { display: flex; justify-content: center; gap: 30px; margin-top: 30px; margin-bottom: 50px; }
@@ -159,13 +162,16 @@
     <div class="container" id="main-content">
         
         <img src="logo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
-        <div class="subtitle">TRANSACTIONAL</div>
-        <div id="countdown-timer">INITIALIZING...</div>
+        
+        <div class="hero-block">
+            <img src="transactional_date.png" alt="03.13.26" class="hero-image">
+            <div id="countdown-timer">00:00:00:00</div>
+        </div>
 
-        <a href="https://payhip.com/b/4TUNw" class="btn btn-sovereign">
-            <span class="title-line">EXECUTIVE ORDER // THE BUNDLE</span>
-            <span class="sub-line">KEEP YOUR SOVEREIGNTY</span>
-            <span class="meta-line">THE EXIT // THE TEA // ORIGINAL HATER // MANUAL</span>
+        <div class="subtitle">TRANSACTIONAL // ERA_02</div>
+
+        <a href="https://payhip.com/b/4TUNw" class="btn purchase-link">
+            <img src="kys.png" alt="KEEP YOUR SOVEREIGNTY">
         </a>
 
         <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS [INC. THEAM ARCHIVE]</a>
@@ -210,7 +216,14 @@
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            timerDisplay.innerHTML = `${days}D:${hours}H:${minutes}M:${seconds}S`;
+            
+            // Format with leading zeros
+            const d = days.toString().padStart(2, '0');
+            const h = hours.toString().padStart(2, '0');
+            const m = minutes.toString().padStart(2, '0');
+            const s = seconds.toString().padStart(2, '0');
+            
+            timerDisplay.innerHTML = `${d}:${h}:${m}:${s}`;
         }, 1000);
 
         // --- ROGUE PIXELS ---
