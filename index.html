@@ -28,12 +28,13 @@
             position: relative;
         }
 
-        /* --- THE BOOT OVERLAY (Z-Index 9999) --- */
+        /* --- THE BOOT OVERLAY (STRICT ENFORCEMENT) --- */
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; 
             z-index: 9999; /* Top Layer */
-            display: flex; flex-direction: column;
+            display: flex !important; /* FORCE DISPLAY */
+            flex-direction: column;
             justify-content: center; align-items: center;
             cursor: crosshair;
         }
