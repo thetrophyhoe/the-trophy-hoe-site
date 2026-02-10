@@ -17,12 +17,33 @@
             width: 100%;
         }
 
-        /* --- INTRO OVERLAY (FIXED) --- */
+        /* --- START / ACCESS OVERLAY (NEW) --- */
+        #access-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 10001;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            cursor: crosshair;
+        }
+
+        .access-btn {
+            border: 2px solid #00ffff; color: #00ffff; background: transparent;
+            padding: 20px 40px; font-family: 'Courier New', monospace;
+            font-size: 1.2rem; font-weight: bold; letter-spacing: 4px;
+            cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 0 15px #00ffff;
+            animation: pulse 2s infinite; transition: 0.3s;
+        }
+        .access-btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
+        
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* --- INTRO VIDEO OVERLAY --- */
         #intro-overlay {
             position: fixed; 
-            top: 0; left: 0; right: 0; bottom: 0; /* Forces full coverage */
+            top: 0; left: 0; right: 0; bottom: 0; 
             background: #000; 
-            z-index: 9999;
+            z-index: 10000;
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -31,13 +52,12 @@
         #intro-video {
             width: 100%; 
             height: 100%;
-            /* CONTAIN ensures the video never bleeds off screen */
             object-fit: contain; 
+            display: none; /* Hidden until accessed */
         }
 
         .skip-btn {
             position: absolute; 
-            /* Moved to bottom-center with extra padding for mobile UI safety */
             bottom: 10%; 
             left: 50%;
             transform: translateX(-50%);
@@ -50,17 +70,18 @@
             text-transform: uppercase; 
             letter-spacing: 2px;
             background: rgba(0,0,0,0.8); 
-            z-index: 10000; 
+            z-index: 10002; 
             transition: 0.3s;
             white-space: nowrap;
+            display: none; /* Hidden until video starts */
         }
         .skip-btn:hover { color: #fff; border-color: #fff; box-shadow: 0 0 10px #fff; }
 
-        /* --- MAIN CONTENT (Hidden Initially) --- */
+        /* --- MAIN STORE (Hidden Initially) --- */
         #main-store {
             opacity: 0; 
             transition: opacity 1.5s ease-in; 
-            display: none; /* Removed from flow until intro done */
+            display: none; 
         }
 
         /* --- ATMOSPHERE LAYERS --- */
@@ -205,18 +226,22 @@
         @media (max-width: 768px) {
             .product-container { height: 100dvh; }
             h2 { font-size: 1.4rem; }
-            /* Force video to contain even on mobile store items */
             .video-wrap video { object-fit: cover; object-position: center; }
         }
     </style>
 </head>
 <body>
 
+    <div id="access-overlay">
+        <div style="color: #00ffff; margin-bottom: 20px; letter-spacing: 3px;">MARKETPLACE LOCKED</div>
+        <button class="access-btn" onclick="enterMarket()">ACCESS SACRED SPOILS</button>
+    </div>
+
     <div id="intro-overlay">
-        <video id="intro-video" muted playsinline>
+        <video id="intro-video" playsinline>
             <source src="spoils_intro.mp4" type="video/mp4">
         </video>
-        <button class="skip-btn" onclick="endIntro()">SKIP SEQUENCE</button>
+        <button class="skip-btn" id="skip-btn" onclick="endIntro()">SKIP SEQUENCE</button>
     </div>
 
     <div id="main-store">
@@ -286,37 +311,41 @@
     </div>
 
     <script>
+        const accessOverlay = document.getElementById('access-overlay');
         const introOverlay = document.getElementById('intro-overlay');
         const introVideo = document.getElementById('intro-video');
         const mainStore = document.getElementById('main-store');
+        const skipBtn = document.getElementById('skip-btn');
 
-        // Function to end intro and show store
+        // 1. User Clicks Access Button
+        function enterMarket() {
+            // Hide Access Button
+            accessOverlay.style.opacity = '0';
+            setTimeout(() => { accessOverlay.style.display = 'none'; }, 500);
+
+            // Show Video Container
+            introVideo.style.display = "block";
+            skipBtn.style.display = "block";
+            
+            // Play Video (With Audio)
+            introVideo.play().catch(e => console.log("Play failed", e));
+        }
+
+        // 2. Transition to Store
         function endIntro() {
             introOverlay.style.transition = "opacity 0.8s ease";
             introOverlay.style.opacity = "0";
             
             setTimeout(() => {
                 introOverlay.style.display = "none";
-                mainStore.style.display = "block"; // Make sure it exists
-                // Small delay to allow display:block to render before opacity fade
+                mainStore.style.display = "block"; 
                 setTimeout(() => {
                     mainStore.style.opacity = "1";
                 }, 50);
             }, 800);
         }
 
-        // AUTO-START LOGIC
-        window.addEventListener('load', function() {
-            introVideo.play().then(() => {
-                console.log("Intro Sequence Initiated");
-            }).catch(error => {
-                console.log("Autoplay blocked. User must interact.");
-                // If blocked, we keep the overlay but maybe show a "START" button if needed
-                // For now, the SKIP button serves as the interactor
-            });
-        });
-
-        // When video ends, transition automatically
+        // 3. When Video Ends, Transition Automatically
         introVideo.onended = () => {
             endIntro();
         };
