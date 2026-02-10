@@ -18,14 +18,13 @@
             text-align: center;
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 50px; /* Space for ticker */
+            padding-bottom: 50px;
         }
 
         /* --- THE BOOT OVERLAY --- */
         #boot-screen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; 
-            z-index: 9999; 
+            background: #000; z-index: 9999; 
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             cursor: crosshair;
@@ -37,24 +36,18 @@
             font-size: 1.2rem; font-weight: bold; letter-spacing: 4px;
             cursor: pointer; text-transform: uppercase;
             box-shadow: 0 0 15px #00ffff;
-            animation: pulse 2s infinite;
-            transition: 0.3s;
+            animation: pulse 2s infinite; transition: 0.3s;
         }
         .boot-btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
-        
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
         /* --- THE BACKGROUND VIDEO LAYER --- */
         #bg-video {
-            position: fixed;
-            top: 50%; left: 50%;
+            position: fixed; top: 50%; left: 50%;
             min-width: 100vw; min-height: 100vh;
             width: auto; height: auto;
-            z-index: 0; 
-            transform: translate(-50%, -50%);
-            object-fit: cover;
-            opacity: 0.5; 
-            filter: contrast(1.2) brightness(0.6);
+            z-index: 0; transform: translate(-50%, -50%);
+            object-fit: cover; opacity: 0.5; filter: contrast(1.2) brightness(0.6);
         }
 
         /* --- ATMOSPHERE LAYERS --- */
@@ -72,105 +65,75 @@
         /* --- CONTENT LAYER --- */
         .container { 
             max-width: 600px; margin: 0 auto; padding: 20px 20px; 
-            position: relative; z-index: 10; 
-            opacity: 0; transition: opacity 1s ease-in; 
+            position: relative; z-index: 10; opacity: 0; transition: opacity 1s ease-in; 
         }
 
         /* --- UI ELEMENTS --- */
-        .signature-logo { 
-            width: 100%; max-width: 350px; margin-bottom: 20px; 
-            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
-            cursor: pointer; /* Indicates interaction */
-        }
-        
-        .hero-block { 
-            position: relative; margin-bottom: 30px; border: 1px solid #333; 
-            background: #000; overflow: hidden;
-        }
+        .signature-logo { width: 100%; max-width: 350px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); cursor: pointer; }
+        .hero-block { position: relative; margin-bottom: 30px; border: 1px solid #333; background: #000; overflow: hidden; }
         .hero-image { width: 100%; display: block; opacity: 0.8; }
-        
         #countdown-timer {
             position: absolute; bottom: 10%; left: 0; width: 100%;
             font-size: clamp(2rem, 8vw, 4rem); color: #00ffff; font-weight: 900;
             letter-spacing: -2px; text-shadow: 2px 2px 0px #ff00ff;
             font-family: 'Arial Black', sans-serif;
         }
-
         .subtitle { color: #ff00ff; letter-spacing: 5px; margin-bottom: 30px; font-weight: bold; text-shadow: 0 0 5px #ff00ff; }
-        
-        .section-title { 
-            font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; 
-            margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; 
-        }
-
-        .btn { 
-            display: block; width: 100%; padding: 0; margin-bottom: 20px; 
-            border: 1px solid #444; background: rgba(0,0,0,0.8); 
-            text-decoration: none; color: #fff; font-weight: bold;
-        }
+        .section-title { font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; }
+        .btn { display: block; width: 100%; padding: 0; margin-bottom: 20px; border: 1px solid #444; background: rgba(0,0,0,0.8); text-decoration: none; color: #fff; font-weight: bold; }
         .purchase-link { border: 2px solid #00ffff; box-shadow: 0 0 15px rgba(0,255,255,0.2); }
         .purchase-link img { width: 100%; display: block; }
-        
         .btn-spoils { padding: 20px; border-color: #ff00ff; color: #ff00ff; letter-spacing: 2px; }
         .btn-hq { padding: 20px; border-color: #fff; color: #fff; letter-spacing: 2px; }
-
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #222; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        
-        /* VERTICAL VIDEO WRAPPER (9:16) */
-        .video-wrapper-vertical { 
-            position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; 
-            border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); 
-            max-width: 350px; margin-left: auto; margin-right: auto;
-        }
+        .video-wrapper-vertical { position: relative; padding-bottom: 177.77%; height: 0; margin-bottom: 25px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); max-width: 350px; margin-left: auto; margin-right: auto; }
         .video-wrapper-vertical iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-
         .social-row { display: flex; justify-content: center; gap: 30px; margin: 40px 0; }
         .social-icon { font-size: 2rem; color: #888; transition: 0.3s; }
         .social-icon:hover { color: #00ffff; }
-
         .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 40px;}
 
-        /* --- SCROLLING TICKER --- */
-        .ticker-wrap {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            overflow: hidden;
-            height: 35px;
-            background-color: rgba(0,0,0,0.95);
-            border-top: 1px solid #00ffff;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-        }
-        .ticker {
-            display: flex;
-            white-space: nowrap;
-            animation: ticker 25s linear infinite;
-        }
-        .ticker-item {
-            color: #ff00ff;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            padding: 0 2rem;
-            font-size: 0.9rem;
-            text-shadow: 0 0 5px #ff00ff;
-        }
+        /* --- TICKER --- */
+        .ticker-wrap { position: fixed; bottom: 0; width: 100%; overflow: hidden; height: 35px; background-color: rgba(0,0,0,0.95); border-top: 1px solid #00ffff; z-index: 999; display: flex; align-items: center; }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 25s linear infinite; }
+        .ticker-item { color: #ff00ff; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; padding: 0 2rem; font-size: 0.9rem; text-shadow: 0 0 5px #ff00ff; }
         .ticker-item.trigger { cursor: pointer; color: #00ffff; text-shadow: 0 0 5px #00ffff; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* --- UPDATED BREACH OVERLAY --- */
+        #breach-overlay { 
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+            background: #000; z-index: 10000; 
+            display: none; align-items: center; justify-content: center; 
+        }
         
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        #breach-video { 
+            width: 100%; height: 100%; 
+            /* THE FIX: CONTAIN ensures the full video is seen without cropping */
+            object-fit: contain; 
         }
 
-        /* --- BREACH OVERLAY --- */
-        #breach-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; align-items: center; justify-content: center; }
-        #breach-video { width: 100%; height: 100%; object-fit: contain; }
         .breach-active { display: flex !important; }
-        .system-failure { animation: shake 0.1s infinite; filter: invert(1); }
-        @keyframes shake { 0% { transform: translate(2px, 2px); } 100% { transform: translate(-2px, -2px); } }
+
+        /* --- NEW ARHYTHMIC STROBE EFFECT --- */
+        .system-failure { animation: violent-strobe 0.8s steps(5) infinite; }
+
+        @keyframes violent-strobe {
+            0% { filter: invert(0); }
+            10% { filter: invert(1); }
+            12% { filter: invert(0); }
+            30% { filter: invert(0); }
+            35% { filter: invert(1); }
+            40% { filter: invert(0); }
+            70% { filter: invert(0); }
+            75% { filter: invert(1); }
+            80% { filter: invert(0); }
+            100% { filter: invert(0); }
+        }
+
+        /* Prevent scrolling when breach is active */
+        body.locked { overflow: hidden; }
 
     </style>
 </head>
@@ -195,41 +158,29 @@
     </div>
 
     <div class="container" id="main-content">
-        
         <img src="teralogo.png" alt="THE TROPHY HOE" class="signature-logo" id="main-logo">
-        
         <div class="hero-block">
             <img src="transactional_date.png" alt="03.13.26" class="hero-image">
             <div id="countdown-timer">00:00:00:00</div>
         </div>
-
         <div class="subtitle">TRANSACTIONAL // ERA_02</div>
-
         <a href="https://payhip.com/b/4TUNw" class="btn purchase-link">
             <img src="kys.png" alt="KEEP YOUR SOVEREIGNTY">
         </a>
-
         <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS</a>
         <a href="https://glitchedrecords.com" class="btn btn-hq">💿 GLITCHED RECORDS // HQ</a>
-
         <div class="section-title">THE CRUCIFLEX</div>
         <div class="video-wrapper-vertical">
             <iframe src="https://www.youtube.com/embed/F7PIxg_JhaY" allowfullscreen></iframe>
         </div>
-
         <div class="section-title">THE TRANSMISSIONS</div>
         <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe></div>
-
         <div class="social-row">
             <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
             <a href="https://tiktok.com/@thetrophyhoe" class="social-icon"><i class="fab fa-tiktok"></i></a>
             <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
         </div>
-
-        <div class="footer-text">
-            © 2026 GLITCHED RECORDS | Oceanside, CA
-        </div>
-
+        <div class="footer-text">© 2026 GLITCHED RECORDS | Oceanside, CA</div>
     </div>
 
     <div class="ticker-wrap">
@@ -239,21 +190,18 @@
             <div class="ticker-item trigger" id="ticker-trigger">#TransActionAl</div>
             <div class="ticker-item">#ReprobateHoe</div>
             <div class="ticker-item">#MatriarchalCode</div>
-             <div class="ticker-item">#KeepYourSovereignty</div>
+            <div class="ticker-item">#KeepYourSovereignty</div>
             <div class="ticker-item">#TheTrophyHoe</div>
             <div class="ticker-item">#TransActionAl</div>
         </div>
     </div>
 
     <script>
-        // --- BOOT SEQUENCE LOGIC ---
         function initializeSystem() {
             const bootScreen = document.getElementById('boot-screen');
             const container = document.getElementById('main-content');
             const video = document.getElementById('bg-video');
-
             video.play().catch(error => { console.error("Video Failed:", error); });
-
             bootScreen.style.opacity = '0';
             setTimeout(() => {
                 bootScreen.style.display = 'none';
@@ -261,7 +209,6 @@
             }, 500);
         }
 
-        // --- COUNTDOWN ---
         const targetDate = new Date("March 13, 2026 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -272,20 +219,23 @@
             document.getElementById('countdown-timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }, 1000);
 
-        // --- BREACH TRIGGER SYSTEM ---
         const breachVid = document.getElementById('breach-video');
         
         function executeBreach() {
-            document.body.classList.add('system-failure');
+            document.body.classList.add('locked'); // Disables scrolling
+            document.body.classList.add('system-failure'); // Triggers strobe
             document.getElementById('breach-overlay').classList.add('breach-active');
+            
+            breachVid.currentTime = 0;
             breachVid.play();
-            breachVid.onended = () => { window.location.href = "https://glitchedrecords.com"; };
+            
+            breachVid.onended = () => { 
+                window.location.href = "https://glitchedrecords.com"; 
+            };
         }
 
-        // TRIGGER 1: Double Click Logo
         document.getElementById('main-logo').addEventListener('dblclick', executeBreach);
 
-        // TRIGGER 2: 3-Click on #TransActionAl Ticker Item
         let tickerClicks = 0;
         document.getElementById('ticker-trigger').addEventListener('click', () => {
             tickerClicks++;
