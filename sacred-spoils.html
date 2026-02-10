@@ -15,10 +15,39 @@
             font-family: 'Courier New', Courier, monospace;
             overflow-x: hidden;
             width: 100%;
-            animation: crt-flicker 0.15s infinite;
         }
 
-        @keyframes crt-flicker { 0% { opacity: 0.98; } 50% { opacity: 1; } 100% { opacity: 0.99; } }
+        /* --- INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        #intro-video {
+            width: 100%; height: 100%;
+            object-fit: contain; /* Shows full video without cropping */
+        }
+        
+        /* Force cover on mobile to avoid black bars if preferred, or keep contain */
+        @media (max-width: 768px) {
+            #intro-video { object-fit: cover; }
+        }
+
+        .skip-btn {
+            position: absolute; bottom: 30px; right: 30px;
+            color: #444; border: 1px solid #444; padding: 10px 20px;
+            font-family: 'Courier New', monospace; font-size: 0.8rem;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            background: rgba(0,0,0,0.5); z-index: 10000; transition: 0.3s;
+        }
+        .skip-btn:hover { color: #fff; border-color: #fff; }
+
+        /* --- MAIN CONTENT (Hidden Initially) --- */
+        #main-store {
+            opacity: 0; 
+            transition: opacity 1.5s ease-in; /* Smooth fade in */
+        }
 
         /* --- ATMOSPHERE LAYERS --- */
         .scanlines {
@@ -56,7 +85,7 @@
             flex-direction: column;
             background: #000;
             border-bottom: 1px solid #333;
-            scroll-snap-align: start; /* Smooth scrolling between items */
+            scroll-snap-align: start; 
         }
 
         /* --- VIDEO WRAPPER --- */
@@ -98,7 +127,7 @@
             letter-spacing: 4px;
             margin-bottom: 0.5rem;
             color: #fff;
-            text-shadow: 2px 2px 0px #ff00ff; /* Glitch Shadow */
+            text-shadow: 2px 2px 0px #ff00ff; 
         }
 
         .price-line {
@@ -150,11 +179,11 @@
             transform: translateY(-2px);
         }
 
-        /* MAGENTA BTN (Physical) */
+        /* MAGENTA BTN */
         .btn-magenta { border-color: #ff00ff; color: #ff00ff; }
         .btn-magenta:hover { background-color: #ff00ff; color: #000; box-shadow: 0 0 20px #ff00ff; }
 
-        /* CYAN BTN (Digital) */
+        /* CYAN BTN */
         .btn-cyan { border-color: #00ffff; color: #00ffff; }
         .btn-cyan:hover { background-color: #00ffff; color: #000; box-shadow: 0 0 20px #00ffff; }
 
@@ -171,67 +200,104 @@
 </head>
 <body>
 
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
-    <div class="grain"></div>
-
-    <a href="/" class="return-nav"><i class="fas fa-arrow-left"></i> TERMINAL</a>
-
-    <div class="product-container">
-        <div class="video-wrap">
-            <video autoplay loop muted playsinline>
-                <source src="bg.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="overlay">
-            <h2 style="text-shadow: 2px 2px 0px #00ffff;">T.H.E.A. ARCHIVE</h2>
-            <p class="price-line" style="color: #00ffff;">$6.66 // V6.66 DOWNLOAD</p>
-            <p class="desc-line">4 RESTRICTED TRACKS + GRIMOIRE + T.H.E.A. ENTITY DATA</p>
-            <a href="https://payhip.com/b/MYNlE" class="btn btn-cyan">INITIATE DOWNLOAD</a>
-        </div>
+    <div id="intro-overlay">
+        <video id="intro-video" autoplay muted playsinline>
+            <source src="spoils_intro.mp4" type="video/mp4">
+        </video>
+        <button class="skip-btn" onclick="endIntro()">SKIP SEQUENCE</button>
     </div>
 
-    <div class="product-container">
-        <div class="video-wrap">
-            <video autoplay loop muted playsinline>
-                <source src="Pony.mp4" type="video/mp4">
-            </video>
+    <div id="main-store">
+        
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+        <div class="grain"></div>
+
+        <a href="/" class="return-nav"><i class="fas fa-arrow-left"></i> TERMINAL</a>
+
+        <div class="product-container">
+            <div class="video-wrap">
+                <video autoplay loop muted playsinline>
+                    <source src="bg.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="overlay">
+                <h2 style="text-shadow: 2px 2px 0px #00ffff;">T.H.E.A. ARCHIVE</h2>
+                <p class="price-line" style="color: #00ffff;">$6.66 // V6.66 DOWNLOAD</p>
+                <p class="desc-line">4 RESTRICTED TRACKS + GRIMOIRE + T.H.E.A. ENTITY DATA</p>
+                <a href="https://payhip.com/b/MYNlE" class="btn btn-cyan">INITIATE DOWNLOAD</a>
+            </div>
         </div>
-        <div class="overlay">
-            <h2>TRICK PONY</h2>
-            <p class="price-line" style="color: #ff00ff;">$35.00 // CROP TEE</p>
-            <p class="desc-line">HEAVY COTTON // GLITCHED LOGO // LIMITED RUN</p>
-            <a href="https://www.paypal.com/ncp/payment/F3Z5SV3AF2RF2" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
+
+        <div class="product-container">
+            <div class="video-wrap">
+                <video autoplay loop muted playsinline>
+                    <source src="Pony.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="overlay">
+                <h2>TRICK PONY</h2>
+                <p class="price-line" style="color: #ff00ff;">$35.00 // CROP TEE</p>
+                <p class="desc-line">HEAVY COTTON // GLITCHED LOGO // LIMITED RUN</p>
+                <a href="https://www.paypal.com/ncp/payment/F3Z5SV3AF2RF2" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
+            </div>
         </div>
+
+        <div class="product-container">
+            <div class="video-wrap">
+                <video autoplay loop muted playsinline>
+                    <source src="Demented.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="overlay">
+                <h2>DEMENTED</h2>
+                <p class="price-line" style="color: #ff00ff;">$35.00 // CROP TEE</p>
+                <p class="desc-line">DISTRESSED PRINT // REPROBATE SERIES</p>
+                <a href="https://www.paypal.com/ncp/payment/VWKSXG8LP9H2G" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
+            </div>
+        </div>
+
+        <div class="product-container">
+            <div class="video-wrap">
+                <video autoplay loop muted playsinline>
+                    <source src="Hoodie.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="overlay">
+                <h2>THE TROPHY HOE</h2>
+                <p class="price-line" style="color: #ff00ff;">$66.60 // OVERSIZED HOODIE</p>
+                <p class="desc-line">ULTRA-HEAVYWEIGHT // 03.13.26 PROTOCOL</p>
+                <a href="https://www.paypal.com/ncp/payment/XU4SCNF6S7ELS" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
+            </div>
+        </div>
+
     </div>
 
-    <div class="product-container">
-        <div class="video-wrap">
-            <video autoplay loop muted playsinline>
-                <source src="Demented.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="overlay">
-            <h2>DEMENTED</h2>
-            <p class="price-line" style="color: #ff00ff;">$35.00 // CROP TEE</p>
-            <p class="desc-line">DISTRESSED PRINT // REPROBATE SERIES</p>
-            <a href="https://www.paypal.com/ncp/payment/VWKSXG8LP9H2G" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
-        </div>
-    </div>
+    <script>
+        const introOverlay = document.getElementById('intro-overlay');
+        const introVideo = document.getElementById('intro-video');
+        const mainStore = document.getElementById('main-store');
 
-    <div class="product-container">
-        <div class="video-wrap">
-            <video autoplay loop muted playsinline>
-                <source src="Hoodie.mp4" type="video/mp4">
-            </video>
-        </div>
-        <div class="overlay">
-            <h2>THE TROPHY HOE</h2>
-            <p class="price-line" style="color: #ff00ff;">$66.60 // OVERSIZED HOODIE</p>
-            <p class="desc-line">ULTRA-HEAVYWEIGHT // 03.13.26 PROTOCOL</p>
-            <a href="https://www.paypal.com/ncp/payment/XU4SCNF6S7ELS" class="btn btn-magenta">ACQUIRE PHYSICAL</a>
-        </div>
-    </div>
+        // Function to end intro and show store
+        function endIntro() {
+            introOverlay.style.transition = "opacity 0.5s ease";
+            introOverlay.style.opacity = "0";
+            
+            setTimeout(() => {
+                introOverlay.style.display = "none";
+                mainStore.style.opacity = "1"; // Fade in store
+            }, 500);
+        }
 
+        // When video ends, transition automatically
+        introVideo.onended = () => {
+            endIntro();
+        };
+
+        // Fallback: If video fails to autoplay (browser block), show "Play" or just end intro
+        introVideo.play().catch(error => {
+            console.log("Autoplay blocked, waiting for interaction or skip.");
+        });
+    </script>
 </body>
 </html>
