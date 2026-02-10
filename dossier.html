@@ -12,58 +12,65 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            background-color: #050505;
+            background-color: #000;
             color: #ccc; 
             font-family: 'Courier New', Courier, monospace;
             text-align: left; 
             overflow-x: hidden;
             line-height: 1.6;
             position: relative;
+            animation: crt-flicker 0.15s infinite;
         }
 
-        /* WATERMARK SEAL (The Matriarch is Watching) */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw; max-width: 600px;
-            height: 80vw; max-height: 600px;
-            background-image: url('seal.png');
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            opacity: 0.08; /* Subtle Ghost Effect */
-            z-index: -1;
-            filter: grayscale(100%);
-            pointer-events: none;
-        }
+        @keyframes crt-flicker { 0% { opacity: 0.98; } 50% { opacity: 1; } 100% { opacity: 0.99; } }
 
+        /* --- ATMOSPHERE LAYERS --- */
         .scanlines {
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-            background-size: 100% 4px;
-            position: fixed; pointer-events: none; top: 0; right: 0; bottom: 0; left: 0; z-index: 5;
+            background: linear-gradient(to bottom, rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+            background-size: 100% 4px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            z-index: 5; pointer-events: none;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 100%);
+            z-index: 6; pointer-events: none;
+        }
+        .grain {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 4; opacity: 0.08;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
 
+        /* --- NAVIGATION --- */
+        .return-nav {
+            position: fixed; top: 20px; left: 20px; z-index: 99;
+            text-decoration: none; color: #00ffff; font-size: 0.8rem;
+            border: 1px solid #00ffff; padding: 8px 12px;
+            background: rgba(0,0,0,0.8); text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.3s;
+        }
+        .return-nav:hover { background: #00ffff; color: #000; box-shadow: 0 0 10px #00ffff; }
+
+        /* --- BACKGROUND VIDEO --- */
         #bg-video {
             position: fixed; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
             width: auto; height: auto; transform: translate(-50%, -50%);
-            z-index: -2; opacity: 0.15; 
-            filter: grayscale(100%) contrast(1.2);
+            z-index: -2; opacity: 0.3; 
+            filter: contrast(1.2) brightness(0.5);
         }
 
         .container {
             max-width: 800px; 
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 20px;
             position: relative;
             z-index: 10;
         }
 
         /* --- HEADER --- */
         .confidential-stamp {
-            border: 2px solid #ff0055;
-            color: #ff0055;
+            border: 2px solid #ff00ff; /* MAGENTA */
+            color: #ff00ff;
             display: inline-block;
             padding: 5px 15px;
             font-weight: bold;
@@ -71,36 +78,38 @@
             transform: rotate(-2deg);
             margin-bottom: 20px;
             font-size: 0.8rem;
-            text-shadow: 0 0 5px #ff0055;
+            text-shadow: 0 0 5px #ff00ff;
         }
 
-        /* UPDATED: ANTICHRIST LOGO */
+        /* VIDEO LOGO */
         .header-logo {
-            width: 300px; /* Slightly larger for the new script */
+            width: 300px; 
             max-width: 90%;
             display: block;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 5px #ff0055);
+            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5));
         }
 
         .epk-subtitle {
-            color: #d4af37; /* GOLD */
+            color: #00ffff; /* CYAN */
             letter-spacing: 2px;
             border-bottom: 1px solid #333;
             padding-bottom: 20px;
             margin-bottom: 40px;
+            text-shadow: 0 0 5px #00ffff;
         }
 
         /* --- CONTENT BLOCKS --- */
         .section-header {
-            background: #111;
+            background: rgba(0,0,0,0.8);
             color: #fff;
             padding: 10px;
-            border-left: 4px solid #ff0055; /* RED ACCENT */
+            border-left: 4px solid #ff00ff; /* MAGENTA ACCENT */
             letter-spacing: 3px;
             text-transform: uppercase;
             margin-top: 50px;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #00ffff; /* CYAN SHADOW */
         }
 
         .bio-text {
@@ -111,7 +120,7 @@
             margin-bottom: 20px;
         }
         
-        .highlight { color: #fff; font-weight: bold; }
+        .highlight { color: #00ffff; font-weight: bold; text-shadow: 0 0 3px #00ffff; }
 
         /* --- STATS GRID --- */
         .stats-grid {
@@ -126,17 +135,17 @@
             padding: 15px;
             text-align: center;
         }
-        /* UPDATED COLORS */
-        .stat-number { font-size: 1.1rem; color: #ff0055; font-weight: bold; display: block; margin-bottom:5px; }
-        .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color:#888; }
-        .stat-sub { font-size: 0.6rem; color:#555; display:block; margin-top:5px; }
+        
+        .stat-number { font-size: 1.1rem; color: #ff00ff; font-weight: bold; display: block; margin-bottom:5px; text-shadow: 0 0 5px #ff00ff; }
+        .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color:#ccc; }
+        .stat-sub { font-size: 0.6rem; color:#666; display:block; margin-top:5px; }
 
         /* --- DOWNLOAD BUTTONS --- */
         .btn-download {
             display: inline-block;
             background: transparent;
-            border: 1px solid #666;
-            color: #fff;
+            border: 1px solid #00ffff;
+            color: #00ffff;
             padding: 10px 20px;
             text-transform: uppercase;
             font-size: 0.8rem;
@@ -146,7 +155,7 @@
             transition: 0.3s;
             text-decoration: none;
         }
-        .btn-download:hover { background: #fff; color: #000; border-color: #fff; }
+        .btn-download:hover { background: #00ffff; color: #000; box-shadow: 0 0 15px #00ffff; }
         .btn-download i { margin-right: 8px; }
 
         /* --- MEDIA GRID --- */
@@ -177,7 +186,7 @@
             padding: 15px;
             border-bottom: 1px solid #222;
         }
-        .contact-role { color: #666; text-transform: uppercase; font-size: 0.8rem; width: 40%; vertical-align: middle; }
+        .contact-role { color: #888; text-transform: uppercase; font-size: 0.8rem; width: 40%; vertical-align: middle; }
         .contact-email { color: #fff; font-weight: bold; vertical-align: middle; }
         
         /* SOCIAL LINKS */
@@ -189,8 +198,8 @@
             font-size: 0.9rem;
             transition: 0.2s;
         }
-        .social-row-item:hover { color: #ff0055; }
-        .social-row-item i { width: 25px; color: #ff0055; }
+        .social-row-item:hover { color: #ff00ff; text-shadow: 0 0 5px #ff00ff; }
+        .social-row-item i { width: 25px; color: #ff00ff; }
 
         /* VIDEO WRAPPER */
         .video-wrapper {
@@ -206,21 +215,28 @@
             .photo-slot { height: 400px; }
         }
         
-        .apple-glitch { filter: invert(100%) hue-rotate(180deg); width: 100%; height: 175px; display: block; }
     </style>
 </head>
 <body>
 
     <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="grain"></div>
+
     <video autoplay loop muted playsinline id="bg-video">
-        <source src="bg.mp4" type="video/mp4">
+        <source src="teraback.mp4" type="video/mp4">
     </video>
+
+    <a href="/" class="return-nav"><i class="fas fa-arrow-left"></i> TERMINAL</a>
 
     <div class="container">
         
         <div class="confidential-stamp">INTERNAL DOSSIER // READ ONLY</div>
         
-        <img src="logo_era_antichrist.png" alt="THE TROPHY HOE" class="header-logo">
+        <video autoplay loop muted playsinline class="header-logo">
+            <source src="teralogo.mp4" type="video/mp4">
+        </video>
+
         <div class="epk-subtitle">GLITCHED RECORDS // ASSET PROFILE 001</div>
 
         <div class="section-header">01 // THE NARRATIVE</div>
@@ -249,17 +265,17 @@
         <div class="section-header">03 // SONIC EVIDENCE</div>
         
         <div style="margin-bottom: 15px; box-shadow: 0 0 10px #000;">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
 
         <div style="margin-bottom: 15px; overflow: hidden; box-shadow: 0 0 10px #000;">
-            <iframe class="apple-glitch" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" style="width:100%;max-width:800px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/artist/the-trophy-hoe/1812507018"></iframe>
+             <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/t-h-e-a-ntichrist-mother/1792613589"></iframe>
         </div>
 
         <div class="section-header">04 // CLASSIFIED AUDIO (VAULT)</div>
         <div class="bio-text" style="text-align:center;">
             <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">[ UNRELEASED MATERIAL // PRIVATE STREAM ]</div>
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2251931048%3Fsecret_token%3Ds-TopYRiT8jkP&color=%23ff0055&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2000000000&color=%23ff00ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
         </div>
 
         <div class="section-header">05 // KEY METRICS</div>
