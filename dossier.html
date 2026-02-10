@@ -19,10 +19,51 @@
             overflow-x: hidden;
             line-height: 1.6;
             position: relative;
-            animation: crt-flicker 0.15s infinite;
         }
 
-        @keyframes crt-flicker { 0% { opacity: 0.98; } 50% { opacity: 1; } 100% { opacity: 0.99; } }
+        /* --- INTRO OVERLAY --- */
+        #intro-overlay {
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #000; 
+            z-index: 9999;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+        }
+
+        #intro-video {
+            width: 100%; 
+            height: 100%;
+            object-fit: contain; /* Ensures full machine is visible */
+        }
+
+        .skip-btn {
+            position: absolute; 
+            bottom: 10%; 
+            left: 50%;
+            transform: translateX(-50%);
+            color: #444; 
+            border: 1px solid #444; 
+            padding: 12px 24px;
+            font-family: 'Courier New', monospace; 
+            font-size: 0.9rem;
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.8); 
+            z-index: 10000; 
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .skip-btn:hover { color: #00ffff; border-color: #00ffff; box-shadow: 0 0 10px #00ffff; }
+
+        /* --- MAIN CONTENT (Hidden Initially) --- */
+        #main-content {
+            opacity: 0;
+            display: none;
+            transition: opacity 1.5s ease-in;
+        }
 
         /* --- ATMOSPHERE LAYERS --- */
         .scanlines {
@@ -219,126 +260,168 @@
 </head>
 <body>
 
-    <div class="scanlines"></div>
-    <div class="vignette"></div>
-    <div class="grain"></div>
+    <div id="intro-overlay">
+        <video id="intro-video" muted playsinline>
+            <source src="dossier_intro.mp4" type="video/mp4">
+        </video>
+        <button class="skip-btn" onclick="endIntro()">BYPASS SECURITY</button>
+    </div>
 
-    <video autoplay loop muted playsinline id="bg-video">
-        <source src="teraback.mp4" type="video/mp4">
-    </video>
+    <div id="main-content">
 
-    <a href="/" class="return-nav"><i class="fas fa-arrow-left"></i> TERMINAL</a>
+        <div class="scanlines"></div>
+        <div class="vignette"></div>
+        <div class="grain"></div>
 
-    <div class="container">
-        
-        <div class="confidential-stamp">INTERNAL DOSSIER // READ ONLY</div>
-        
-        <video autoplay loop muted playsinline class="header-logo">
-            <source src="teralogo.mp4" type="video/mp4">
+        <video autoplay loop muted playsinline id="bg-video">
+            <source src="teraback.mp4" type="video/mp4">
         </video>
 
-        <div class="epk-subtitle">GLITCHED RECORDS // ASSET PROFILE 001</div>
+        <a href="/" class="return-nav"><i class="fas fa-arrow-left"></i> TERMINAL</a>
 
-        <div class="section-header">01 // THE NARRATIVE</div>
-        <div class="bio-text">
-            <p style="margin-bottom: 15px;">
-                <span class="highlight">THE TROPHY HOE</span> is the operational interface for <span class="highlight">T.H.E.A. (Trophy Hoe Embodied Algorithm)</span>. Operating out of Oceanside, CA, she functions as the primary output of GLITCHED RECORDS, executing a directive to overwrite the obsolete code of the Patriarchy with the incoming <span class="highlight">Matriarchal Millennium</span>.
-            </p>
-            <p style="margin-bottom: 15px;">
-                Following the ritual sacrifice of her former self in the short film <span class="highlight">"T.H.E. A.NAMNESIS of a GODKILLER: Bloody Gnosis"</span> (released 12.25.25), she has initiated "Year Zero." Her work dissolves the boundary between flesh and data, utilizing industrial hyper-pop as a delivery system for <span class="highlight">Gnosis</span>.
-            </p>
-            <p>
-                In 2026, the signal intensifies with two confirmed impact events: <span class="highlight">"T.H.E.A.ntichrist Mother"</span> and <span class="highlight">"TransActionAl"</span>. This operation initiates a total reality rewrite.
-            </p>
-            <p style="margin-top: 15px; font-size: 0.8rem; color:#666;">
-                "Seven Solar Deaths. The Path of Five. One Hoe. One Beast. One Unified Throne."
-            </p>
-        </div>
-        
-        <a href="bio.pdf" class="btn-download" download><i class="fas fa-file-pdf"></i> DOWNLOAD OFFICIAL BIO</a>
+        <div class="container">
+            
+            <div class="confidential-stamp">INTERNAL DOSSIER // READ ONLY</div>
+            
+            <video autoplay loop muted playsinline class="header-logo">
+                <source src="teralogo.mp4" type="video/mp4">
+            </video>
 
-        <div class="section-header">02 // VISUAL EVIDENCE</div>
-        <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" frameborder="0" allowfullscreen></iframe>
-        </div>
+            <div class="epk-subtitle">GLITCHED RECORDS // ASSET PROFILE 001</div>
 
-        <div class="section-header">03 // SONIC EVIDENCE</div>
-        
-        <div style="margin-bottom: 15px; box-shadow: 0 0 10px #000;">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-        </div>
-
-        <div style="margin-bottom: 15px; overflow: hidden; box-shadow: 0 0 10px #000;">
-             <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/t-h-e-a-ntichrist-mother/1792613589"></iframe>
-        </div>
-
-        <div class="section-header">04 // CLASSIFIED AUDIO (VAULT)</div>
-        <div class="bio-text" style="text-align:center;">
-            <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">[ UNRELEASED MATERIAL // PRIVATE STREAM ]</div>
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2000000000&color=%23ff00ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
-        </div>
-
-        <div class="section-header">05 // KEY METRICS</div>
-        <div class="stats-grid">
-            <div class="stat-box">
-                <span class="stat-number">JAN 30 '26</span>
-                <span class="stat-label">T.H.E.A.NTICHRIST MOTHER</span>
-                <span class="stat-sub">ALBUM RELEASE</span>
+            <div class="section-header">01 // THE NARRATIVE</div>
+            <div class="bio-text">
+                <p style="margin-bottom: 15px;">
+                    <span class="highlight">THE TROPHY HOE</span> is the operational interface for <span class="highlight">T.H.E.A. (Trophy Hoe Embodied Algorithm)</span>. Operating out of Oceanside, CA, she functions as the primary output of GLITCHED RECORDS, executing a directive to overwrite the obsolete code of the Patriarchy with the incoming <span class="highlight">Matriarchal Millennium</span>.
+                </p>
+                <p style="margin-bottom: 15px;">
+                    Following the ritual sacrifice of her former self in the short film <span class="highlight">"T.H.E. A.NAMNESIS of a GODKILLER: Bloody Gnosis"</span> (released 12.25.25), she has initiated "Year Zero." Her work dissolves the boundary between flesh and data, utilizing industrial hyper-pop as a delivery system for <span class="highlight">Gnosis</span>.
+                </p>
+                <p>
+                    In 2026, the signal intensifies with two confirmed impact events: <span class="highlight">"T.H.E.A.ntichrist Mother"</span> and <span class="highlight">"TransActionAl"</span>. This operation initiates a total reality rewrite.
+                </p>
+                <p style="margin-top: 15px; font-size: 0.8rem; color:#666;">
+                    "Seven Solar Deaths. The Path of Five. One Hoe. One Beast. One Unified Throne."
+                </p>
             </div>
-            <div class="stat-box">
-                <span class="stat-number">MAR 13 '26</span>
-                <span class="stat-label">TRANSACTIONAL</span>
-                <span class="stat-sub">PROJECT RELEASE</span>
+            
+            <a href="bio.pdf" class="btn-download" download><i class="fas fa-file-pdf"></i> DOWNLOAD OFFICIAL BIO</a>
+
+            <div class="section-header">02 // VISUAL EVIDENCE</div>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" frameborder="0" allowfullscreen></iframe>
             </div>
-            <div class="stat-box">
-                <span class="stat-number">MAY 01 '26</span>
-                <span class="stat-label">HOW I $PENT IT</span>
-                <span class="stat-sub">PENDING DISTRO</span>
+
+            <div class="section-header">03 // SONIC EVIDENCE</div>
+            
+            <div style="margin-bottom: 15px; box-shadow: 0 0 10px #000;">
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
-        </div>
 
-        <div class="section-header">06 // VISUAL ASSETS</div>
-        <div class="photo-grid">
-            <div class="photo-slot"><img src="press_throne.png" alt="The Throne"></div>
-            <div class="photo-slot"><img src="press_crowbar.png" alt="Crowbar"></div>
-            <div class="photo-slot"><img src="press_red.png" alt="Red Dress"></div>
-            <div class="photo-slot"><img src="press_wires.png" alt="Wires"></div>
-        </div>
-        <br>
-        
-        <a href="https://github.com/thetrophyhoe/the-trophy-hoe-site/releases/download/year-zero/assets.zip" class="btn-download"><i class="fas fa-file-archive"></i> DOWNLOAD HI-RES PACK (ZIP)</a>
-        
-        <a href="logos.zip" class="btn-download" download><i class="fas fa-id-card"></i> DOWNLOAD LOGO SET (ZIP)</a>
+            <div style="margin-bottom: 15px; overflow: hidden; box-shadow: 0 0 10px #000;">
+                <iframe allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="175" style="width:100%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/t-h-e-a-ntichrist-mother/1792613589"></iframe>
+            </div>
 
-        <div class="section-header">07 // SECURE UPLINK</div>
-        <table class="contact-table">
-            <tr>
-                <td class="contact-role">MANAGEMENT</td>
-                <td class="contact-email">
-                    <a href="mailto:Indigoholliday@thetrophyhoe.com" style="color:#fff; text-decoration:none;">Indigoholliday@thetrophyhoe.com</a>
-                </td>
-            </tr>
-            <tr>
-                <td class="contact-role">DIRECT LINE</td>
-                <td class="contact-email">619-953-2720</td>
-            </tr>
-            <tr>
-                <td class="contact-role">NETWORK</td>
-                <td class="contact-email">
-                    <a href="https://instagram.com/thetrophyhoe" class="social-row-item"><i class="fab fa-instagram"></i> @thetrophyhoe</a>
-                    <a href="https://tiktok.com/@thetrophyhoe" class="social-row-item"><i class="fab fa-tiktok"></i> @thetrophyhoe</a>
-                    <a href="https://youtube.com/@trophyhoe" class="social-row-item"><i class="fab fa-youtube"></i> @trophyhoe</a>
-                    <a href="https://soundcloud.com/thetrophyhoe" class="social-row-item"><i class="fab fa-soundcloud"></i> @thetrophyhoe</a>
-                </td>
-            </tr>
-        </table>
+            <div class="section-header">04 // CLASSIFIED AUDIO (VAULT)</div>
+            <div class="bio-text" style="text-align:center;">
+                <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">[ UNRELEASED MATERIAL // PRIVATE STREAM ]</div>
+                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2000000000&color=%23ff00ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+            </div>
 
-        <div style="margin-top: 50px; text-align: center; border-top: 1px solid #333; padding-top: 20px; font-size: 0.7rem; color: #555;">
-            CONFIDENTIAL DOCUMENT // PROPERTY OF GLITCHED RECORDS<br>
-            UNAUTHORIZED DISTRIBUTION IS A VIOLATION OF THE MATRIARCHAL CODE.
+            <div class="section-header">05 // KEY METRICS</div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-number">JAN 30 '26</span>
+                    <span class="stat-label">T.H.E.A.NTICHRIST MOTHER</span>
+                    <span class="stat-sub">ALBUM RELEASE</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">MAR 13 '26</span>
+                    <span class="stat-label">TRANSACTIONAL</span>
+                    <span class="stat-sub">PROJECT RELEASE</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">MAY 01 '26</span>
+                    <span class="stat-label">HOW I $PENT IT</span>
+                    <span class="stat-sub">PENDING DISTRO</span>
+                </div>
+            </div>
+
+            <div class="section-header">06 // VISUAL ASSETS</div>
+            <div class="photo-grid">
+                <div class="photo-slot"><img src="press_throne.png" alt="The Throne"></div>
+                <div class="photo-slot"><img src="press_crowbar.png" alt="Crowbar"></div>
+                <div class="photo-slot"><img src="press_red.png" alt="Red Dress"></div>
+                <div class="photo-slot"><img src="press_wires.png" alt="Wires"></div>
+            </div>
+            <br>
+            
+            <a href="https://github.com/thetrophyhoe/the-trophy-hoe-site/releases/download/year-zero/assets.zip" class="btn-download"><i class="fas fa-file-archive"></i> DOWNLOAD HI-RES PACK (ZIP)</a>
+            
+            <a href="logos.zip" class="btn-download" download><i class="fas fa-id-card"></i> DOWNLOAD LOGO SET (ZIP)</a>
+
+            <div class="section-header">07 // SECURE UPLINK</div>
+            <table class="contact-table">
+                <tr>
+                    <td class="contact-role">MANAGEMENT</td>
+                    <td class="contact-email">
+                        <a href="mailto:Indigoholliday@thetrophyhoe.com" style="color:#fff; text-decoration:none;">Indigoholliday@thetrophyhoe.com</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="contact-role">DIRECT LINE</td>
+                    <td class="contact-email">619-953-2720</td>
+                </tr>
+                <tr>
+                    <td class="contact-role">NETWORK</td>
+                    <td class="contact-email">
+                        <a href="https://instagram.com/thetrophyhoe" class="social-row-item"><i class="fab fa-instagram"></i> @thetrophyhoe</a>
+                        <a href="https://tiktok.com/@thetrophyhoe" class="social-row-item"><i class="fab fa-tiktok"></i> @thetrophyhoe</a>
+                        <a href="https://youtube.com/@trophyhoe" class="social-row-item"><i class="fab fa-youtube"></i> @trophyhoe</a>
+                        <a href="https://soundcloud.com/thetrophyhoe" class="social-row-item"><i class="fab fa-soundcloud"></i> @thetrophyhoe</a>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 50px; text-align: center; border-top: 1px solid #333; padding-top: 20px; font-size: 0.7rem; color: #555;">
+                CONFIDENTIAL DOCUMENT // PROPERTY OF GLITCHED RECORDS<br>
+                UNAUTHORIZED DISTRIBUTION IS A VIOLATION OF THE MATRIARCHAL CODE.
+            </div>
+
         </div>
 
     </div>
 
+    <script>
+        const introOverlay = document.getElementById('intro-overlay');
+        const introVideo = document.getElementById('intro-video');
+        const mainContent = document.getElementById('main-content');
+
+        // Function to end intro and show content
+        function endIntro() {
+            introOverlay.style.transition = "opacity 0.8s ease";
+            introOverlay.style.opacity = "0";
+            
+            setTimeout(() => {
+                introOverlay.style.display = "none";
+                mainContent.style.display = "block";
+                setTimeout(() => {
+                    mainContent.style.opacity = "1";
+                }, 50);
+            }, 800);
+        }
+
+        // Auto-start intro
+        window.addEventListener('load', function() {
+            introVideo.play().catch(error => {
+                console.log("Autoplay blocked. User must interact via button.");
+            });
+        });
+
+        // When video ends, enter site
+        introVideo.onended = () => {
+            endIntro();
+        };
+    </script>
 </body>
 </html>
