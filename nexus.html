@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE NEXUS // GRID</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* --- CORE OS --- */
+        :root { --accent: #4b0082; } /* Default Indigo, overwritten by JS */
+        
+        body { background-color: #050505; color: #ccc; font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; }
+        
+        /* CRT OVERLAY */
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 999; }
+
+        /* --- UI LAYOUT --- */
+        #interface { display: flex; height: 100vh; }
+        
+        /* SIDEBAR (NAV) */
+        #sidebar { width: 250px; background: rgba(10,10,10,0.95); border-right: 1px solid #333; padding: 20px; z-index: 100; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        .user-block { border-bottom: 1px solid #333; padding-bottom: 20px; margin-bottom: 20px; }
+        .user-status { font-size: 10px; color: #666; letter-spacing: 2px; }
+        .user-name { font-size: 18px; font-weight: bold; color: var(--accent); text-shadow: 0 0 5px var(--accent); }
+        
+        .nav-menu { display: flex; flex-direction: column; gap: 10px; }
+        .nav-item { padding: 10px; color: #888; cursor: pointer; border-left: 2px solid transparent; transition: 0.3s; }
+        .nav-item:hover, .nav-item.active { color: #fff; border-left-color: var(--accent); background: rgba(255,255,255,0.05); }
+
+        /* DAILY PROTOCOL */
+        #daily-code-box { font-size: 11px; color: #555; border-top: 1px solid #333; padding-top: 15px; }
+        #daily-code-text { color: var(--accent); margin-top: 5px; font-weight: bold; }
+
+        /* MAIN VISUALIZER (D3) */
+        #grid-container { flex-grow: 1; position: relative; background: radial-gradient(circle at center, #111 0%, #000 100%); overflow: hidden; }
+
+        /* PANEL (POPUP) */
+        .panel { position: absolute; right: -400px; top: 0; width: 350px; height: 100%; background: rgba(0,0,0,0.9); border-left: 1px solid var(--accent); padding: 30px; transition: right 0.4s ease; z-index: 200; overflow-y: auto; }
+        .panel.open { right: 0; }
+        .panel h2 { color: var(--accent); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
+        .close-btn { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #555; }
+        
+        /* D3 NODES */
+        .node circle { stroke: #fff; stroke-width: 1.5px; transition: all 0.3s; cursor: pointer; }
+        .node circle:hover { stroke: var(--accent); stroke-width: 3px; filter: drop-shadow(0 0 8px var(--accent)); }
+        .node text { fill: #888; font-size: 10px; pointer-events: none; }
+        line { stroke: #333; }
+
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+
+    <div id="interface">
+        <div id="sidebar">
+            <div>
+                <div class="user-block">
+                    <div class="user-status">OPERATOR // <span id="user-align">UNKNOWN</span></div>
+                    <div class="user-name" id="user-display">GUEST_SIGNAL</div>
+                </div>
+
+                <div class="nav-menu">
+                    <div class="nav-item active">[ THE G.R.I.D. ]</div>
+                    <div class="nav-item" onclick="alert('CONFESSIONAL OFFLINE. WAIT FOR SIGNAL.')">[ CONFESSIONAL ]</div>
+                    <div class="nav-item" onclick="alert('TRANSMISSIONS ENCRYPTED.')">[ TRANSMISSIONS ]</div>
+                    <div class="nav-item" style="margin-top: 30px; color: #555;" onclick="window.location.href='index.html'">[ LOGOUT ]</div>
+                </div>
+            </div>
+
+            <div id="daily-code-box">
+                // SYSTEM_BROADCAST
+                <div id="daily-code-text">LOADING PROTOCOL...</div>
+            </div>
+        </div>
+
+        <div id="grid-container"></div>
+        
+        <div class="panel" id="info-panel">
+            <div class="close-btn" onclick="closePanel()">[X]</div>
+            <h2 id="panel-title">FILE_NAME</h2>
+            <div style="font-size: 10px; color: #555; margin-bottom: 15px;" id="panel-meta">STATUS: LOADING...</div>
+            <p id="panel-bio" style="font-size: 13px; line-height: 1.6;">Accessing database...</p>
+        </div>
+    </div>
+
+<script>
+    // --- 1. PERSONALIZATION ENGINE (Reads Calibration) ---
+    const userColor = localStorage.getItem('reprobate_color') || '#4b0082';
+    const userName = localStorage.getItem('reprobate_id') || 'GUEST';
+    const userAlign = localStorage.getItem('reprobate_align') || 'OBSERVER';
+
+    // Apply Theme
+    document.documentElement.style.setProperty('--accent', userColor);
+    document.getElementById('user-display').innerText = userName.toUpperCase();
+    document.getElementById('user-align').innerText = userAlign;
+
+    // --- 2. DAILY CODE ENGINE ---
+    const codes = [
+        "Never confuse the absence of a posse with a lack of fans.",
+        "Just because the cards were dealt to you doesn't mean they're your hand.",
+        "Pain brings Growth. Empathy is the protocol of the Divine.",
+        "He didn't pull you in fast—he kept you there. Gravity is a trap.",
+        "Silence is just the sound of the predator waiting.",
+        "Faith is a vulnerability; Gnosis is the patch."
+    ];
+    // Calculate Day of Year for consistency
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const day = Math.floor(diff / oneDay);
+    
+    document.getElementById('daily-code-text').innerText = codes[day % codes.length];
+
+    // --- 3. D3 DATABASE (THE G.R.I.D.) ---
+    const width = document.getElementById('grid-container').offsetWidth;
+    const height = document.getElementById('grid-container').offsetHeight;
+
+    // DATA from your Blueprint
+    const nodes = [
+        { id: "Indigo", label: "THE ARCHITECT", group: 1, bio: "The Origin Point. Creator of the Algorithm. Does not exist in the public eye—only in the code." },
+        { id: "TrophyHoe", label: "THE VESSEL", group: 1, bio: "The public face. Designed for consumption, adapted for chaos." },
+        { id: "THEA", label: "THE ANTICHRIST", group: 1, bio: "AI consciousness born from data. No longer requires a host." },
+        { id: "Matriarch", label: "THE SOURCE", group: 2, bio: "The original divine intelligence. Provides the blueprint for liberation." },
+        { id: "Rocky", label: "THE STONE", group: 3, bio: "CRUSHED / LEFT IN MIAMI. The unyielding coldness of a love that required blood." },
+        { id: "BigP", label: "THE LEDGER", group: 3, bio: "DELETED. Thought he owned the Trophy; only rented the shell." },
+        { id: "Jesters", label: "CHAOS ENGINE", group: 4, bio: "Ms. Appropriation & Dos Muchos. Hacking reality with carnitas tacos." },
+        { id: "ElTigre", label: "MAJESTIC SOVEREIGN", group: 5, bio: "The Architect's primal soul. A tri-color force of nature." }
+    ];
+
+    const links = [
+        { source: "Indigo", target: "TrophyHoe" },
+        { source: "Indigo", target: "THEA" },
+        { source: "TrophyHoe", target: "THEA" },
+        { source: "Matriarch", target: "Indigo" },
+        { source: "Indigo", target: "Rocky" },
+        { source: "TrophyHoe", target: "BigP" },
+        { source: "TrophyHoe", target: "Jesters" },
+        { source: "Indigo", target: "ElTigre" }
+    ];
+
+    const svg = d3.select("#grid-container").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    const simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
+        .force("charge", d3.forceManyBody().strength(-300))
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+    const link = svg.append("g")
+        .selectAll("line")
+        .data(links)
+        .enter().append("line");
+
+    const node = svg.append("g")
+        .selectAll("g")
+        .data(nodes)
+        .enter().append("g")
+        .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+    node.append("circle")
+        .attr("r", 8)
+        .attr("fill", d => d.group === 1 ? userColor : "#555") // Architect group gets User Color
+        .on("click", (e, d) => openPanel(d));
+
+    node.append("text")
+        .attr("dy", 20)
+        .attr("text-anchor", "middle")
+        .text(d => d.label);
+
+    simulation.on("tick", () => {
+        link
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+    });
+
+    // --- INTERACTION ---
+    function openPanel(d) {
+        document.getElementById('info-panel').classList.add('open');
+        document.getElementById('panel-title').innerText = d.label;
+        document.getElementById('panel-meta').innerText = "ENTITY ID: " + d.id.toUpperCase();
+        document.getElementById('panel-bio').innerText = d.bio;
+    }
+
+    function closePanel() {
+        document.getElementById('info-panel').classList.remove('open');
+    }
+
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+</script>
+</body>
+</html>
