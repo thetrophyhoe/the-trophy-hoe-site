@@ -69,12 +69,10 @@
         }
 
         /* --- UI ELEMENTS --- */
-        /* Updated for VIDEO LOGO */
         .signature-logo { 
             width: 100%; max-width: 350px; margin-bottom: 20px; 
             filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
             cursor: pointer; 
-            /* Ensure video doesn't capture clicks in a way that blocks our event */
             pointer-events: auto; 
         }
 
@@ -120,7 +118,6 @@
 
         /* --- TIMED FAILURE SEQUENCE --- */
         .system-failure { animation: breach-timeline 17s linear forwards; }
-
         @keyframes breach-timeline {
             0% { filter: invert(0); }
             1% { filter: invert(1); } 
@@ -135,6 +132,58 @@
 
         body.locked { overflow: hidden; }
 
+        /* ================================================= */
+        /* [NEXUS INTEGRATION START] - THE GLITCH TRIGGER    */
+        /* ================================================= */
+        .nexus-anomaly {
+            position: fixed; top: 25px; right: 30px;
+            font-family: 'Courier New', monospace; font-size: 14px;
+            color: rgba(255, 255, 255, 0.4); 
+            cursor: default; z-index: 99998; /* Just below boot screen, above content */
+            transition: all 0.4s ease; user-select: none;
+        }
+
+        /* The Heartbeat Twitch */
+        @keyframes nexus-twitch {
+            0%, 95% { transform: skew(0deg); opacity: 0.4; }
+            96% { transform: skew(10deg); opacity: 0.8; color: #4b0082; } 
+            97% { transform: skew(-10deg); opacity: 0.2; }
+            100% { transform: skew(0deg); opacity: 0.4; }
+        }
+        .nexus-anomaly { animation: nexus-twitch 8s infinite; }
+
+        /* Hover Interaction */
+        .nexus-anomaly:hover {
+            color: #4b0082; opacity: 1; animation: none;
+            cursor: pointer; text-shadow: 0px 0px 8px rgba(75, 0, 130, 0.8);
+        }
+
+        /* The Tooltip */
+        .nexus-tooltip {
+            visibility: hidden; position: absolute; top: 100%; right: 0;
+            width: 100px; background: #000; color: #00ff00;
+            text-align: center; font-size: 10px; padding: 4px;
+            border: 1px solid #4b0082; margin-top: 5px;
+            opacity: 0; transition: opacity 0.2s;
+        }
+        .nexus-anomaly:hover .nexus-tooltip { visibility: visible; opacity: 1; }
+
+        /* The Nexus Crash Sequence */
+        body.nexus-crashing {
+            animation: nexus-crash-anim 0.2s infinite;
+            overflow: hidden; filter: invert(1) grayscale(100%) contrast(200%);
+        }
+        @keyframes nexus-crash-anim {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(-5px, 2px); }
+            50% { transform: translate(5px, -2px); }
+            75% { transform: translate(-2px, 5px); }
+            100% { transform: translate(0, 0); }
+        }
+        /* ================================================= */
+        /* [NEXUS INTEGRATION END]                           */
+        /* ================================================= */
+
     </style>
 </head>
 <body>
@@ -142,6 +191,12 @@
     <div id="boot-screen">
         <div style="color: #ff00ff; margin-bottom: 20px; letter-spacing: 3px;">SYSTEM OFFLINE</div>
         <button class="boot-btn" onclick="initializeSystem()">INITIALIZE SYSTEM</button>
+    </div>
+
+    <div id="nexus-portal-trigger" class="nexus-anomaly">
+        <span class="nexus-text">720</span>
+        <span class="nexus-sigil">🜃</span>
+        <div class="nexus-tooltip">ENTER NEXUS</div>
     </div>
 
     <video id="bg-video" loop muted playsinline poster="transactional_date.png">
@@ -249,6 +304,32 @@
         document.getElementById('ticker-trigger').addEventListener('click', () => {
             tickerClicks++;
             if(tickerClicks === 3) executeBreach();
+        });
+
+        /* ================================================= */
+        /* [NEXUS INTEGRATION] - SCRIPT LOGIC                */
+        /* ================================================= */
+        document.getElementById('nexus-portal-trigger').addEventListener('click', function() {
+            // 1. Trigger the Visual Crash
+            document.body.classList.add('nexus-crashing');
+            
+            // 2. The Blackout (after 800ms)
+            setTimeout(() => {
+                document.body.innerHTML = ''; // Wipes the visual DOM
+                document.body.style.backgroundColor = 'black';
+                document.body.style.filter = 'none'; // Remove invert filter
+                
+                // 3. Terminal Message
+                const term = document.createElement('div');
+                term.innerHTML = "ACCESSING NODE... <br>AUTHORITY: [REPROBATE]";
+                term.style.cssText = "color:#00ff00; font-family:'Courier New'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center;";
+                document.body.appendChild(term);
+
+                // 4. Redirect to The Registry
+                setTimeout(() => {
+                    window.location.href = "/registry.html"; 
+                }, 2000);
+            }, 800);
         });
     </script>
 </body>
