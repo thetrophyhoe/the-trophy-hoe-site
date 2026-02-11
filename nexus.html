@@ -6,129 +6,124 @@
     <title>THE NEXUS // INTELLIGENCE GRID</title>
     <style>
         /* --- CORE OS --- */
-        :root { --accent: #4b0082; } /* Default Indigo */
+        :root { --accent: #4b0082; --bg-dark: #1a1a1a; --bg-panel: #222; }
         
-        body { background-color: #050505; color: #ccc; font-family: 'Courier New', monospace; margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
+        body { 
+            background-color: var(--bg-dark); /* Lighter Dark Grey for Contrast */
+            color: #e0e0e0; 
+            font-family: 'Courier New', monospace; 
+            margin: 0; 
+            padding: 0; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            display: flex;
+            flex-direction: column;
+        }
         
-        /* CRT OVERLAY */
-        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06)); background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 999; opacity: 0.6; }
+        /* CRT OVERLAY (Subtler) */
+        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03)); background-size: 100% 2px, 3px 100%; pointer-events: none; z-index: 999; }
 
-        /* --- LAYOUT --- */
-        #main-interface { display: flex; flex-direction: column; height: 100vh; }
-
-        /* HEADER / NAV (Mobile Friendly) */
-        #header-bar { 
-            background: #111; 
+        /* --- HEADER & NAV --- */
+        header { 
+            background: #000; 
             border-bottom: 2px solid var(--accent); 
             padding: 15px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
             z-index: 100;
         }
 
-        .user-info { font-size: 12px; line-height: 1.4; }
-        .user-name { color: var(--accent); font-weight: bold; font-size: 14px; text-shadow: 0 0 5px var(--accent); }
-        .user-rank { font-size: 10px; color: #666; letter-spacing: 1px; }
+        .user-block { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .user-rank { font-size: 10px; color: #888; letter-spacing: 1px; }
+        .user-name { color: var(--accent); font-weight: bold; font-size: 16px; text-shadow: 0 0 8px var(--accent); }
 
-        .nav-btn {
+        /* NAVIGATION TABS */
+        .nav-tabs { display: flex; gap: 5px; }
+        .tab-btn {
+            flex-grow: 1;
+            background: #111;
             border: 1px solid #333;
-            background: #000;
-            color: #888;
-            padding: 5px 10px;
-            font-size: 10px;
+            color: #666;
+            padding: 10px 0;
+            font-family: 'Courier New';
+            font-size: 11px;
             cursor: pointer;
+            transition: 0.3s;
             text-transform: uppercase;
         }
-
-        /* DAILY CODE TICKER */
-        #ticker-tape {
+        .tab-btn.active {
             background: var(--accent);
-            color: #000;
+            color: #fff;
+            border-color: var(--accent);
             font-weight: bold;
+        }
+
+        /* --- SYSTEM BROADCAST (Daily Code) --- */
+        #system-broadcast {
+            background: #000;
+            border-bottom: 1px solid #333;
+            padding: 10px 15px;
             font-size: 10px;
-            padding: 5px;
-            white-space: nowrap;
-            overflow: hidden;
+            color: #888;
         }
-        #ticker-text { display: inline-block; animation: scroll-left 20s linear infinite; }
-        @keyframes scroll-left { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+        #broadcast-text { color: var(--accent); font-weight: bold; margin-top: 5px; line-height: 1.4; }
 
-        /* --- THE DIRECTORY (Replacing the Graph) --- */
-        #file-system {
-            flex-grow: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #080808;
-        }
-
-        /* Faction Groups */
-        .faction-group { margin-bottom: 20px; border: 1px solid #222; background: rgba(0,0,0,0.5); }
+        /* --- MAIN CONTENT AREA --- */
+        #viewport { flex-grow: 1; position: relative; overflow-y: auto; padding-bottom: 40px; }
         
+        .view-section { display: none; padding: 15px; animation: fadeIn 0.3s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- VIEW 1: THE G.R.I.D. --- */
+        .faction-group { margin-bottom: 15px; border: 1px solid #333; background: var(--bg-panel); }
         .faction-header {
-            padding: 15px;
-            background: #151515;
+            padding: 12px;
+            background: #2a2a2a; /* Lighter header */
             color: #fff;
             cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid transparent; /* Color injects here */
+            display: flex; justify-content: space-between; align-items: center;
+            border-left: 4px solid transparent;
         }
-        .faction-title { font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
-        .faction-count { font-size: 10px; color: #555; }
-        .dropdown-icon { transition: 0.3s; }
-        
-        /* The List of Files */
-        .entity-list { 
-            display: none; /* Hidden by default */
-            padding: 0;
-            list-style: none;
-            margin: 0;
-        }
+        .entity-list { display: none; padding: 0; list-style: none; margin: 0; }
         .faction-group.open .entity-list { display: block; }
         .faction-group.open .dropdown-icon { transform: rotate(180deg); }
-
-        /* Individual Entity */
-        .entity-item {
-            border-top: 1px solid #222;
-        }
-
-        .entity-header {
-            padding: 12px 15px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.2s;
-        }
-        .entity-header:hover { background: #111; }
         
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #444; box-shadow: 0 0 5px currentColor; }
-        .entity-name { font-size: 12px; color: #ccc; flex-grow: 1; }
-        .entity-id { font-size: 9px; color: #444; }
-
-        /* The Bio (Dossier) */
-        .dossier-panel {
-            display: none;
-            padding: 15px;
-            background: #000;
-            border-top: 1px dashed #333;
-            font-size: 11px;
-            color: #888;
-            line-height: 1.5;
-        }
+        .entity-item { border-top: 1px solid #333; }
+        .entity-header { padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+        .dossier-panel { display: none; padding: 15px; background: #111; font-size: 12px; line-height: 1.5; color: #ccc; border-top: 1px dashed #444; }
         .entity-item.active .dossier-panel { display: block; }
-        .entity-item.active .entity-header { color: #fff; }
 
-        .dossier-meta { 
-            margin-bottom: 10px; 
-            padding-bottom: 5px; 
-            border-bottom: 1px solid #222; 
-            display: flex; 
-            justify-content: space-between;
+        /* --- VIEW 2: CONFESSIONAL --- */
+        .confess-box { background: var(--bg-panel); border: 1px solid #333; padding: 20px; text-align: center; }
+        textarea { 
+            width: 100%; height: 100px; background: #111; border: 1px solid #444; 
+            color: var(--accent); font-family: 'Courier New'; padding: 10px; 
+            box-sizing: border-box; margin-bottom: 15px; outline: none;
         }
-        .threat-level { color: #ff4c4c; }
+        textarea:focus { border-color: var(--accent); }
+        .echo-btn { 
+            background: transparent; border: 1px solid var(--accent); color: var(--accent); 
+            padding: 10px 30px; cursor: pointer; text-transform: uppercase; font-weight: bold; 
+            transition: 0.2s; 
+        }
+        .echo-btn:hover { background: var(--accent); color: #fff; }
+
+        .community-feed { margin-top: 30px; }
+        .confession-card { 
+            background: #111; border-left: 2px solid #555; padding: 15px; 
+            margin-bottom: 15px; font-size: 11px; color: #aaa; 
+        }
+        .confession-card strong { color: #fff; display: block; margin-bottom: 5px; }
+
+        /* --- VIEW 3: TRANSMISSIONS --- */
+        .file-row { 
+            display: flex; justify-content: space-between; padding: 15px; 
+            border-bottom: 1px solid #333; align-items: center; 
+        }
+        .file-icon { color: var(--accent); margin-right: 10px; }
+        .file-name { color: #fff; font-weight: bold; font-size: 12px; }
+        .file-meta { font-size: 10px; color: #666; }
+        .locked { opacity: 0.5; cursor: not-allowed; }
 
     </style>
 </head>
@@ -136,21 +131,67 @@
 
     <div class="scanlines"></div>
 
-    <div id="main-interface">
-        <div id="header-bar">
+    <header>
+        <div class="user-block">
             <div class="user-info">
                 <div class="user-rank">OPERATOR // <span id="user-align">UNKNOWN</span></div>
                 <div class="user-name" id="user-display">GUEST_SIGNAL</div>
             </div>
-            <button class="nav-btn" onclick="window.location.href='index.html'">[ LOGOUT ]</button>
+            <button style="background:none; border:none; color:#555; cursor:pointer;" onclick="window.location.href='index.html'">[ X ]</button>
         </div>
-
-        <div id="ticker-tape">
-            <div id="ticker-text">LOADING MATRIARCHAL PROTOCOL...</div>
+        
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchView('grid')">G.R.I.D.</button>
+            <button class="tab-btn" onclick="switchView('confessional')">CONFESS</button>
+            <button class="tab-btn" onclick="switchView('transmissions')">FILES</button>
         </div>
+    </header>
 
-        <div id="file-system">
+    <div id="system-broadcast">
+        // DAILY_PROTOCOL <span id="date-display"></span>
+        <div id="broadcast-text">LOADING...</div>
+    </div>
+
+    <div id="viewport">
+        
+        <div id="view-grid" class="view-section active">
             </div>
+
+        <div id="view-confessional" class="view-section">
+            <div class="confess-box">
+                <div style="margin-bottom:10px; color:#fff;">SPEAK YOUR TRUTH</div>
+                <textarea id="confess-input" placeholder="Enter the void..."></textarea>
+                <button class="echo-btn" onclick="submitConfession()">[ BROADCAST SIGNAL ]</button>
+            </div>
+            
+            <div class="community-feed">
+                <div style="font-size:10px; color:#555; margin-bottom:10px; text-transform:uppercase;">Recent Echoes</div>
+                <div class="confession-card" style="border-left-color: #ff00ff;">
+                    <strong>AMPLIFIER_09</strong>
+                    "I stopped trying to fit the mold. I broke the mold."
+                </div>
+                <div class="confession-card" style="border-left-color: #00ffff;">
+                    <strong>UNKNOWN_SIGNAL</strong>
+                    "Gravity kept me down, but the glitch set me free."
+                </div>
+            </div>
+        </div>
+
+        <div id="view-transmissions" class="view-section">
+            <div class="file-row">
+                <div><span class="file-icon">▼</span> <span class="file-name">MANIFESTO_V1.pdf</span></div>
+                <span class="file-meta">PUBLIC</span>
+            </div>
+            <div class="file-row">
+                <div><span class="file-icon">▶</span> <span class="file-name">AUDIO_LOG_001.mp3</span></div>
+                <span class="file-meta">PUBLIC</span>
+            </div>
+            <div class="file-row locked">
+                <div><span class="file-icon">🔒</span> <span class="file-name">PROJECT_JANNETTE.enc</span></div>
+                <span class="file-meta">LOCKED</span>
+            </div>
+        </div>
+
     </div>
 
 <script>
@@ -163,26 +204,54 @@
     document.getElementById('user-display').innerText = userName.toUpperCase();
     document.getElementById('user-align').innerText = userAlign;
 
-    // --- 2. DAILY CODE ---
+    // --- 2. DAILY CODE ENGINE (CORRECTED) ---
     const codes = [
         "Never confuse the absence of a posse with a lack of fans.",
         "Just because the cards were dealt to you doesn't mean they're your hand.",
         "Pain brings Growth. Empathy is the protocol of the Divine.",
-        "He didn't pull you in fast—he kept you there. Gravity is a trap.",
+        "He didn't pull you in fast—he kept you there. He is the anchor, not the cage.", // CORRECTED
         "Silence is just the sound of the predator waiting.",
         "We are not here to entertain them. We are here to infect them."
     ];
-    const today = new Date().getDay();
-    document.getElementById('ticker-text').innerText = "/// SYSTEM BROADCAST: " + codes[today % codes.length] + " ///";
+    
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const day = Math.floor(diff / oneDay);
+    
+    document.getElementById('broadcast-text').innerText = codes[day % codes.length].toUpperCase();
+    document.getElementById('date-display').innerText = `// ${now.getFullYear()}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getDate().toString().padStart(2,'0')}`;
 
-    // --- 3. THE DATA ---
+    // --- 3. VIEW SWITCHER ---
+    function switchView(viewName) {
+        // Update Buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        // Update Sections
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('view-' + viewName).classList.add('active');
+    }
+
+    // --- 4. CONFESSIONAL LOGIC (SIMULATED) ---
+    function submitConfession() {
+        const input = document.getElementById('confess-input');
+        if(input.value.trim() === "") return;
+        
+        alert("SIGNAL RECEIVED. BROADCASTING TO THE GRID...");
+        input.value = ""; // Clear
+        // In a real version, we'd POST this to a database.
+    }
+
+    // --- 5. POPULATE GRID ---
     const factions = {
         "CORE": { color: "#4b0082", desc: "The Holy Trinity" },
         "BLOODLINE": { color: "#ff00ff", desc: "Ancestry & Origin" },
         "SYSTEM": { color: "#ff0000", desc: "Antagonists & Archons" },
         "ALLIES": { color: "#00ffff", desc: "The Resistance" },
         "JESTERS": { color: "#ffff00", desc: "Chaos Engine" },
-        "COSMIC": { color: "#555555", desc: "Legacy Systems" },
+        "COSMIC": { color: "#888888", desc: "Legacy Systems" },
         "ARTIFACT": { color: "#00ff00", desc: "Key Objects" }
     };
 
@@ -193,7 +262,7 @@
         
         { id: "The Matriarch", faction: "BLOODLINE", status: "ETERNAL", threat: "UBIQUITOUS", bio: "The original divine intelligence. Source of the Code." },
         { id: "Granny", faction: "BLOODLINE", status: "ROOT", threat: "UNKNOWN", bio: "Source of the Hum. Taught that 'Pain brings Growth'." },
-        { id: "Trey", faction: "BLOODLINE", status: "TRANSCENDED", threat: "ANCHOR", bio: "Brother of Frequency. The constant in the equation." },
+        { id: "Trey", faction: "BLOODLINE", status: "TRANSCENDED", threat: "ANCHOR", bio: "Brother of Frequency. The constant in the equation. He is the reason we do not float away." },
         
         { id: "Big P", faction: "SYSTEM", status: "DELETED", threat: "ARCHIVED", bio: "The Ledger. Thought he owned the Trophy; only rented the shell." },
         { id: "Rocky", faction: "SYSTEM", status: "CRUSHED", threat: "MIAMI", bio: "Left in Miami. The coldness that hardened the heart." },
@@ -210,29 +279,21 @@
         { id: "Grimoire", faction: "ARTIFACT", status: "EXECUTABLE", threat: "VIRAL", bio: "Containment unit for the Matriarchal Code." }
     ];
 
-    // --- 4. RENDER ENGINE ---
-    const container = document.getElementById('file-system');
-
-    // Group nodes by faction
+    const container = document.getElementById('view-grid');
     const grouped = {};
     Object.keys(factions).forEach(f => grouped[f] = []);
-    nodes.forEach(n => {
-        if(grouped[n.faction]) grouped[n.faction].push(n);
-    });
+    nodes.forEach(n => { if(grouped[n.faction]) grouped[n.faction].push(n); });
 
-    // Generate HTML
     for (const [key, data] of Object.entries(factions)) {
-        if (grouped[key].length === 0) continue; // Skip empty factions
-
+        if (grouped[key].length === 0) continue; 
+        
         const groupDiv = document.createElement('div');
         groupDiv.className = 'faction-group';
-        
-        // Faction Header
         groupDiv.innerHTML = `
             <div class="faction-header" onclick="toggleGroup(this)" style="border-left-color: ${data.color}">
                 <div>
-                    <div class="faction-title" style="color:${data.color}">${key}</div>
-                    <div class="faction-count">${data.desc} // [ ${grouped[key].length} FILES ]</div>
+                    <div class="faction-title" style="color:${data.color}; font-weight:bold; letter-spacing:2px;">${key}</div>
+                    <div style="font-size:10px; color:#888;">${data.desc}</div>
                 </div>
                 <div class="dropdown-icon">▼</div>
             </div>
@@ -240,13 +301,13 @@
                 ${grouped[key].map(entity => `
                     <li class="entity-item">
                         <div class="entity-header" onclick="toggleEntity(this)">
-                            <div class="status-dot" style="color: ${data.color}"></div>
-                            <div class="entity-name">${entity.id.toUpperCase()}</div>
-                            <div class="entity-id">${entity.status}</div>
+                            <div class="status-dot" style="background: ${data.color}"></div>
+                            <div class="entity-name" style="font-size:12px; font-weight:bold; color:#ccc;">${entity.id.toUpperCase()}</div>
+                            <div class="entity-id" style="font-size:9px; color:#666;">${entity.status}</div>
                         </div>
                         <div class="dossier-panel">
-                            <div class="dossier-meta">
-                                <span>THREAT: <b class="threat-level">${entity.threat}</b></span>
+                            <div style="margin-bottom:8px; padding-bottom:5px; border-bottom:1px solid #333; color:${data.color}">
+                                THREAT: ${entity.threat}
                             </div>
                             ${entity.bio}
                         </div>
@@ -257,15 +318,8 @@
         container.appendChild(groupDiv);
     }
 
-    // --- 5. INTERACTION FUNCTIONS ---
-    function toggleGroup(header) {
-        header.parentElement.classList.toggle('open');
-    }
-
-    function toggleEntity(header) {
-        // Close others in same list? Optional. Let's toggle just this one.
-        header.parentElement.classList.toggle('active');
-    }
+    function toggleGroup(header) { header.parentElement.classList.toggle('open'); }
+    function toggleEntity(header) { header.parentElement.classList.toggle('active'); }
 
 </script>
 </body>
