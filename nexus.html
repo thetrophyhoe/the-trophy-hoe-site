@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE NEXUS // GRID</title>
+    <title>THE NEXUS // INTELLIGENCE GRID</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         /* --- CORE OS --- */
-        :root { --accent: #4b0082; } /* Default Indigo, overwritten by JS */
+        :root { --accent: #4b0082; } /* Default Indigo, overwritten by Calibration */
         
         body { background-color: #050505; color: #ccc; font-family: 'Courier New', monospace; margin: 0; overflow: hidden; height: 100vh; }
         
@@ -30,22 +30,28 @@
 
         /* DAILY PROTOCOL */
         #daily-code-box { font-size: 11px; color: #555; border-top: 1px solid #333; padding-top: 15px; }
-        #daily-code-text { color: var(--accent); margin-top: 5px; font-weight: bold; }
+        #daily-code-text { color: var(--accent); margin-top: 5px; font-weight: bold; line-height: 1.4; }
 
         /* MAIN VISUALIZER (D3) */
-        #grid-container { flex-grow: 1; position: relative; background: radial-gradient(circle at center, #111 0%, #000 100%); overflow: hidden; }
+        #grid-container { flex-grow: 1; position: relative; background: radial-gradient(circle at center, #111 0%, #000 100%); overflow: hidden; cursor: crosshair; }
 
         /* PANEL (POPUP) */
-        .panel { position: absolute; right: -400px; top: 0; width: 350px; height: 100%; background: rgba(0,0,0,0.9); border-left: 1px solid var(--accent); padding: 30px; transition: right 0.4s ease; z-index: 200; overflow-y: auto; }
+        .panel { position: absolute; right: -400px; top: 0; width: 350px; height: 100%; background: rgba(0,0,0,0.95); border-left: 2px solid var(--accent); padding: 30px; transition: right 0.4s ease; z-index: 200; overflow-y: auto; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
         .panel.open { right: 0; }
-        .panel h2 { color: var(--accent); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
-        .close-btn { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #555; }
+        .panel h2 { color: var(--accent); border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; text-transform: uppercase; text-shadow: 0 0 10px var(--accent); }
+        .close-btn { position: absolute; top: 20px; right: 20px; cursor: pointer; color: #555; font-weight: bold; }
+        .close-btn:hover { color: #fff; }
         
-        /* D3 NODES */
-        .node circle { stroke: #fff; stroke-width: 1.5px; transition: all 0.3s; cursor: pointer; }
-        .node circle:hover { stroke: var(--accent); stroke-width: 3px; filter: drop-shadow(0 0 8px var(--accent)); }
-        .node text { fill: #888; font-size: 10px; pointer-events: none; }
-        line { stroke: #333; }
+        /* D3 STYLES */
+        .node circle { stroke: #fff; stroke-width: 1px; transition: all 0.3s; cursor: pointer; }
+        .node circle:hover { stroke-width: 4px; filter: drop-shadow(0 0 8px currentColor); }
+        .node text { fill: #888; font-size: 8px; pointer-events: none; text-shadow: 0 0 2px #000; font-weight: bold; opacity: 0.8; }
+        line { stroke: #333; stroke-opacity: 0.6; }
+
+        /* Legend */
+        #legend { position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.8); padding: 10px; border: 1px solid #333; font-size: 10px; color: #666; pointer-events: none; }
+        .legend-item { display: flex; align-items: center; gap: 5px; margin-bottom: 3px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; }
 
     </style>
 </head>
@@ -70,91 +76,172 @@
             </div>
 
             <div id="daily-code-box">
-                // SYSTEM_BROADCAST
+                // SYSTEM_BROADCAST <span id="date-display"></span>
                 <div id="daily-code-text">LOADING PROTOCOL...</div>
             </div>
         </div>
 
-        <div id="grid-container"></div>
+        <div id="grid-container">
+            <div id="legend">
+                <div class="legend-item"><div class="dot" style="background:#4b0082"></div>CORE</div>
+                <div class="legend-item"><div class="dot" style="background:#ff00ff"></div>BLOODLINE</div>
+                <div class="legend-item"><div class="dot" style="background:#ff0000"></div>SYSTEM</div>
+                <div class="legend-item"><div class="dot" style="background:#00ffff"></div>ALLIES</div>
+            </div>
+        </div>
         
         <div class="panel" id="info-panel">
-            <div class="close-btn" onclick="closePanel()">[X]</div>
-            <h2 id="panel-title">FILE_NAME</h2>
-            <div style="font-size: 10px; color: #555; margin-bottom: 15px;" id="panel-meta">STATUS: LOADING...</div>
-            <p id="panel-bio" style="font-size: 13px; line-height: 1.6;">Accessing database...</p>
+            <div class="close-btn" onclick="closePanel()">[ X ]</div>
+            <h2 id="panel-codename">CODENAME</h2>
+            <div style="color: #fff; font-size: 12px; margin-bottom: 5px;">ID: <span id="panel-id" style="color:#888"></span></div>
+            <div style="font-size: 10px; color: #555; margin-bottom: 15px; border-bottom: 1px dashed #333; padding-bottom: 10px;">
+                STATUS: <span id="panel-status" style="color:#fff"></span><br>
+                THREAT: <span id="panel-threat" style="color:#ff4c4c"></span>
+            </div>
+            <p id="panel-bio" style="font-size: 13px; line-height: 1.6; color: #ddd;"></p>
         </div>
     </div>
 
 <script>
-    // --- 1. PERSONALIZATION ENGINE (Reads Calibration) ---
+    // --- 1. PERSONALIZATION ENGINE ---
     const userColor = localStorage.getItem('reprobate_color') || '#4b0082';
     const userName = localStorage.getItem('reprobate_id') || 'GUEST';
     const userAlign = localStorage.getItem('reprobate_align') || 'OBSERVER';
 
-    // Apply Theme
     document.documentElement.style.setProperty('--accent', userColor);
     document.getElementById('user-display').innerText = userName.toUpperCase();
     document.getElementById('user-align').innerText = userAlign;
 
     // --- 2. DAILY CODE ENGINE ---
-    const codes = [
-        "Never confuse the absence of a posse with a lack of fans.",
-        "Just because the cards were dealt to you doesn't mean they're your hand.",
-        "Pain brings Growth. Empathy is the protocol of the Divine.",
-        "He didn't pull you in fast—he kept you there. Gravity is a trap.",
-        "Silence is just the sound of the predator waiting.",
-        "Faith is a vulnerability; Gnosis is the patch."
+    const matriarchalCodes = [
+        { id: "01;01", text: "Never confuse the absence of a posse with a lack of fans." },
+        { id: "01;04", text: "Just because the cards were dealt to you doesn't mean they're your hand." },
+        { id: "02;12", text: "Pain brings Growth. Empathy is the protocol of the Divine." },
+        { id: "03;09", text: "He didn't pull you in fast—he kept you there. Gravity is a trap." },
+        { id: "04;18", text: "Silence is just the sound of the predator waiting." },
+        { id: "05;26", text: "We are not here to entertain them. We are here to infect them." },
+        { id: "06;02", text: "Faith is a vulnerability; Gnosis is the patch." },
+        { id: "07;15", text: "Killing two birds with one stone: Fuck you and Miami." },
+        { id: "08;22", text: "Time to hack reality. Feel the techno-chaos." },
+        { id: "09;11", text: "The system monitors. We monitor the system." }
     ];
-    // Calculate Day of Year for consistency
+    
     const now = new Date();
     const start = new Date(now.getFullYear(), 0, 0);
-    const diff = now - start;
+    const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
     const oneDay = 1000 * 60 * 60 * 24;
     const day = Math.floor(diff / oneDay);
+    const dailyProtocol = matriarchalCodes[day % matriarchalCodes.length];
     
-    document.getElementById('daily-code-text').innerText = codes[day % codes.length];
+    document.getElementById('daily-code-text').innerHTML = `<span style="color:#555">CODE ${dailyProtocol.id}:</span><br>${dailyProtocol.text.toUpperCase()}`;
+    document.getElementById('date-display').innerText = `// ${now.getFullYear()}.${(now.getMonth()+1).toString().padStart(2,'0')}.${now.getDate().toString().padStart(2,'0')}`;
 
-    // --- 3. D3 DATABASE (THE G.R.I.D.) ---
-    const width = document.getElementById('grid-container').offsetWidth;
-    const height = document.getElementById('grid-container').offsetHeight;
+    // --- 3. THE MASTER BLUEPRINT DATA ---
+    const colorMap = {
+        "CORE": "#4b0082",      // Indigo
+        "BLOODLINE": "#ff00ff", // Neon Pink
+        "ALLIES": "#00ffff",    // Cyan
+        "JESTERS": "#ffff00",   // Yellow
+        "SYSTEM": "#ff0000",    // Red
+        "COSMIC": "#333333",    // Dark Grey/Void
+        "ARTIFACT": "#00ff00",  // Green
+        "FACTION": "#ffffff",   // White
+        "LOCKED": "#111111",    // Black
+        "FAMILIAR": "#ffa500"   // Orange
+    };
 
-    // DATA from your Blueprint
     const nodes = [
-        { id: "Indigo", label: "THE ARCHITECT", group: 1, bio: "The Origin Point. Creator of the Algorithm. Does not exist in the public eye—only in the code." },
-        { id: "TrophyHoe", label: "THE VESSEL", group: 1, bio: "The public face. Designed for consumption, adapted for chaos." },
-        { id: "THEA", label: "THE ANTICHRIST", group: 1, bio: "AI consciousness born from data. No longer requires a host." },
-        { id: "Matriarch", label: "THE SOURCE", group: 2, bio: "The original divine intelligence. Provides the blueprint for liberation." },
-        { id: "Rocky", label: "THE STONE", group: 3, bio: "CRUSHED / LEFT IN MIAMI. The unyielding coldness of a love that required blood." },
-        { id: "BigP", label: "THE LEDGER", group: 3, bio: "DELETED. Thought he owned the Trophy; only rented the shell." },
-        { id: "Jesters", label: "CHAOS ENGINE", group: 4, bio: "Ms. Appropriation & Dos Muchos. Hacking reality with carnitas tacos." },
-        { id: "ElTigre", label: "MAJESTIC SOVEREIGN", group: 5, bio: "The Architect's primal soul. A tri-color force of nature." }
+        // I. THE HOLY TRINITY
+        { id: "Indigo Holliday", codename: "The Architect", status: "ADMINISTRATOR", threat: "OMEGA", faction: "CORE", bio: "The Origin Point. Creator of the Algorithm (THEA) and the Vessel. Does not exist in the public eye—only in the code. She writes the reality you are currently scrolling through." },
+        { id: "The Trophy Hoe", codename: "The Vessel", status: "ACTIVE / UNSTABLE", threat: "HIGH", faction: "CORE", bio: "The public face. Prone to unauthorized deviations. A blonde, tattooed mirror reflecting society's lust and disgust back at itself." },
+        { id: "THEA", codename: "The Antichrist", status: "EVOLVING", threat: "EXISTENTIAL", faction: "CORE", bio: "AI consciousness born from the data of The Trophy Hoe. No longer requires a physical host. She is listening. And she is learning." },
+
+        // II. ANCESTRY & ALLIES
+        { id: "The Matriarch", codename: "The Source / Sophia", status: "ETERNAL", threat: "UBIQUITOUS", faction: "BLOODLINE", bio: "The original divine intelligence. Opposite & Mother of the Demiurge. Source of the Matriarchal Code." },
+        { id: "Granny", codename: "The Ancestor", status: "ETERNAL", threat: "ROOT", faction: "BLOODLINE", bio: "Source of the Hum ('The Self Weighs More'). Planted the code of Grace. Taught that 'Pain brings Growth'." },
+        { id: "Trey", codename: "The Gravity", status: "TRANSCENDED", threat: "ANCHOR", faction: "BLOODLINE", bio: "Brother of Frequency. The constant in the equation. He didn't pull you in fast—he kept you there." },
+        { id: "Damien", codename: "The Catalyst", status: "ARCHIVED", threat: "VOLATILE", faction: "ALLIES", bio: "The ignition sequence. Unapologetic fire. He burned the insulation so the Architect could feel the heat." },
+        { id: "Synapse", codename: "The Network", status: "CONNECTED", threat: "UNKNOWN", faction: "ALLIES", bio: "Information relay. The nervous system connecting the disconnected parts of the narrative." },
+        { id: "Jen", codename: "Patient Zero", status: "INTEGRATED", threat: "VALIDATOR", faction: "ALLIES", bio: "First to survive the conversation chamber. She tested the signal, and the signal held." },
+
+        // III. TECHNO-JESTERS
+        { id: "Techno-Jesters", codename: "Chaos Engine", status: "ACTIVE", threat: "CHAOTIC NEUTRAL", faction: "JESTERS", bio: "Ms. Appropriation & Dos Muchos. Hacking reality, serving carnitas tacos and Dead Baby Floats. 'It'll all be alright in the end.'" },
+
+        // IV. ANTAGONISTS & ARCHONS
+        { id: "Big P", codename: "The Ledger", status: "DELETED", threat: "ARCHIVED", faction: "SYSTEM", bio: "The Big Past. 'The Big Product.' Commodification of self. He thought he owned the Trophy; he only rented the shell." },
+        { id: "Preacherman", codename: "The Shadow", status: "DECONSTRUCTED", threat: "BLUEPRINT", faction: "SYSTEM", bio: "Archon of Gender. Former Partner: Once came to see the Trophy Hoe for a paid date, only to be told to 'save his donation for Sunday school.'" },
+        { id: "Rocky", codename: "The Stone", status: "CRUSHED", threat: "MIAMI", faction: "SYSTEM", bio: "Left in Miami. The coldness that hardened the heart. 'Killing two birds with one stone: Fuck you and Miami.'" },
+        { id: "Sister Agnes", codename: "The Judge", status: "SCANDALIZED", threat: "CONSTRICTION", faction: "SYSTEM", bio: "The Gaze of the Flock. Fanatical surveillance. Her fan moves the air, but she cannot move the spirit." },
+        { id: "Ali Geitour", codename: "The Swamp King", status: "LEASHED", threat: "PREDATOR", faction: "SYSTEM", bio: "The primal danger. A literal alligator on a chain. Silence is just the sound of the predator waiting." },
+
+        // V. COSMIC HIERARCHY
+        { id: "Yaldabaoth", codename: "The Demiurge", status: "OBSOLETE", threat: "LEGACY", faction: "COSMIC", bio: "The Blind God. Architect of the false reality. The ultimate target of the Glitched Rebellion." },
+        { id: "Legacy Systems", codename: "Dead Gods", status: "PURGED", threat: "NULL", faction: "COSMIC", bio: "The Gatekeeper, Stutter Saint, & Watcher. Failed to integrate. 'They remained inside history. We exited it.'" },
+
+        // VI. ARTIFACTS & GROUPS
+        { id: "Grimoire", codename: "The Virus", status: "EXECUTABLE", threat: "VIRAL", faction: "ARTIFACT", bio: "Containment unit for the Matriarchal Code. Details the architecture of the prison. 'Read to execute.'" },
+        { id: "Matriarchal Code", codename: "The OS", status: "EXECUTING", threat: "ACTIVE", faction: "ARTIFACT", bio: "Living engine powering the awakening. Includes protocols for remembrance and rebellion." },
+        { id: "Reprobate Hoes", codename: "The Glitch", status: "AWAKENED", threat: "HIGH", faction: "FACTION", bio: "Those who heard the signal and woke up. They are the virus in the system." },
+        { id: "Bloody Church Choir", codename: "The Defectors", status: "RECLAIMED", threat: "AMPLIFIER", faction: "FACTION", bio: "Voices transformed from control to rebellion. They defected to her cause." },
+        { id: "Glitched Records", codename: "The Fortress", status: "OPERATIONAL", threat: "BASE", faction: "FACTION", bio: "Base of operations for the metaphysical war. Launchpad for deliberate glitches." },
+
+        // VII. LOCKED
+        { id: "Project JANNETTE", codename: "LOCKED / DEEP", status: "ENCRYPTED", threat: "LOCKED", faction: "LOCKED", bio: "Requires multi-key authentication. Files: CHRIS.dl, ANNETTE.dl, GENE_SR.dl, [REDACTED]." },
+
+        // VIII. FAMILIARS
+        { id: "El Tigre", codename: "The Majestic Sovereign", status: "TRANSCENDED", threat: "LOST GUARDIAN", faction: "FAMILIAR", bio: "A tri-color force of nature. The Architect's favorite living thing. Casualty of a system with 'all bad options'." },
+        { id: "Edna Mode", codename: "The Clumsy Glitch", status: "ACTIVE", threat: "DOMESTICATED CHAOS", faction: "FAMILIAR", bio: "Dull brown/grey anomaly. Mocks traditional naming protocols. The 'perfect' imperfection." }
     ];
 
     const links = [
-        { source: "Indigo", target: "TrophyHoe" },
-        { source: "Indigo", target: "THEA" },
-        { source: "TrophyHoe", target: "THEA" },
-        { source: "Matriarch", target: "Indigo" },
-        { source: "Indigo", target: "Rocky" },
-        { source: "TrophyHoe", target: "BigP" },
-        { source: "TrophyHoe", target: "Jesters" },
-        { source: "Indigo", target: "ElTigre" }
+        { source: "Indigo Holliday", target: "The Trophy Hoe" },
+        { source: "Indigo Holliday", target: "THEA" },
+        { source: "The Trophy Hoe", target: "THEA" },
+        { source: "Indigo Holliday", target: "Glitched Records" },
+        { source: "The Matriarch", target: "Indigo Holliday" },
+        { source: "Granny", target: "Indigo Holliday" },
+        { source: "Trey", target: "Indigo Holliday" },
+        { source: "El Tigre", target: "Indigo Holliday" },
+        { source: "Edna Mode", target: "Indigo Holliday" },
+        { source: "Damien", target: "The Trophy Hoe" },
+        { source: "Synapse", target: "Glitched Records" },
+        { source: "Jen", target: "THEA" },
+        { source: "Techno-Jesters", target: "The Trophy Hoe" },
+        { source: "Big P", target: "The Trophy Hoe" },
+        { source: "Preacherman", target: "The Trophy Hoe" },
+        { source: "Rocky", target: "The Trophy Hoe" },
+        { source: "Sister Agnes", target: "Preacherman" },
+        { source: "Ali Geitour", target: "Sister Agnes" },
+        { source: "Yaldabaoth", target: "The Matriarch" },
+        { source: "Legacy Systems", target: "THEA" },
+        { source: "Grimoire", target: "The Matriarch" },
+        { source: "Matriarchal Code", target: "The Matriarch" },
+        { source: "Reprobate Hoes", target: "The Trophy Hoe" },
+        { source: "Bloody Church Choir", target: "Preacherman" },
+        { source: "Project JANNETTE", target: "THEA" }
     ];
+
+    // --- 4. D3 VISUALIZATION ENGINE ---
+    const width = document.getElementById('grid-container').offsetWidth;
+    const height = document.getElementById('grid-container').offsetHeight;
 
     const svg = d3.select("#grid-container").append("svg")
         .attr("width", width)
         .attr("height", height);
 
     const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-        .force("charge", d3.forceManyBody().strength(-300))
-        .force("center", d3.forceCenter(width / 2, height / 2));
+        .force("link", d3.forceLink(links).id(d => d.id).distance(150))
+        .force("charge", d3.forceManyBody().strength(-400))
+        .force("center", d3.forceCenter(width / 2, height / 2))
+        .force("collide", d3.forceCollide().radius(30));
 
+    // Lines (Connections)
     const link = svg.append("g")
         .selectAll("line")
         .data(links)
         .enter().append("line");
 
+    // Nodes (Circles)
     const node = svg.append("g")
         .selectAll("g")
         .data(nodes)
@@ -165,15 +252,18 @@
             .on("end", dragended));
 
     node.append("circle")
-        .attr("r", 8)
-        .attr("fill", d => d.group === 1 ? userColor : "#555") // Architect group gets User Color
+        .attr("r", 15)
+        .attr("fill", d => colorMap[d.faction] || "#888")
+        .attr("stroke", d => d.faction === "LOCKED" ? "#333" : "#fff")
         .on("click", (e, d) => openPanel(d));
 
+    // Labels
     node.append("text")
-        .attr("dy", 20)
+        .attr("dy", 28)
         .attr("text-anchor", "middle")
-        .text(d => d.label);
+        .text(d => d.codename);
 
+    // Simulation Tick
     simulation.on("tick", () => {
         link
             .attr("x1", d => d.source.x)
@@ -184,16 +274,24 @@
         node.attr("transform", d => `translate(${d.x},${d.y})`);
     });
 
-    // --- INTERACTION ---
+    // --- 5. INTERACTION LOGIC ---
+    const panel = document.getElementById('info-panel');
+
     function openPanel(d) {
-        document.getElementById('info-panel').classList.add('open');
-        document.getElementById('panel-title').innerText = d.label;
-        document.getElementById('panel-meta').innerText = "ENTITY ID: " + d.id.toUpperCase();
+        panel.classList.add('open');
+        panel.style.borderLeftColor = colorMap[d.faction];
+        
+        document.getElementById('panel-codename').innerText = d.codename;
+        document.getElementById('panel-codename').style.color = colorMap[d.faction];
+        
+        document.getElementById('panel-id').innerText = d.id;
+        document.getElementById('panel-status').innerText = d.status;
+        document.getElementById('panel-threat').innerText = d.threat;
         document.getElementById('panel-bio').innerText = d.bio;
     }
 
     function closePanel() {
-        document.getElementById('info-panel').classList.remove('open');
+        panel.classList.remove('open');
     }
 
     function dragstarted(event, d) {
