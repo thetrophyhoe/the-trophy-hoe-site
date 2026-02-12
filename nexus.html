@@ -70,11 +70,26 @@
         .seal-img { width: 150px; height: auto; margin-bottom: 25px; filter: drop-shadow(0 0 10px var(--accent)); opacity: 0.9; }
         .gate-input { background: #000; border: 1px solid #444; color: var(--accent); padding: 10px; font-family: 'Courier New'; text-align: center; width: 80%; max-width: 300px; letter-spacing: 3px; font-size: 16px; margin-bottom: 15px; }
 
+        /* --- VIDEO OVERLAY --- */
+        #video-overlay {
+            display: none; /* Hidden by default */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 10000;
+            align-items: center; justify-content: center;
+        }
+        #gate-video { width: 100%; max-width: 800px; height: auto; }
+
     </style>
 </head>
 <body>
 
     <div class="scanlines"></div>
+
+    <div id="video-overlay">
+        <video id="gate-video" playsinline>
+            <source src="matriarch.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <header>
         <div class="user-block">
@@ -195,13 +210,27 @@
         form.submit();
     }
 
-    // --- 5. GATEWAY ---
+    // --- 5. GATEWAY & ANIMATION LOGIC ---
     function checkGate() {
         const key = document.getElementById('gate-key').value;
         const msg = document.getElementById('gate-msg');
+        const overlay = document.getElementById('video-overlay');
+        const video = document.getElementById('gate-video');
+
         if (key === '4b0082' || key === 'TRANSFORM' || key === 'THEA') {
+            // 1. Hide Error Message
             msg.style.display = 'none';
-            window.location.href = "https://matriarch.codes?operator=" + encodeURIComponent(userName); 
+            
+            // 2. Show Video Overlay
+            overlay.style.display = 'flex';
+            
+            // 3. Play Video
+            video.play();
+
+            // 4. Redirect When Video Ends
+            video.onended = function() {
+                window.location.href = "https://matriarch.codes?operator=" + encodeURIComponent(userName); 
+            };
         } else {
             msg.style.display = 'block';
             document.getElementById('gate-key').value = '';
