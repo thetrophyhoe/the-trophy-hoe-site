@@ -21,7 +21,7 @@
             position: relative;
         }
 
-        /* --- START / DECRYPT OVERLAY (NEW) --- */
+        /* --- START / DECRYPT OVERLAY --- */
         #decrypt-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: #000; z-index: 10001;
@@ -47,13 +47,13 @@
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: #000; z-index: 10000;
             display: flex; justify-content: center; align-items: center;
-            pointer-events: none; /* Let clicks pass through if needed, but we handle via JS */
+            pointer-events: none; 
         }
 
         #intro-video {
             width: 100%; height: 100%;
             object-fit: contain; 
-            opacity: 0; /* Hidden until decrypted */
+            opacity: 0; 
             transition: opacity 0.5s;
         }
 
@@ -258,7 +258,7 @@
             <div class="section-header">03 // SONIC EVIDENCE</div>
             
             <div style="margin-bottom: 15px; box-shadow: 0 0 10px #000;">
-                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                <iframe style="border-radius:12px" src="https://open.spotify.com/embed/artist/0Wt716RDrIkaGfNlSN8IFj?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
 
             <div style="margin-bottom: 15px; overflow: hidden; box-shadow: 0 0 10px #000;">
@@ -268,7 +268,9 @@
             <div class="section-header">04 // CLASSIFIED AUDIO (VAULT)</div>
             <div class="bio-text" style="text-align:center;">
                 <div style="color:#666; font-size:0.8rem; margin-bottom:10px;">[ UNRELEASED MATERIAL // PRIVATE STREAM ]</div>
-                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2000000000&color=%23ff00ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+                <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" 
+                src="https://w.soundcloud.com/player/?url=https://on.soundcloud.com/HssPvXGswIj6HNJpqW&color=%23ff00ff&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true">
+                </iframe>
             </div>
 
             <div class="section-header">05 // KEY METRICS</div>
