@@ -116,6 +116,14 @@
         #breach-video { width: 100%; height: 100%; object-fit: contain; }
         .breach-active { display: flex !important; }
 
+        /* --- NEXUS TRANSITION OVERLAY --- */
+        #nexus-transition-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 100000; /* Highest priority */
+            display: none; align-items: center; justify-content: center;
+        }
+        #nexus-clip { width: 100%; height: 100%; object-fit: cover; }
+
         /* --- TIMED FAILURE SEQUENCE --- */
         .system-failure { animation: breach-timeline 17s linear forwards; }
         @keyframes breach-timeline {
@@ -133,17 +141,16 @@
         body.locked { overflow: hidden; }
 
         /* ================================================= */
-        /* [NEXUS INTEGRATION START] - THE GLITCH TRIGGER    */
+        /* [NEXUS TRIGGER STYLE]                             */
         /* ================================================= */
         .nexus-anomaly {
             position: fixed; top: 25px; right: 30px;
             font-family: 'Courier New', monospace; font-size: 14px;
             color: rgba(255, 255, 255, 0.4); 
-            cursor: default; z-index: 99998; /* Just below boot screen, above content */
+            cursor: default; z-index: 99998; 
             transition: all 0.4s ease; user-select: none;
         }
 
-        /* The Heartbeat Twitch */
         @keyframes nexus-twitch {
             0%, 95% { transform: skew(0deg); opacity: 0.4; }
             96% { transform: skew(10deg); opacity: 0.8; color: #4b0082; } 
@@ -152,13 +159,11 @@
         }
         .nexus-anomaly { animation: nexus-twitch 8s infinite; }
 
-        /* Hover Interaction */
         .nexus-anomaly:hover {
             color: #4b0082; opacity: 1; animation: none;
             cursor: pointer; text-shadow: 0px 0px 8px rgba(75, 0, 130, 0.8);
         }
 
-        /* The Tooltip */
         .nexus-tooltip {
             visibility: hidden; position: absolute; top: 100%; right: 0;
             width: 100px; background: #000; color: #00ff00;
@@ -167,22 +172,6 @@
             opacity: 0; transition: opacity 0.2s;
         }
         .nexus-anomaly:hover .nexus-tooltip { visibility: visible; opacity: 1; }
-
-        /* The Nexus Crash Sequence */
-        body.nexus-crashing {
-            animation: nexus-crash-anim 0.2s infinite;
-            overflow: hidden; filter: invert(1) grayscale(100%) contrast(200%);
-        }
-        @keyframes nexus-crash-anim {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(-5px, 2px); }
-            50% { transform: translate(5px, -2px); }
-            75% { transform: translate(-2px, 5px); }
-            100% { transform: translate(0, 0); }
-        }
-        /* ================================================= */
-        /* [NEXUS INTEGRATION END]                           */
-        /* ================================================= */
 
     </style>
 </head>
@@ -209,6 +198,12 @@
     <div id="breach-overlay">
         <video id="breach-video" playsinline>
             <source src="breach_cinematic.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="nexus-transition-overlay">
+        <video id="nexus-clip" playsinline>
+            <source src="nexusclip.mp4" type="video/mp4">
         </video>
     </div>
 
@@ -262,7 +257,6 @@
             const bgVideo = document.getElementById('bg-video');
             const logoVideo = document.getElementById('main-logo');
 
-            // Force play BOTH videos on user interaction
             bgVideo.play().catch(error => { console.error("BG Video Failed:", error); });
             logoVideo.play().catch(error => { console.error("Logo Video Failed:", error); });
 
@@ -307,29 +301,23 @@
         });
 
         /* ================================================= */
-        /* [NEXUS INTEGRATION] - SCRIPT LOGIC                */
+        /* [NEXUS INTEGRATION] - UPDATED VIDEO LOGIC         */
         /* ================================================= */
         document.getElementById('nexus-portal-trigger').addEventListener('click', function() {
-            // 1. Trigger the Visual Crash
-            document.body.classList.add('nexus-crashing');
-            
-            // 2. The Blackout (after 800ms)
-            setTimeout(() => {
-                document.body.innerHTML = ''; // Wipes the visual DOM
-                document.body.style.backgroundColor = 'black';
-                document.body.style.filter = 'none'; // Remove invert filter
-                
-                // 3. Terminal Message
-                const term = document.createElement('div');
-                term.innerHTML = "ACCESSING NODE... <br>AUTHORITY: [REPROBATE]";
-                term.style.cssText = "color:#00ff00; font-family:'Courier New'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center;";
-                document.body.appendChild(term);
+            // 1. Get Elements
+            const nexusOverlay = document.getElementById('nexus-transition-overlay');
+            const nexusVid = document.getElementById('nexus-clip');
 
-                // 4. Redirect to The Registry
-                setTimeout(() => {
-                    window.location.href = "/registry.html"; 
-                }, 2000);
-            }, 800);
+            // 2. Display Overlay
+            nexusOverlay.style.display = 'flex';
+
+            // 3. Play Video
+            nexusVid.play();
+
+            // 4. Redirect On End
+            nexusVid.onended = function() {
+                window.location.href = "registry.html"; 
+            };
         });
     </script>
 </body>
