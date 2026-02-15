@@ -3,148 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE TROPHY HOE | THE EXIT ACRONYM</title>
+    <title>THE TROPHY HOE // TRANSACTIONAL // 03.13.26</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root {
-            --glitch-red: #ff003c;
-            --glitch-blue: #00f0ff;
-            --bg-color: #050505;
-            --text-color: #ffffff;
-        }
-
+        /* --- CORE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #000;
+            color: #e0e0e0;
             font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
+            text-align: center;
             overflow-x: hidden;
-        }
-
-        /* Glitch Text Effect */
-        h1 {
-            font-size: 2.5rem;
-            text-transform: uppercase;
             position: relative;
-            text-shadow: 2px 2px var(--glitch-red), -2px -2px var(--glitch-blue);
-            animation: glitch 1s infinite alternate;
-            margin-bottom: 0.5rem;
-            text-align: center;
+            padding-bottom: 50px;
         }
 
-        @keyframes glitch {
-            0% { text-shadow: 2px 2px var(--glitch-red), -2px -2px var(--glitch-blue); }
-            25% { text-shadow: -2px 2px var(--glitch-blue), 2px -2px var(--glitch-red); }
-            50% { text-shadow: 2px -2px var(--glitch-red), -2px 2px var(--glitch-blue); }
-            75% { text-shadow: -2px -2px var(--glitch-blue), 2px 2px var(--glitch-red); }
-            100% { text-shadow: 2px 2px var(--glitch-red), -2px -2px var(--glitch-blue); }
+        /* --- THE BOOT OVERLAY --- */
+        #boot-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 9999; 
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            cursor: crosshair;
         }
 
-        h2 {
-            font-size: 1rem;
-            color: #888;
-            letter-spacing: 2px;
-            margin-top: 0;
-            margin-bottom: 2rem;
-            text-align: center;
+        .boot-btn {
+            border: 2px solid #00ffff; color: #00ffff; background: transparent;
+            padding: 20px 40px; font-family: 'Courier New', monospace;
+            font-size: 1.2rem; font-weight: bold; letter-spacing: 4px;
+            cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 0 15px #00ffff;
+            animation: pulse 2s infinite; transition: 0.3s;
+        }
+        .boot-btn:hover { background: #00ffff; color: #000; box-shadow: 0 0 30px #00ffff; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* --- BACKGROUND VIDEO LAYER --- */
+        #bg-video {
+            position: fixed; top: 50%; left: 50%;
+            min-width: 100vw; min-height: 100vh;
+            width: auto; height: auto;
+            z-index: 0; transform: translate(-50%, -50%);
+            object-fit: cover; opacity: 0.5; filter: contrast(1.2) brightness(0.6);
         }
 
-        /* Responsive Video Container */
-        .video-container {
-            position: relative;
-            width: 90%;
-            max-width: 800px;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            border: 2px solid #333;
-            box-shadow: 0 0 20px rgba(255, 0, 60, 0.2);
-            margin-bottom: 2rem;
-            background: #000;
+        /* --- ATMOSPHERE LAYERS --- */
+        .scanlines {
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.2) 50%);
+            background-size: 100% 4px; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+            z-index: 1; pointer-events: none;
+        }
+        .vignette {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,1) 100%);
+            z-index: 2; pointer-events: none;
         }
 
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* --- CONTENT LAYER --- */
+        .container { 
+            max-width: 600px; margin: 0 auto; padding: 20px 20px; 
+            position: relative; z-index: 10; opacity: 0; transition: opacity 1s ease-in; 
         }
 
-        /* Buttons */
-        .btn-container {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
+        /* --- UI ELEMENTS --- */
+        .signature-logo { 
+            width: 100%; max-width: 350px; margin-bottom: 20px; 
+            filter: drop-shadow(0 0 10px rgba(0,255,255,0.5)); 
+            cursor: pointer; 
+            pointer-events: auto; 
         }
 
-        .btn {
-            background: transparent;
-            color: var(--text-color);
-            border: 1px solid var(--text-color);
-            padding: 1rem 2rem;
-            font-size: 1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .hero-block { position: relative; margin-bottom: 30px; border: 1px solid #333; background: #000; overflow: hidden; }
+        .hero-image { width: 100%; display: block; opacity: 0.8; }
+        #countdown-timer {
+            position: absolute; bottom: 10%; left: 0; width: 100%;
+            font-size: clamp(2rem, 8vw, 4rem); color: #00ffff; font-weight: 900;
+            letter-spacing: -2px; text-shadow: 2px 2px 0px #ff00ff;
+            font-family: 'Arial Black', sans-serif;
+        }
+        .subtitle { color: #ff00ff; letter-spacing: 5px; margin-bottom: 30px; font-weight: bold; text-shadow: 0 0 5px #ff00ff; }
+        .section-title { font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; }
+        .btn { display: block; width: 100%; padding: 0; margin-bottom: 20px; border: 1px solid #444; background: rgba(0,0,0,0.8); text-decoration: none; color: #fff; font-weight: bold; }
+        .purchase-link { border: 2px solid #00ffff; box-shadow: 0 0 15px rgba(0,255,255,0.2); }
+        .purchase-link img { width: 100%; display: block; }
+        .btn-spoils { padding: 20px; border-color: #ff00ff; color: #ff00ff; letter-spacing: 2px; }
+        .btn-hq { padding: 20px; border-color: #fff; color: #fff; letter-spacing: 2px; }
+        
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #222; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        
+        /* UPDATED: Standard 16:9 container for "The Exit Acronym" */
+        .video-wrapper-feature { position: relative; padding-bottom: 56.25%; height: 0; margin-bottom: 25px; border: 1px solid #333; box-shadow: 0 0 20px rgba(0,0,0,0.8); width: 100%; }
+        .video-wrapper-feature iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        .social-row { display: flex; justify-content: center; gap: 30px; margin: 40px 0; }
+        .social-icon { font-size: 2rem; color: #888; transition: 0.3s; }
+        .social-icon:hover { color: #00ffff; }
+        .footer-text { font-size: 0.7rem; color: #555; text-transform: uppercase; margin-bottom: 40px;}
+
+        /* --- TICKER --- */
+        .ticker-wrap { position: fixed; bottom: 0; width: 100%; overflow: hidden; height: 35px; background-color: rgba(0,0,0,0.95); border-top: 1px solid #00ffff; z-index: 999; display: flex; align-items: center; }
+        .ticker { display: flex; white-space: nowrap; animation: ticker 25s linear infinite; }
+        .ticker-item { color: #ff00ff; font-weight: 900; text-transform: uppercase; letter-spacing: 3px; padding: 0 2rem; font-size: 0.9rem; text-shadow: 0 0 5px #ff00ff; }
+        .ticker-item.trigger { cursor: pointer; color: #00ffff; text-shadow: 0 0 5px #00ffff; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* --- BREACH OVERLAY --- */
+        #breach-overlay { 
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; 
+            background: #000; z-index: 10000; 
+            display: none; align-items: center; justify-content: center; 
+        }
+        #breach-video { width: 100%; height: 100%; object-fit: contain; }
+        .breach-active { display: flex !important; }
+
+        /* --- NEXUS TRANSITION OVERLAY --- */
+        #nexus-transition-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; z-index: 100000; /* Highest priority */
+            display: none; align-items: center; justify-content: center;
+        }
+        #nexus-clip { width: 100%; height: 100%; object-fit: cover; }
+
+        /* --- TIMED FAILURE SEQUENCE --- */
+        .system-failure { animation: breach-timeline 17s linear forwards; }
+        @keyframes breach-timeline {
+            0% { filter: invert(0); }
+            1% { filter: invert(1); } 
+            2% { filter: invert(0); }
+            3% { filter: invert(1); }
+            4% { filter: invert(0); } 
+            49% { filter: invert(0); }
+            50% { filter: invert(1); } 
+            51% { filter: invert(0); }
+            100% { filter: invert(0); }
         }
 
-        .btn:hover {
-            background: var(--text-color);
-            color: var(--bg-color);
-            box-shadow: 0 0 10px var(--text-color);
+        body.locked { overflow: hidden; }
+
+        /* ================================================= */
+        /* [NEXUS TRIGGER STYLE]                             */
+        /* ================================================= */
+        .nexus-anomaly {
+            position: fixed; top: 25px; right: 30px;
+            font-family: 'Courier New', monospace; font-size: 14px;
+            color: rgba(255, 255, 255, 0.4); 
+            cursor: default; z-index: 99998; 
+            transition: all 0.4s ease; user-select: none;
         }
 
-        .btn-primary {
-            border-color: var(--glitch-red);
-            color: var(--glitch-red);
+        @keyframes nexus-twitch {
+            0%, 95% { transform: skew(0deg); opacity: 0.4; }
+            96% { transform: skew(10deg); opacity: 0.8; color: #4b0082; } 
+            97% { transform: skew(-10deg); opacity: 0.2; }
+            100% { transform: skew(0deg); opacity: 0.4; }
+        }
+        .nexus-anomaly { animation: nexus-twitch 8s infinite; }
+
+        .nexus-anomaly:hover {
+            color: #4b0082; opacity: 1; animation: none;
+            cursor: pointer; text-shadow: 0px 0px 8px rgba(75, 0, 130, 0.8);
         }
 
-        .btn-primary:hover {
-            background: var(--glitch-red);
-            color: #fff;
-            box-shadow: 0 0 15px var(--glitch-red);
+        .nexus-tooltip {
+            visibility: hidden; position: absolute; top: 100%; right: 0;
+            width: 100px; background: #000; color: #00ff00;
+            text-align: center; font-size: 10px; padding: 4px;
+            border: 1px solid #4b0082; margin-top: 5px;
+            opacity: 0; transition: opacity 0.2s;
         }
+        .nexus-anomaly:hover .nexus-tooltip { visibility: visible; opacity: 1; }
 
-        footer {
-            margin-top: 3rem;
-            font-size: 0.8rem;
-            color: #444;
-            text-align: center;
-            padding-bottom: 1rem;
-        }
     </style>
 </head>
 <body>
 
-    <h1>THE EXIT ACRONYM</h1>
-    <h2>STARRING: THE TROPHY HOE && PLASTIC PISTOLZ</h2>
-
-    <div class="video-container">
-        <iframe 
-            src="https://www.youtube.com/embed/CTg8NdRTyAE?autoplay=1&mute=1" 
-            title="The Trophy Hoe - The Exit Acronym" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            allowfullscreen>
-        </iframe>
+    <div id="boot-screen">
+        <div style="color: #ff00ff; margin-bottom: 20px; letter-spacing: 3px;">SYSTEM OFFLINE</div>
+        <button class="boot-btn" onclick="initializeSystem()">INITIALIZE SYSTEM</button>
     </div>
 
-    <div class="btn-container">
-        <a href="https://thetrophyhoe.com" class="btn btn-primary">BUY THE EP</a>
-        <a href="https://open.spotify.com/artist/0Wt716RDrIkaGfNlSN8IFj?si=23GvfPcXTfOLJEXOoCZQaQ" class="btn">STREAM NOW</a>
+    <div id="nexus-portal-trigger" class="nexus-anomaly">
+        <span class="nexus-text">720</span>
+        <span class="nexus-sigil">🜃</span>
+        <div class="nexus-tooltip">ENTER NEXUS</div>
     </div>
 
-    <footer>
-        &copy; 2026 GLITCHED RECORDS. ALL RIGHTS RESERVED.<br>
-        SYSTEM STATUS: UNBOTHERED.
-    </footer>
+    <video id="bg-video" loop muted playsinline poster="transactional_date.png">
+        <source src="teraback.mp4" type="video/mp4">
+    </video>
 
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div id="breach-overlay">
+        <video id="breach-video" playsinline>
+            <source src="breach_cinematic.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="nexus-transition-overlay">
+        <video id="nexus-clip" playsinline>
+            <source src="nexusclip.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="container" id="main-content">
+        
+        <video autoplay loop muted playsinline class="signature-logo" id="main-logo">
+            <source src="teralogo.mp4" type="video/mp4">
+        </video>
+        
+        <div class="hero-block">
+            <img src="transactional_date.png" alt="03.13.26" class="hero-image">
+            <div id="countdown-timer">00:00:00:00</div>
+        </div>
+        <div class="subtitle">TRANSACTIONAL // ERA_02</div>
+        <a href="https://payhip.com/b/4TUNw" class="btn purchase-link">
+            <img src="kys.png" alt="KEEP YOUR SOVEREIGNTY">
+        </a>
+        <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS</a>
+        <a href="https://glitchedrecords.com" class="btn btn-hq">💿 GLITCHED RECORDS // HQ</a>
+        
+        <div class="section-title">THE EXIT ACRONYM</div>
+        <div class="video-wrapper-feature">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/CTg8NdRTyAE" title="The Trophy Hoe - The Exit Acronym" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <div class="section-title">THE TRANSMISSIONS</div>
+        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe></div>
+        <div class="social-row">
+            <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@thetrophyhoe" class="social-icon"><i class="fab fa-tiktok"></i></a>
+            <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-text">© 2026 GLITCHED RECORDS | Oceanside, CA</div>
+    </div>
+
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">#KeepYourSovereignty</div>
+            <div class="ticker-item">#TheTrophyHoe</div>
+            <div class="ticker-item trigger" id="ticker-trigger">#TransActionAl</div>
+            <div class="ticker-item">#ReprobateHoe</div>
+            <div class="ticker-item">#MatriarchalCode</div>
+            <div class="ticker-item">#KeepYourSovereignty</div>
+            <div class="ticker-item">#TheTrophyHoe</div>
+            <div class="ticker-item">#TransActionAl</div>
+        </div>
+    </div>
+
+    <script>
+        function initializeSystem() {
+            const bootScreen = document.getElementById('boot-screen');
+            const container = document.getElementById('main-content');
+            const bgVideo = document.getElementById('bg-video');
+            const logoVideo = document.getElementById('main-logo');
+
+            bgVideo.play().catch(error => { console.error("BG Video Failed:", error); });
+            logoVideo.play().catch(error => { console.error("Logo Video Failed:", error); });
+
+            bootScreen.style.opacity = '0';
+            setTimeout(() => {
+                bootScreen.style.display = 'none';
+                container.style.opacity = '1';
+            }, 500);
+        }
+
+        const targetDate = new Date("March 13, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const d = Math.floor((targetDate - now) / (1000 * 60 * 60 * 24));
+            const h = Math.floor(((targetDate - now) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor(((targetDate - now) % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor(((targetDate - now) % (1000 * 60)) / 1000);
+            document.getElementById('countdown-timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }, 1000);
+
+        const breachVid = document.getElementById('breach-video');
+        
+        function executeBreach() {
+            document.body.classList.add('locked');
+            document.body.classList.add('system-failure');
+            document.getElementById('breach-overlay').classList.add('breach-active');
+            
+            breachVid.currentTime = 0;
+            breachVid.play();
+            
+            breachVid.onended = () => { 
+                window.location.href = "https://theantichrist.ai"; 
+            };
+        }
+
+        document.getElementById('main-logo').addEventListener('dblclick', executeBreach);
+
+        let tickerClicks = 0;
+        document.getElementById('ticker-trigger').addEventListener('click', () => {
+            tickerClicks++;
+            if(tickerClicks === 3) executeBreach();
+        });
+
+        /* ================================================= */
+        /* [NEXUS INTEGRATION] - UPDATED VIDEO LOGIC         */
+        /* ================================================= */
+        document.getElementById('nexus-portal-trigger').addEventListener('click', function() {
+            // 1. Get Elements
+            const nexusOverlay = document.getElementById('nexus-transition-overlay');
+            const nexusVid = document.getElementById('nexus-clip');
+
+            // 2. Display Overlay
+            nexusOverlay.style.display = 'flex';
+
+            // 3. Play Video
+            nexusVid.play();
+
+            // 4. Redirect On End
+            nexusVid.onended = function() {
+                window.location.href = "registry.html"; 
+            };
+        });
+    </script>
 </body>
 </html>
