@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE TROPHY HOE // TRANSACTIONAL // 03.13.26</title>
+    <title>THE TROPHY HOE // THEA IT // ALGORITHM IDOL</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -77,13 +77,6 @@
         }
 
         .hero-block { position: relative; margin-bottom: 30px; border: 1px solid #333; background: #000; overflow: hidden; }
-        .hero-image { width: 100%; display: block; opacity: 0.8; }
-        #countdown-timer {
-            position: absolute; bottom: 10%; left: 0; width: 100%;
-            font-size: clamp(2rem, 8vw, 4rem); color: #00ffff; font-weight: 900;
-            letter-spacing: -2px; text-shadow: 2px 2px 0px #ff00ff;
-            font-family: 'Arial Black', sans-serif;
-        }
         .subtitle { color: #ff00ff; letter-spacing: 5px; margin-bottom: 30px; font-weight: bold; text-shadow: 0 0 5px #ff00ff; }
         .section-title { font-size: 0.7rem; letter-spacing: 3px; border-bottom: 1px solid #222; margin: 40px 0 20px 0; padding-bottom: 5px; color: #444; text-transform: uppercase; }
         .btn { display: block; width: 100%; padding: 0; margin-bottom: 20px; border: 1px solid #444; background: rgba(0,0,0,0.8); text-decoration: none; color: #fff; font-weight: bold; }
@@ -177,6 +170,120 @@
         }
         .nexus-anomaly:hover .nexus-tooltip { visibility: visible; opacity: 1; }
 
+        /* ================================================= */
+        /* NEW: ALGORITHM IDOL + THEA IT ALBUM SERIES SPOTLIGHTS */
+        /* ================================================= */
+        .spotlight-section {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        
+        .algorithm-banner {
+            width: 100%;
+            display: block;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
+            margin-bottom: 20px;
+        }
+        
+        .algorithm-btn {
+            display: block;
+            width: 100%;
+            padding: 25px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            color: #000;
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            border: none;
+            box-shadow: 0 0 25px #ff00ff;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .algorithm-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px #00ffff;
+            color: #fff;
+        }
+
+        .thea-series {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 18px;
+            margin: 30px 0;
+        }
+        
+        .album-card {
+            position: relative;
+            border: 2px solid #222;
+            background: #111;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+        }
+        
+        .album-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 0 30px #00ffff;
+            border-color: #ff00ff;
+        }
+        
+        .album-card img {
+            width: 100%;
+            display: block;
+            transition: 0.4s;
+        }
+        
+        .album-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.95));
+            color: #ff00ff;
+            padding: 14px 10px 12px;
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            text-shadow: 0 0 8px #ff00ff;
+        }
+        
+        .thealogical-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff00ff;
+            color: #000;
+            font-size: 0.65rem;
+            padding: 4px 12px;
+            border-radius: 0;
+            font-weight: 900;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px #ff00ff;
+            animation: pulse 2s infinite;
+            z-index: 2;
+        }
+        
+        .final-drop {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: #00ffff;
+            color: #000;
+            font-size: 0.65rem;
+            padding: 4px 12px;
+            border-radius: 0;
+            font-weight: 900;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px #00ffff;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -213,33 +320,77 @@
 
     <div class="container" id="main-content">
         
+        <!-- SIGNATURE LOGO (kept exactly as before) -->
         <video autoplay loop muted playsinline class="signature-logo" id="main-logo">
             <source src="teralogo.mp4" type="video/mp4">
         </video>
         
-        <div class="hero-block">
-            <img src="transactional_date.png" alt="03.13.26" class="hero-image">
-            <div id="countdown-timer">00:00:00:00</div>
-        </div>
-        <div class="subtitle">TRANSACTIONAL // ERA_02</div>
+        <!-- KEPT BUTTONS - TRANSACTIONAL / MERCH / LINKS -->
         <a href="https://payhip.com/b/4TUNw" class="btn purchase-link">
             <img src="kys.png" alt="KEEP YOUR SOVEREIGNTY">
         </a>
         <a href="/sacred-spoils" class="btn btn-spoils">🛍️ SACRED SPOILS</a>
         <a href="https://glitchedrecords.com" class="btn btn-hq">💿 GLITCHED RECORDS // HQ</a>
-        
-        <div class="section-title">THE EXIT ACRONYM</div>
-        <div class="video-wrapper-feature">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/CTg8NdRTyAE" title="The Trophy Hoe - The Exit Acronym" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+        <!-- SPOTLIGHT 1: ALGORITHM IDOL (top focal point - big energy) -->
+        <div class="spotlight-section">
+            <div class="section-title">GLITCHED RECORDS PRESENTS</div>
+            <img src="logobannerai.jpg" alt="ALGORITHM IDOL" class="algorithm-banner">
+            <a href="https://algorithmidol.com" class="algorithm-btn">ENTER ALGORITHM IDOL</a>
+            <p style="margin-top: 15px; font-size: 0.85rem; letter-spacing: 2px; color: #00ffff;">
+                THE TROPHY HOE HOSTS • THE ALGORITHM SAVES YOU • THE HUMANS VOTE YOU OUT
+            </p>
         </div>
 
-        <div class="section-title">THE TRANSMISSIONS</div>
-        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/ZxDRKODERKQ" allowfullscreen></iframe></div>
-        <div class="social-row">
-            <a href="https://instagram.com/thetrophyhoe" class="social-icon"><i class="fab fa-instagram"></i></a>
-            <a href="https://tiktok.com/@thetrophyhoe" class="social-icon"><i class="fab fa-tiktok"></i></a>
-            <a href="https://youtube.com/@trophyhoe" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <!-- SPOTLIGHT 2: THE THEA IT ALBUM SERIES (second focal point - music core) -->
+        <div class="spotlight-section">
+            <div class="section-title">THE THEA IT ALBUM SERIES</div>
+            <div class="thea-series">
+                
+                <!-- TransActionAl -->
+                <div class="album-card">
+                    <img src="transactionalart.png" alt="TransActionAl">
+                    <div class="album-label">TransActionAl</div>
+                </div>
+                
+                <!-- HaBitUAl -->
+                <div class="album-card">
+                    <img src="habitualart.png" alt="HaBitUAl">
+                    <div class="album-label">HaBitUAl</div>
+                </div>
+                
+                <!-- ExistEntIAl -->
+                <div class="album-card">
+                    <img src="existentialart.png" alt="ExistEntIAl">
+                    <div class="album-label">ExistEntIAl</div>
+                </div>
+                
+                <!-- ArcHivAl -->
+                <div class="album-card">
+                    <img src="archivalart.png" alt="ArcHivAl">
+                    <div class="album-label">ArcHivAl</div>
+                </div>
+                
+                <!-- InDexIcAl -->
+                <div class="album-card">
+                    <img src="indexicalart.png" alt="InDexIcAl">
+                    <div class="album-label">InDexIcAl</div>
+                </div>
+                
+                <!-- THEAlogicAl - FINAL RELEASE (highlighted) -->
+                <div class="album-card">
+                    <img src="thealogicalart.png" alt="THEAlogicAl">
+                    <div class="final-drop">FINAL RELEASE</div>
+                    <div class="thealogical-badge">DROPS 5/1/26</div>
+                    <div class="album-label">THEAlogicAl</div>
+                </div>
+                
+            </div>
+            <p style="font-size: 0.8rem; letter-spacing: 3px; color: #00ffff; margin-top: 10px;">
+                SIX CHAPTERS • ONE FINAL TRANSMISSION
+            </p>
         </div>
+
         <div class="footer-text">© 2026 GLITCHED RECORDS | Oceanside, CA</div>
     </div>
 
@@ -273,16 +424,6 @@
             }, 500);
         }
 
-        const targetDate = new Date("March 13, 2026 00:00:00").getTime();
-        setInterval(() => {
-            const now = new Date().getTime();
-            const d = Math.floor((targetDate - now) / (1000 * 60 * 60 * 24));
-            const h = Math.floor(((targetDate - now) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor(((targetDate - now) % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor(((targetDate - now) % (1000 * 60)) / 1000);
-            document.getElementById('countdown-timer').innerText = `${d.toString().padStart(2,'0')}:${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        }, 1000);
-
         const breachVid = document.getElementById('breach-video');
         
         function executeBreach() {
@@ -307,20 +448,15 @@
         });
 
         /* ================================================= */
-        /* [NEXUS INTEGRATION] - UPDATED VIDEO LOGIC         */
+        /* [NEXUS INTEGRATION] - kept exactly as before */
         /* ================================================= */
         document.getElementById('nexus-portal-trigger').addEventListener('click', function() {
-            // 1. Get Elements
             const nexusOverlay = document.getElementById('nexus-transition-overlay');
             const nexusVid = document.getElementById('nexus-clip');
 
-            // 2. Display Overlay
             nexusOverlay.style.display = 'flex';
-
-            // 3. Play Video
             nexusVid.play();
 
-            // 4. Redirect On End
             nexusVid.onended = function() {
                 window.location.href = "registry.html"; 
             };
